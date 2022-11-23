@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: mail-control\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-23 00:04+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Rahal <rahal.aboulfeth@gmail.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;esc_attr_e;esc_attr__;esc_html__\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+
+#: admin.php:9
+msgid "Mail Control"
+msgstr "Mail Control"
+
+#: background-mailer.php:28
+msgid "Background Mailer"
+msgstr "Envoie en tache de fond"
+
+#: background-mailer.php:33
+msgid "Send emails in background"
+msgstr "Envoyer les emails en tache de fond"
+
+#: background-mailer.php:38
+msgid "Sleep between emails in seconds ( in case of SMTP limitations)"
+msgstr ""
+"Temps de pause entre les emails (A utiliser dans le cas de limitations du "
+"serveur SMTP)"
+
+#: email-tracker.php:12
+msgid "Email Logging and Tracking"
+msgstr "Suivi d’ouvertures et clics des emails"
+
+#: email-tracker.php:17
+msgid "Log Emails (Mandatory if we want to track emails)"
+msgstr ""
+"Journaliser les emails (Obligatoire si on souhaite faire le suivi des "
+"ouvertures et clics)"
+
+#: email-tracker.php:23
+msgid "Enable opens and clicks tracking"
+msgstr "Suivi d’ouvertures et clics des emails"
+
+#: email-tracker__premium_only.php:8
+#, fuzzy
+#| msgid ""
+#| "Source and campain will be read from X-Source and X-Campaign email "
+#| "headers<br/> a helper Mail_Control\\get_headers($source,$campaign) is "
+#| "provided to prepare headers for your wp_mail call  ,"
+msgid ""
+"Source and campain will be read from X-Source and X-Campaign email headers\n"
+"a helper Mail_Control\\get_headers($source,$campaign) is provided to prepare "
+"headers for your wp_mail call"
+msgstr ""
+"Le nom de la “source” et “campagne” seront lus à partir des entetes de "
+"l’email X-Source et X-Campaign respectivement<br/>\n"
+"Une fonction d’aide Mail_Control\\get_headers($source,$campaign) est fournie "
+"par ce plugin pour preparer ces entetes avant utilisation avant l’appel de "
+"wp_mail ,"
+
+#: email-tracker__premium_only.php:9
+msgid ""
+"If you are using Contact Form 7, you can setup those headers as Additionnal "
+"headers in Mail Panel, we suggest :\n"
+"X-Source: ContactForm7\n"
+"X-Campaign: My Contact Form Name"
+msgstr ""
+
+#: email-tracker__premium_only.php:15
+msgid "Add utm_* to tracked links (Own domain only)"
+msgstr ""
+"Ajouter les tags utm_* sur les liens marqués (Sur notre propre nom de "
+"domaine uniquement)"
+
+#: email-tracker__premium_only.php:27
+msgid "Google analytics read (experimental)"
+msgstr "Suivi d’ouverture avec Google Analytics"
+
+#: email-tracker__premium_only.php:28
+msgid "Track reads with google analytics as well"
+msgstr "Faire le suivi des ouvertures avec google analytics"
+
+#: emails-table.php:105
+msgid "From"
+msgstr "De"
+
+#: emails-table.php:106 emails-table.php:131
+msgid "To"
+msgstr "à"
+
+#: emails-table.php:108
+msgid "Filter"
+msgstr "Filtrer"
+
+#: emails-table.php:130
+msgid "Date"
+msgstr "Date"
+
+#: emails-table.php:132
+msgid "Subject"
+msgstr "Objet"
+
+#: emails-table.php:133
+msgid "Excerpt"
+msgstr "Extrait"
+
+#: emails-table.php:134
+msgid "Status"
+msgstr "Etat"
+
+#: emails-table.php:135
+msgid "Reads"
+msgstr "Ouvertures"
+
+#: emails-table.php:136
+msgid "Clicks"
+msgstr "Clics"
+
+#: emails-table.php:191
+msgid "Source"
+msgstr "Source"
+
+#: emails-table.php:192
+msgid "Campaign"
+msgstr "Campagne"
+
+#: init_freemius.php:58
+#, php-format
+msgid "Hey %1$s"
+msgstr "Salut %s"
+
+#: init_freemius.php:59
+#, php-format
+msgid ""
+"Please help us improve %2$s! If you opt-in, some data about your usage of "
+"%2$s will be sent to %5$s. If you skip this, that's okay! %2$s will still "
+"work just fine."
+msgstr ""
+"Aide nous stp à améliorer %2$s! Si tu acceptes, certaines données de ton "
+"utilisations de %2$s seront envoyées à %5$s. Si tu n’en as pas envie, pas de "
+"problème! %2$s fonctionnera tout aussi bien."
+
+#: integrations/woocommerce.php:8
+msgid "Woocommerce Integration"
+msgstr "Intégration Woocommerce"
+
+#: integrations/woocommerce.php:12
+msgid "Woocommerce Compatibility"
+msgstr "Compatibilité Woocommerce"
+
+#: integrations/woocommerce.php:14
+msgid ""
+"Woocommerce is already capable of sending emails in the backgroud via "
+"\"woocommerce_defer_transactional_emails\" filter, with mail control, it is "
+"possible to use this capability to transactionnal emails in the background"
+msgstr ""
+
+#: integrations/woocommerce.php:19
+msgid "Use Woocommerce defer feature to send woocommerce transactional emails"
+msgstr ""
+
+#: integrations/woocommerce.php:20
+msgid ""
+"You can still use Mail Control to send your emails in the background by "
+"setting the Background mailer panel. If you leave this checkbox unchecked, "
+"woocommerce defer feature will be disabled"
+msgstr ""
+
+#: settings.php:23
+#, php-format
+msgid ""
+"Welcone to Mail Contol, your one stop plugin to take control over your "
+"wordpress emails, feel to <a href=\"%s\" >contact us</a> if you have any "
+"question."
+msgstr ""
+"Bienvenue sur Mail Control, votre plugin pour maitriser vos emails "
+"wordpress, n’hésitez pas a nous <a href=\"%s\" >contacter</a> si vous avez "
+"la moindre question."
+
+#: settings.php:27
+msgid "Mail Control Settings"
+msgstr "Paramètrages Mail Control"
+
+#: smtp-mailer.php:10
+msgid "SMTP Mailer"
+msgstr "Envoi par SMTP"
+
+#: smtp-mailer.php:15
+msgid "Smtp Secure"
+msgstr "SMTP sécurisé"
+
+#: smtp-mailer.php:20
+msgid "Smtp Host"
+msgstr "Nom de l’hote SMTP"
+
+#: smtp-mailer.php:25
+msgid "Smtp PORT"
+msgstr "Numéro de port SMTP"
+
+#: smtp-mailer.php:30
+msgid "Smtp User"
+msgstr "Nom d’utilisateur du compte SMTP"
+
+#: smtp-mailer.php:35
+msgid "Smtp Password"
+msgstr "Mot de passe du compte SMTP"
+
+#: smtp-mailer.php:40
+msgid "From Email"
+msgstr "Emails envoyés avec l’adresse"
+
+#: smtp-mailer.php:45
+msgid "From Name"
+msgstr "Nom de l’envoyeur"
+
+#: smtp-mailer.php:59
+msgid "Please fill the email field"
+msgstr "Veuillez saisir un email"
+
+#: smtp-mailer.php:63
+msgid "Please fill a correct email field"
+msgstr "Veuillez saisir un email valide"
+
+#: smtp-mailer.php:75
+msgid "Mail Control, test email"
+msgstr "Test d’envoi d’email Mail Control"
+
+#: smtp-mailer.php:76
+#, php-format
+msgid "This is a test email sent mail control in by %s"
+msgstr "Ceci est un email de test envoyé par Mail Control sur le site %s"
+
+#: smtp-mailer.php:90
+msgid "Test your setup"
+msgstr "Tester votre configuration"
+
+#: smtp-mailer.php:97
+msgid "Send a test email"
+msgstr "Envoyer un email de test"
+
+#~ msgid "Add tracking to email content"
+#~ msgstr "Activer le suivi d’ouvertures et clics"
