@@ -9,39 +9,51 @@ add_filter( 'mail_control_settings', function ( $settings ) {
         'title'  => __( 'SMTP Mailer', 'mail-control' ),
         'fields' => [
         [
-        'id'    => 'SSL',
-        'type'  => 'checkbox',
-        'title' => __( 'Smtp Secure', 'mail-control' ),
+        'id'          => 'HOST',
+        'type'        => 'text',
+        'title'       => __( 'Smtp Host', 'mail-control' ),
+        'description' => __( 'Your smtp mail server hostname (or IP)', 'mail-control' ),
     ],
         [
-        'id'    => 'HOST',
-        'type'  => 'text',
-        'title' => __( 'Smtp Host', 'mail-control' ),
+        'id'          => 'PORT',
+        'type'        => 'number',
+        'title'       => __( 'Smtp PORT', 'mail-control' ),
+        'description' => __( 'You smtp mail server PORT', 'mail-control' ),
     ],
         [
-        'id'    => 'PORT',
-        'type'  => 'number',
-        'title' => __( 'Smtp PORT', 'mail-control' ),
+        'id'          => 'SSL',
+        'type'        => 'radio',
+        'options'     => [
+        ''    => 'None',
+        'ssl' => 'SSL',
+        'tls' => 'TLS',
+    ],
+        'title'       => __( 'Smtp Encryption', 'mail-control' ),
+        'description' => __( 'What type of encryption your server is using', 'mail-control' ),
     ],
         [
-        'id'    => 'USER',
-        'type'  => 'text',
-        'title' => __( 'Smtp User', 'mail-control' ),
+        'id'          => 'USER',
+        'type'        => 'text',
+        'title'       => __( 'Smtp User', 'mail-control' ),
+        'description' => __( 'You smtp account\'s username', 'mail-control' ),
     ],
         [
-        'id'    => 'PASSWORD',
-        'type'  => 'text',
-        'title' => __( 'Smtp Password', 'mail-control' ),
+        'id'          => 'PASSWORD',
+        'type'        => 'text',
+        'title'       => __( 'Smtp Password', 'mail-control' ),
+        'description' => __( 'You smtp account\'s password', 'mail-control' ),
     ],
         [
-        'id'    => 'FROM_EMAIL',
-        'type'  => 'email',
-        'title' => __( 'From Email', 'mail-control' ),
+        'id'          => 'FROM_EMAIL',
+        'type'        => 'email',
+        'title'       => __( 'From Email', 'mail-control' ),
+        'description' => __( 'Your emails will be sent from this email adress', 'mail-control' ),
     ],
         [
-        'id'    => 'FROM_NAME',
-        'type'  => 'text',
-        'title' => __( 'From Name', 'mail-control' ),
+        'id'          => 'FROM_NAME',
+        'type'        => 'text',
+        'title'       => __( 'From Name', 'mail-control' ),
+        'description' => __( 'Your emails will be sent with this name', 'mail-control' ),
     ]
     ],
     ];
@@ -74,29 +86,30 @@ if ( is_admin() ) {
             [ "X-Source: Mail Control", "X-Campaign: Send Test Email" ]
         );
         wp_die( json_encode( [
-            'success'    => $result,
-            'debug_info' => ob_get_clean(),
+            'success' => $result,
+            'result'  => ob_get_clean(),
         ] ) );
     } );
     /**
      * Test email form
      */
     add_action( 'wsa_after_form_SMTP_MAILER', function () {
+        $nonce = wp_create_nonce( "secure-nonce" );
+        $admin = admin_url( "admin-ajax.php" );
         ?>
     <h2><?php 
         echo  esc_html__( 'Test your setup', 'mail-control' ) ;
         ?></h2>
-    <form id="test_email" method='post' action="<?php 
-        echo  admin_url( "admin-ajax.php" ) ;
+    <form class="test_smtp" method='post' action="<?php 
+        echo  $admin ;
         ?>">
 	    <input type="hidden"  name="test_email_once" value="<?php 
-        echo  wp_create_nonce( "secure-nonce" ) ;
+        echo  $nonce ;
         ?>" />
 	    <input type="hidden"  name="action" value="send_test_email" />
 	    <div style="padding-left: 10px">
-		<input type="email" required class="regular-text" id="SMTP_MAILER_TEST_EMAIL" name="SMTP_MAILER_TEST_EMAIL" value="" placeholder="yourtestemail@domain.com" />
-
-		<?php 
+	 	<input type="email" required class="regular-text" id="SMTP_MAILER_TEST_EMAIL" name="SMTP_MAILER_TEST_EMAIL" value="" placeholder="yourtestemail@domain.com" />
+	 		<?php 
         submit_button(
             __( 'Send a test email', 'mail-control' ),
             'primary',
@@ -104,12 +117,14 @@ if ( is_admin() ) {
             false
         );
         ?>
-	    <div id="test_result"></div>
-	</div>
+	 	    <div class="test_result"></div>
+	 	</div>
 	</form>
+	<?php 
+        ?>
 	<script>
 		jQuery(document).ready( function($) {
-			$( 'form#test_email' ).submit( function(e) {
+			$( 'form.test_smtp' ).submit( function(e) {
 				e.preventDefault();
 				$me = $(this);
 				$.ajax({
@@ -118,10 +133,10 @@ if ( is_admin() ) {
 					dataType: "json",
 					data : $me.serializeArray(),
 					success : function( response ) {
-						$('#test_result').html(response.debug_info).addClass('notice').addClass( response.success ? 'notice-success' : 'notice-error' );
+						$('div.test_result' , $me).html(response.result).addClass('notice').addClass( response.success ? 'notice-success' : 'notice-error' );
 					},
 					fail : function( err ) {
-						$('#test_result').html(err).addClass('notice notice-error');
+						$('div.test_result', $me) .html(err).addClass('notice notice-error');
 					}
 				});
 				return false;
@@ -140,7 +155,14 @@ if ( is_admin() ) {
 function init_phpmailer( PHPMailer $phpmailer )
 {
     $phpmailer->Mailer = 'smtp';
-    $phpmailer->SMTPSecure = ( SMTP_MAILER_SSL == 'on' ? 'ssl' : false );
+    
+    if ( SMTP_MAILER_SSL == 'on' ) {
+        // compat SSL as a checkbox
+        $phpmailer->SMTPSecure = 'ssl';
+    } else {
+        $phpmailer->SMTPSecure = ( SMTP_MAILER_SSL ? SMTP_MAILER_SSL : false );
+    }
+    
     $phpmailer->SMTPAutoTLS = ( $phpmailer->SMTPSecure ? true : false );
     $phpmailer->Host = SMTP_MAILER_HOST;
     $phpmailer->Port = SMTP_MAILER_PORT;

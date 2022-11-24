@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mail-control\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-23 00:04+0100\n"
+"POT-Creation-Date: 2022-11-24 00:29+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rahal <rahal.aboulfeth@gmail.com>\n"
 "Language-Team: \n"
@@ -67,7 +67,7 @@ msgstr ""
 "par ce plugin pour preparer ces entetes avant utilisation avant l’appel de "
 "wp_mail ,"
 
-#: email-tracker__premium_only.php:9
+#: email-tracker__premium_only.php:11
 msgid ""
 "If you are using Contact Form 7, you can setup those headers as Additionnal "
 "headers in Mail Panel, we suggest :\n"
@@ -75,17 +75,17 @@ msgid ""
 "X-Campaign: My Contact Form Name"
 msgstr ""
 
-#: email-tracker__premium_only.php:15
+#: email-tracker__premium_only.php:18
 msgid "Add utm_* to tracked links (Own domain only)"
 msgstr ""
 "Ajouter les tags utm_* sur les liens marqués (Sur notre propre nom de "
 "domaine uniquement)"
 
-#: email-tracker__premium_only.php:27
+#: email-tracker__premium_only.php:30
 msgid "Google analytics read (experimental)"
 msgstr "Suivi d’ouverture avec Google Analytics"
 
-#: email-tracker__premium_only.php:28
+#: email-tracker__premium_only.php:31
 msgid "Track reads with google analytics as well"
 msgstr "Faire le suivi des ouvertures avec google analytics"
 
@@ -195,57 +195,100 @@ msgid "SMTP Mailer"
 msgstr "Envoi par SMTP"
 
 #: smtp-mailer.php:15
-msgid "Smtp Secure"
-msgstr "SMTP sécurisé"
-
-#: smtp-mailer.php:20
 msgid "Smtp Host"
 msgstr "Nom de l’hote SMTP"
 
-#: smtp-mailer.php:25
+#: smtp-mailer.php:16
+msgid "Your smtp mail server hostname (or IP)"
+msgstr "Nom de domaine de votre serveur SMTP ( Ou IP )"
+
+#: smtp-mailer.php:21
 msgid "Smtp PORT"
 msgstr "Numéro de port SMTP"
 
-#: smtp-mailer.php:30
-msgid "Smtp User"
-msgstr "Nom d’utilisateur du compte SMTP"
+#: smtp-mailer.php:22
+msgid "You smtp mail server PORT"
+msgstr "Numéro de port de votre serveur SMTP"
 
-#: smtp-mailer.php:35
+#: smtp-mailer.php:32
+msgid "Smtp Encryption"
+msgstr "Cryptage SMTP"
+
+#: smtp-mailer.php:33
+msgid "What type of encryption your server is using"
+msgstr "Quel type de cryptage votre serveur utilise"
+
+#: smtp-mailer.php:38
+msgid "Smtp User"
+msgstr "Nom d’utilisateur SMTP"
+
+#: smtp-mailer.php:39
+msgid "You smtp account's username"
+msgstr "Le nom de votre utilisateur SMTP"
+
+#: smtp-mailer.php:44
 msgid "Smtp Password"
 msgstr "Mot de passe du compte SMTP"
 
-#: smtp-mailer.php:40
+#: smtp-mailer.php:45
+msgid "You smtp account's password"
+msgstr "Le mot de passe de votre compte SMTP"
+
+#: smtp-mailer.php:50
 msgid "From Email"
 msgstr "Emails envoyés avec l’adresse"
 
-#: smtp-mailer.php:45
+#: smtp-mailer.php:51
+msgid "Your emails will be sent from this email adress"
+msgstr "Les emails partiront de cette adresse mail"
+
+#: smtp-mailer.php:56
 msgid "From Name"
 msgstr "Nom de l’envoyeur"
 
-#: smtp-mailer.php:59
+#: smtp-mailer.php:57
+msgid "Your emails will be sent with this name"
+msgstr "Les emails partiront avec ce nom"
+
+#: smtp-mailer.php:71
 msgid "Please fill the email field"
 msgstr "Veuillez saisir un email"
 
-#: smtp-mailer.php:63
+#: smtp-mailer.php:75
 msgid "Please fill a correct email field"
 msgstr "Veuillez saisir un email valide"
 
-#: smtp-mailer.php:75
+#: smtp-mailer.php:87
 msgid "Mail Control, test email"
 msgstr "Test d’envoi d’email Mail Control"
 
-#: smtp-mailer.php:76
+#: smtp-mailer.php:88
 #, php-format
 msgid "This is a test email sent mail control in by %s"
 msgstr "Ceci est un email de test envoyé par Mail Control sur le site %s"
 
-#: smtp-mailer.php:90
+#: smtp-mailer.php:105
+msgid "You have to setup From Email field"
+msgstr "Vous devez saisir un email"
+
+#: smtp-mailer.php:115
+msgid "There seems to be more tham one spf record!!"
+msgstr "Il semble qu’il y ait plus qu’une entrée SPF"
+
+#: smtp-mailer.php:137
 msgid "Test your setup"
 msgstr "Tester votre configuration"
 
-#: smtp-mailer.php:97
+#: smtp-mailer.php:143
 msgid "Send a test email"
 msgstr "Envoyer un email de test"
+
+#: smtp-mailer.php:154
+msgid "Test Your domain"
+msgstr "Testez votre domaine"
+
+#~ msgid "Smtp Secure"
+#~ msgstr "SMTP sécurisé"
 
 #~ msgid "Add tracking to email content"
 #~ msgstr "Activer le suivi d’ouvertures et clics"

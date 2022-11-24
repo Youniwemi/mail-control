@@ -1,16 +1,16 @@
 === Mail Control ===
 Contributors: rahal.aboulfeth
-Tags: email tracking, email stmp, email logging, mail tracking, email tracker, background email, marketing email 
+Tags: email tracking, email stmp, email logging, mail tracking, email tracker, marketing email, background email
 Requires at least: 5.0
 Tested up to: 6.1
 Requires PHP: 7.4
 License: GPL
-Stable tag: 0.2
+Stable tag: 0.2.1
 
-Have control over emails sent in your website, send using smtp, log and track emails clicks and opening, and allow sending the emails in the background to speed up responses.
+Have control over your emails, log and track emails clicks and opening, send using smtp, and allow sending the emails in the background to speed up responses.
 
 == Description ==
-Have control over emails sent in your website, send using smtp, log and track emails clicks and opening, and allow sending the emails in the background to speed up responses.
+Have control over your emails, log and track emails clicks and opening, send using smtp, and allow sending the emails in the background to speed up responses.
 
 With Mail Control, you will be able to have a better control over how your emails are handled by wordpress
 
@@ -36,9 +36,10 @@ What if you notice that a visitor reads you email multiple times? isn't it a goo
 
 If you get stuck, you can ask for help in the [Mail Control Plugin Forum](https://wordpress.org/support/plugin/mail-control).
 
-= Will Mail Control work with my theme and other plugins ? =
+= Will Mail Control work with my theme and other plugins like Woocommerce or Contact form 7 ? =
 
-Probably, as long as your theme or plugin doesn't override the wp_mail function. Mail Control should work just fine
+Probably, as long as your theme or plugin doesn't override the wp_mail function. Mail Control should work just fine.
+As tested now, mail control is compatible with contact form 7 and woocommerce
 
 == Installation ==
 1. Upload the plugin to your plugins folder: 'wp-content/plugins/'
@@ -51,6 +52,10 @@ Probably, as long as your theme or plugin doesn't override the wp_mail function.
 3. Configure Smtp Mailer
 
 == Changelog ==
+= 0.2.1 =
+* Added Domain Path to plugin file comment
+* Added field descriptions to SMTP Mailer Settings section
+* Reviewd French translation
 = 0.2 =
 * Added the possibility to send a Test Email in the SMTP Mailer Section
 
