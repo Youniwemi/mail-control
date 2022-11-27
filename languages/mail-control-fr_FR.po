@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mail-control\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-24 00:29+0100\n"
+"POT-Creation-Date: 2022-11-26 01:38+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rahal <rahal.aboulfeth@gmail.com>\n"
 "Language-Team: \n"
@@ -190,6 +190,120 @@ msgstr ""
 msgid "Mail Control Settings"
 msgstr "Paramètrages Mail Control"
 
+#: settings.php:35
+#, php-format
+msgid "Please insert a valid %s"
+msgstr ""
+
+#: smtp-checks.php:55
+#, php-format
+msgid "The smtp server %s doesn't seem to be a valid domain name or IP adress"
+msgstr ""
+
+#: smtp-checks.php:63
+#, php-format
+msgid ""
+"There is no SPF record for you domain %s, some mail providers won't allow "
+"emails without spf records, you should add an spf record to you DNS"
+msgstr ""
+
+#: smtp-checks.php:66
+#, php-format
+msgid "We suggest you add this line : %s"
+msgstr ""
+
+#: smtp-checks.php:67
+#, php-format
+msgid ""
+"This line will tell receiving mail servers to allow emails coming from your "
+"MX servers as well as your smtp host %s"
+msgstr ""
+
+#: smtp-checks.php:71
+msgid "There seems to be more than one spf record!!"
+msgstr "Il semble qu’il y ait plus qu’une entrée SPF"
+
+#: smtp-checks.php:72
+msgid "This can cause your emails to get blocked, you should merge them"
+msgstr ""
+
+#: smtp-checks.php:79 smtp-checks.php:88
+#, php-format
+msgid "Your SPF record : %s"
+msgstr ""
+
+#: smtp-checks.php:83
+#, php-format
+msgid ""
+"Good! Your SMTP host %s seems to be allowed to send emails for your domain %s"
+msgstr ""
+
+#: smtp-checks.php:89
+#, php-format
+msgid ""
+"Aie Aie! Your SMTP host %s doesn't seem to be allowed to send emails for "
+"your domain %s"
+msgstr ""
+
+#: smtp-checks.php:90
+#, php-format
+msgid "Make sure you add \"%s\" after v=spf1 to your record"
+msgstr ""
+
+#: smtp-checks.php:96
+#, php-format
+msgid ""
+"Please keep in mind that this feature is experimental, you can find more "
+"information on SPF here %s, and use this wizard here %s to compose your "
+"record"
+msgstr ""
+
+#: smtp-checks.php:131
+#, php-format
+msgid ""
+"There is no DKIM record for you domain %s, email providers won't be able to "
+"authenticate your emails"
+msgstr ""
+
+#: smtp-checks.php:134
+#, fuzzy
+#| msgid "There seems to be more tham one spf record!!"
+msgid "There seems to be more tham one dkim record for "
+msgstr "Il semble qu’il y ait plus qu’une entrée SPF"
+
+#: smtp-checks.php:135 smtp-checks.php:176
+msgid ""
+"This can cause your emails to get blocked, you should remove the incorrect "
+"one :"
+msgstr ""
+
+#: smtp-checks.php:142
+#, php-format
+msgid "Your DKIM record : %s"
+msgstr ""
+
+#: smtp-checks.php:143 smtp-checks.php:184
+msgid ""
+"Please be aware that we only tested the presence of the record, not that its "
+"content is correct"
+msgstr ""
+
+#: smtp-checks.php:172
+#, php-format
+msgid "There is no DMARK record for you domain %s"
+msgstr ""
+
+#: smtp-checks.php:175
+#, fuzzy
+#| msgid "There seems to be more tham one spf record!!"
+msgid "There seems to be more tham one DMARK record for "
+msgstr "Il semble qu’il y ait plus qu’une entrée SPF"
+
+#: smtp-checks.php:183
+#, php-format
+msgid "Your DMARK record : %s"
+msgstr ""
+
 #: smtp-mailer.php:10
 msgid "SMTP Mailer"
 msgstr "Envoi par SMTP"
@@ -202,89 +316,156 @@ msgstr "Nom de l’hote SMTP"
 msgid "Your smtp mail server hostname (or IP)"
 msgstr "Nom de domaine de votre serveur SMTP ( Ou IP )"
 
-#: smtp-mailer.php:21
+#: smtp-mailer.php:18
+msgid "Please insert a valid hostname or IP"
+msgstr ""
+
+#: smtp-mailer.php:23
 msgid "Smtp PORT"
 msgstr "Numéro de port SMTP"
 
-#: smtp-mailer.php:22
+#: smtp-mailer.php:24
 msgid "You smtp mail server PORT"
 msgstr "Numéro de port de votre serveur SMTP"
 
-#: smtp-mailer.php:32
+#: smtp-mailer.php:34
 msgid "Smtp Encryption"
 msgstr "Cryptage SMTP"
 
-#: smtp-mailer.php:33
+#: smtp-mailer.php:35
 msgid "What type of encryption your server is using"
 msgstr "Quel type de cryptage votre serveur utilise"
 
-#: smtp-mailer.php:38
+#: smtp-mailer.php:40
 msgid "Smtp User"
 msgstr "Nom d’utilisateur SMTP"
 
-#: smtp-mailer.php:39
+#: smtp-mailer.php:41
 msgid "You smtp account's username"
 msgstr "Le nom de votre utilisateur SMTP"
 
-#: smtp-mailer.php:44
+#: smtp-mailer.php:46
 msgid "Smtp Password"
 msgstr "Mot de passe du compte SMTP"
 
-#: smtp-mailer.php:45
+#: smtp-mailer.php:47
 msgid "You smtp account's password"
 msgstr "Le mot de passe de votre compte SMTP"
 
-#: smtp-mailer.php:50
+#: smtp-mailer.php:52
 msgid "From Email"
 msgstr "Emails envoyés avec l’adresse"
 
-#: smtp-mailer.php:51
+#: smtp-mailer.php:53
 msgid "Your emails will be sent from this email adress"
 msgstr "Les emails partiront de cette adresse mail"
 
-#: smtp-mailer.php:56
+#: smtp-mailer.php:58
 msgid "From Name"
 msgstr "Nom de l’envoyeur"
 
-#: smtp-mailer.php:57
+#: smtp-mailer.php:59
 msgid "Your emails will be sent with this name"
 msgstr "Les emails partiront avec ce nom"
 
-#: smtp-mailer.php:71
+#: smtp-mailer.php:83
 msgid "Please fill the email field"
 msgstr "Veuillez saisir un email"
 
-#: smtp-mailer.php:75
+#: smtp-mailer.php:87
 msgid "Please fill a correct email field"
 msgstr "Veuillez saisir un email valide"
 
-#: smtp-mailer.php:87
+#: smtp-mailer.php:94
 msgid "Mail Control, test email"
 msgstr "Test d’envoi d’email Mail Control"
 
-#: smtp-mailer.php:88
+#: smtp-mailer.php:95
 #, php-format
 msgid "This is a test email sent mail control in by %s"
 msgstr "Ceci est un email de test envoyé par Mail Control sur le site %s"
 
-#: smtp-mailer.php:105
-msgid "You have to setup From Email field"
-msgstr "Vous devez saisir un email"
+#: smtp-mailer.php:109
+msgid "You have to setup From Email field to run this test"
+msgstr "Vous devez saisir un email d’envoyeur pour lancer ce test"
 
-#: smtp-mailer.php:115
-msgid "There seems to be more tham one spf record!!"
-msgstr "Il semble qu’il y ait plus qu’une entrée SPF"
+#: smtp-mailer.php:113
+msgid "You have to setup the smtp host to run this test"
+msgstr ""
 
-#: smtp-mailer.php:137
+#: smtp-mailer.php:119
+msgid "SPF record verification"
+msgstr ""
+
+#: smtp-mailer.php:120
+#, php-format
+msgid ""
+"The main idea behind the SPF concept is to make sure all applications that "
+"send emails for your domain %s are included in your SPF record (their domain "
+"name or IP to be precise)."
+msgstr ""
+
+#: smtp-mailer.php:125
+msgid "DKIM record verification"
+msgstr ""
+
+#: smtp-mailer.php:126
+msgid ""
+"DKIM - DomainKeys Identified Mail, is an authentication method that allows "
+"the receiver to check that an email claimed to have come from a specific "
+"domain was indeed authorized by the owner of that domain"
+msgstr ""
+
+#: smtp-mailer.php:135
+msgid ""
+"You did not provide a dkim selector so we could not test your dkim record"
+msgstr ""
+
+#: smtp-mailer.php:139
+msgid "DMARC record verification"
+msgstr ""
+
+#: smtp-mailer.php:140
+msgid ""
+"Domain-based Message Authentication, Reporting and Conformance (DMARC) is an "
+"email authentication protocol. It gives email domain owners the ability to "
+"protect their domain from unauthorized use"
+msgstr ""
+
+#: smtp-mailer.php:145
+msgid "Bravo! Our checks are succesful, still, make sure to send a test email"
+msgstr ""
+
+#: smtp-mailer.php:147
+#, php-format
+msgid ""
+"Don't hesitate to request us for some assistance helping you setting your "
+"domains, feel to <a href=\"%s\" >contact us</a>"
+msgstr ""
+
+#: smtp-mailer.php:151
+#, php-format
+msgid ""
+"For a more complete test, we suggest you go to %s. After clicking on \"Next "
+"Step\", you will be asked to send an email to a temporary address test-"
+"XXXXXXX@appmaildev.com. There, you can your use our \"send a test email\" "
+"feature to send your email"
+msgstr ""
+
+#: smtp-mailer.php:164
 msgid "Test your setup"
 msgstr "Tester votre configuration"
 
-#: smtp-mailer.php:143
+#: smtp-mailer.php:170
 msgid "Send a test email"
 msgstr "Envoyer un email de test"
 
-#: smtp-mailer.php:154
-msgid "Test Your domain"
+#: smtp-mailer.php:180
+msgid "Test your SPF, DKIM, and domain DMARK setup (experimental):"
+msgstr ""
+
+#: smtp-mailer.php:182
+msgid "Test your domain"
 msgstr "Testez votre domaine"
 
 #~ msgid "Smtp Secure"

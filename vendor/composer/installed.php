@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '395a71ea5b8b92071e0875dcdd81b50ba737249a',
+        'reference' => 'c06e06db4dc68ca83008ed9e584162fba4d70a7c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '395a71ea5b8b92071e0875dcdd81b50ba737249a',
+            'reference' => 'c06e06db4dc68ca83008ed9e584162fba4d70a7c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'ahmadawais/wp-oop-settings-api' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '110e2cc2eb667cde9bfb4d9cdd06b83f51a65727',
+            'reference' => 'cdd7d110179980be1f19d16848fe520c7be3b03e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../ahmadawais/wp-oop-settings-api',
             'aliases' => array(

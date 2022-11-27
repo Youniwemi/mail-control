@@ -91,9 +91,14 @@ if (! class_exists('WP_OSA')) :
                                 'id'      => $field['id'],
                                 'type'    => $field['type'],
                                 'name'    => $field['title'],
+                                'label_for' => isset($field['label_for']) ? $field['label_for'] : null,
                                 'desc'    => isset($field['description']) ? $field['description'] : null,
                                 'default' => isset($field['default']) ? $field['default'] : null,
+                                'size' => isset($field['size']) ? $field['size'] : null,
                                 'options' => isset($field['options']) ? $field['options'] : null,
+                                'placeholder' => isset($field['placeholder']) ? $field['placeholder'] : null,
+                                'sanitize_callback' => isset($field['sanitize_callback']) ? $field['sanitize_callback'] : null,
+                                'sanitization_error_message' => isset($field['sanitization_error_message']) ? $field['sanitization_error_message'] : null,
                             ]
                         );
                     }
@@ -343,6 +348,9 @@ if (! class_exists('WP_OSA')) :
                     // Sanitize Callback.
                     $sanitize_callback = isset($field['sanitize_callback']) ? $field['sanitize_callback'] : '';
 
+                    // Sanitization error message.
+                    $sanitization_error_message = isset($field['sanitization_error_message']) ? $field['sanitization_error_message'] : null;
+
                     $args = array(
                         'id'                => $id,
                         'type'              => $type,
@@ -355,6 +363,7 @@ if (! class_exists('WP_OSA')) :
                         'std'               => $default,
                         'placeholder'       => $placeholder,
                         'sanitize_callback' => $sanitize_callback,
+                        'sanitization_error_message' => $sanitization_error_message,
                     );
 
                     /**
@@ -408,8 +417,9 @@ if (! class_exists('WP_OSA')) :
          */
         public function sanitize_fields($fields, $section_id)
         {
+            $old_values = get_option($section_id, []);
             foreach ($fields as $field_slug => $field_value) {
-                if ($field_config = $this->get_field_config($section_id, $field_slug)) {
+                if (!empty($field_value) && $field_config = $this->get_field_config($section_id, $field_slug)) {
                     // Use sanitizer from field config, if not provided, use internal sanitization
                     $sanitize_callback = isset($field_config['sanitize_callback']) && is_callable($field_config['sanitize_callback']) ?
                         $field_config['sanitize_callback'] :
@@ -417,8 +427,22 @@ if (! class_exists('WP_OSA')) :
                             return $this->sanitize_field($field_value, $field_config);
                         };
                     if ($sanitize_callback) {
-                        $fields[ $field_slug ] = call_user_func($sanitize_callback, $field_value);
-                        continue;
+                        $sanitized = call_user_func($sanitize_callback, $field_value);
+                        if (empty($sanitized)) {
+                            add_settings_error(
+                                $section_id,
+                                $section_id.'['.$field_slug.']', // so we can easily access the field ( see script method sanitization errors )
+                                (isset($field_config['sanitization_error_message']) ?
+                                $field_config['sanitization_error_message'] :
+                                __('Please insert a valid ').$field_config['type']),
+                                'error', // error or notice works to make things pretty
+                            );
+                            if(isset($old_values[$field_slug])) {
+                                // Get old value
+                                $sanitized = $old_values[$field_slug];
+                            }
+                        }
+                        $fields[ $field_slug ] = $sanitized ;
                     }
                 }
             }
@@ -866,6 +890,7 @@ if (! class_exists('WP_OSA')) :
                         <form method="post" action="options.php">
                             <?php
                             do_action('wsa_form_top_' . $form['id'], $form);
+                    settings_errors($form['id']);
                     settings_fields($form['id']);
                     do_settings_sections($form['id']);
                     do_action('wsa_form_bottom_' . $form['id'], $form);
@@ -988,6 +1013,19 @@ if (! class_exists('WP_OSA')) :
                             .attr( 'src', self.val() );
                     })
                     .change();
+
+                // Sanitization errors
+                $('div.settings-error').each(function(){
+                	var field_id = $(this).attr('id')
+                		.replace('setting-error-', '')
+                		.replace('[', "\\[")
+                		.replace(']', "\\]")
+                	var $field = $("[name="+field_id+"]");
+                	$field.addClass('sanitization-error');
+                	$field.one('change',function(){
+                		$field.removeClass('sanitization-error');
+                	});
+                });
             });
 
             </script>
@@ -1018,6 +1056,12 @@ if (! class_exists('WP_OSA')) :
                 }
                 .group .form-table input.color-picker {
                     max-width: 100px;
+                }
+                /* Pretty much like :focus with red ( like notice-error )*/
+                .form-table input.sanitization-error, .form-table select.sanitization-error {
+                	border-color: #d63638;
+                	box-shadow: 0 0 0 1px #d63638;
+					outline: 2px solid transparent;
                 }
             </style>
             <?php

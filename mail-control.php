@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Mail Control
  * Plugin URI: https://www.wpmailcontrol.com
- * Version: 0.2.1
+ * Version: 0.2.2
  * Author: Instareza
  * Author URI: https://www.instareza.com
  * Description: Have control over emails sent in your website, send using smtp, log and track emails clicks and opening, and allow sendind the emails in the background to speed up responses
@@ -10,7 +10,7 @@
  * Text Domain: mail-control
  * Domain Path: /languages
  * Requires PHP: 7.4
- * Stable tag: 0.2.1
+ * Stable tag: 0.2.2
  *
   * @package Mail_Control
  */

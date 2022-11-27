@@ -6,10 +6,10 @@
             "version_normalized": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/Users/rahal/WORKSPACE/Bloggomania/WP-OOP-Settings-API",
-                "reference": "110e2cc2eb667cde9bfb4d9cdd06b83f51a65727"
+                "url": "https://github.com/Youniwemi/WP-OOP-Settings-API",
+                "reference": "cdd7d110179980be1f19d16848fe520c7be3b03e"
             },
-            "time": "2022-11-17T15:17:46+00:00",
+            "time": "2022-11-25T22:06:43+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "source",

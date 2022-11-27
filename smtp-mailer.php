@@ -9,10 +9,12 @@ add_filter( 'mail_control_settings', function ( $settings ) {
         'title'  => __( 'SMTP Mailer', 'mail-control' ),
         'fields' => [
         [
-        'id'          => 'HOST',
-        'type'        => 'text',
-        'title'       => __( 'Smtp Host', 'mail-control' ),
-        'description' => __( 'Your smtp mail server hostname (or IP)', 'mail-control' ),
+        'id'                         => 'HOST',
+        'type'                       => 'text',
+        'title'                      => __( 'Smtp Host', 'mail-control' ),
+        'description'                => __( 'Your smtp mail server hostname (or IP)', 'mail-control' ),
+        'sanitize_callback'          => 'Mail_Control\\sanitize_smtp_host',
+        'sanitization_error_message' => __( 'Please insert a valid hostname or IP', 'mail-control' ),
     ],
         [
         'id'          => 'PORT',
@@ -61,34 +63,74 @@ add_filter( 'mail_control_settings', function ( $settings ) {
 } );
 
 if ( is_admin() ) {
+    include __DIR__ . '/smtp-checks.php';
+    function send_json_result( $result, $success = true )
+    {
+        wp_die( json_encode( [
+            'success' => $success,
+            'result'  => $result,
+        ] ) );
+    }
+    
     /**
      * Ajax sent a test email
      */
     add_action( 'wp_ajax_send_test_email', function () {
         check_ajax_referer( 'secure-nonce', 'test_email_once' );
         if ( empty($_POST["SMTP_MAILER_TEST_EMAIL"]) ) {
-            wp_die( __( "Please fill the email field", 'mail-control' ) );
+            send_json_result( __( "Please fill the email field", 'mail-control' ), false );
         }
         $email = sanitize_email( $_POST["SMTP_MAILER_TEST_EMAIL"] );
         if ( empty($email) ) {
-            wp_die( __( "Please fill a correct email field", 'mail-control' ) );
+            send_json_result( __( "Please fill a correct email field", 'mail-control' ), false );
         }
-        // disable backgroud sending
-        add_filter( 'mc_disable_email_queue', '__return_true' );
-        // Init phpmailer SMTPDEBUG
-        add_action( 'phpmailer_init', function ( $phpmailer ) {
-            $phpmailer->SMTPDebug = true;
-        }, 11 );
-        $result = wp_mail(
+        init_test_email_mode();
+        $sent = wp_mail(
             $email,
             __( 'Mail Control, test email', 'mail-control' ),
             sprintf( __( "This is a test email sent mail control in by %s", 'mail-control' ), get_home_url() ),
             [ "X-Source: Mail Control", "X-Campaign: Send Test Email" ]
         );
-        wp_die( json_encode( [
-            'success' => $result,
-            'result'  => ob_get_clean(),
-        ] ) );
+        send_json_result( ob_get_clean(), $sent );
+    } );
+    /**
+     * Ajax test a domain
+     */
+    add_action( 'wp_ajax_test_domain', function () {
+        check_ajax_referer( 'secure-nonce', 'test_domain_once' );
+        $email = sanitize_email( SMTP_MAILER_FROM_EMAIL );
+        if ( !$email ) {
+            send_json_result( __( "You have to setup From Email field to run this test", 'mail-control' ), false );
+        }
+        $host = SMTP_MAILER_HOST;
+        if ( !$host ) {
+            send_json_result( __( "You have to setup the smtp host to run this test", 'mail-control' ), false );
+        }
+        // SPF
+        $domain = explode( '@', $email )[1];
+        $report = [];
+        [ $spf_ok, $report ] = test_spf_record( $domain, $host, $report );
+        // DKIM
+        if ( !empty($_POST["SMTP_MAILER_TEST_DKIM"]) ) {
+            $selector = sanitize_text_field( $_POST["SMTP_MAILER_TEST_DKIM"] );
+        }
+        $dkim_host = ( isset( $selector ) ? $selector . '._domainkey.' . $domain : '' );
+        [ $dkim_ok, $report ] = test_dkim_record( $dkim_host, $report );
+        // DMARC
+        [ $dmarc_ok, $report ] = test_dmarc_record( $domain, $report );
+        $config_ok = $spf_ok && $dkim_ok && $dmarc_ok;
+        
+        if ( $config_ok ) {
+            $report[] = '<p class="notice notice-success">' . __( 'Bravo! Our checks are succesful, still, make sure to send a test email', 'mail-control' ) . '<br/>';
+        } else {
+            $report[] = '<p class="notice notice-info">' . sprintf( __( 'Don\'t hesitate to request us for some assistance helping you setting your domains, feel to <a href="%s" >contact us</a>', 'mail-control' ), mc_fs()->contact_url() ) . '<br/>';
+        }
+        
+        $locale = substr( get_locale(), 0, 2 );
+        $app_mail_dev = "https://www.appmaildev.com/{$locale}/dkim";
+        $report[] = sprintf( __( 'For a more complete test, we suggest you go to %s. After clicking on "Next Step", you will be asked to send an email to a temporary address test-XXXXXXX@appmaildev.com. There, you can your use our "send a test email" feature to send your email', 'mail-control' ), "<a href='{$app_mail_dev} ' target='_blank'>{$app_mail_dev} </a>" ) . '<br/>';
+        $report[] = '</p>';
+        send_json_result( implode( '', $report ), $config_ok );
     } );
     /**
      * Test email form
@@ -100,7 +142,7 @@ if ( is_admin() ) {
     <h2><?php 
         echo  esc_html__( 'Test your setup', 'mail-control' ) ;
         ?></h2>
-    <form class="test_smtp" method='post' action="<?php 
+    <form class="test_smtp"  data-result="email_test" method='post' action="<?php 
         echo  $admin ;
         ?>">
 	    <input type="hidden"  name="test_email_once" value="<?php 
@@ -108,7 +150,7 @@ if ( is_admin() ) {
         ?>" />
 	    <input type="hidden"  name="action" value="send_test_email" />
 	    <div style="padding-left: 10px">
-	 	<input type="email" required class="regular-text" id="SMTP_MAILER_TEST_EMAIL" name="SMTP_MAILER_TEST_EMAIL" value="" placeholder="yourtestemail@domain.com" />
+	 	<input type="email" required class="medium-text" id="SMTP_MAILER_TEST_EMAIL" name="SMTP_MAILER_TEST_EMAIL" value="" placeholder="yourtestemail@domain.com" />
 	 		<?php 
         submit_button(
             __( 'Send a test email', 'mail-control' ),
@@ -117,32 +159,63 @@ if ( is_admin() ) {
             false
         );
         ?>
-	 	    <div class="test_result"></div>
+	 	    <div id="email_test" class="test_result"></div>
 	 	</div>
 	</form>
-	<?php 
+
+	<h2><?php 
+        _e( 'Test your SPF, DKIM, and domain DMARC setup (experimental):', 'mail-control' );
+        ?> </h2>
+	<form class="test_smtp" data-result="dns_test" method='post' action="<?php 
+        echo  $admin ;
+        ?>">
+	    <input type="hidden"  name="test_domain_once" value="<?php 
+        echo  $nonce ;
+        ?>" />
+	    <input type="hidden"  name="action" value="test_domain" />
+	    <div style="padding-left: 10px;margin-top:1em;">
+	    	
+			<input type="text" class="medium-text" id="SMTP_MAILER_TEST_DKIM" name="SMTP_MAILER_TEST_DKIM" value="" placeholder="<?php 
+        esc_attr_e( 'DKIM Selector', 'mail-control' );
+        ?>" />
+	    	<?php 
+        submit_button(
+            __( 'Test your domain', 'mail-control' ),
+            'primary',
+            'test_domain',
+            false
+        );
         ?>
+		    <div id="dns_test" class="test_result" ></div>
+		</div>
+	</form>
 	<script>
 		jQuery(document).ready( function($) {
 			$( 'form.test_smtp' ).submit( function(e) {
-				e.preventDefault();
 				$me = $(this);
+				var result = $me.data('result');
+				var $result = $('#'+result).html('').removeClass();
 				$.ajax({
-					url : $(this).attr('action'), // Here goes our WordPress AJAX endpoint.
+					url : $me.attr('action'),
 					type : 'post',
 					dataType: "json",
 					data : $me.serializeArray(),
-					success : function( response ) {
-						$('div.test_result' , $me).html(response.result).addClass('notice').addClass( response.success ? 'notice-success' : 'notice-error' );
+					success : function( response ) {						
+						$result.html(response.result).
+						addClass('notice').
+						addClass( response.success ? 'notice-success' : 'notice-error' );
 					},
 					fail : function( err ) {
-						$('div.test_result', $me) .html(err).addClass('notice notice-error');
+						$result.html(err).addClass('notice notice-error');
 					}
 				});
 				return false;
 			});
 		});
 	</script>
+	<style>
+	form .notice { word-break: break-all; }
+	</style>
 	<?php 
     } );
 }

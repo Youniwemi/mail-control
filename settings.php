@@ -18,6 +18,7 @@ class Settings extends \WP_OSA
     
     public function plugin_page()
     {
+        add_thickbox();
         if ( isset( $_GET['welcome-message'] ) && $_GET['welcome-message'] == 'true' ) {
             echo  '<div class="notice notice-success is-dismissible"><p>' . sprintf( __( 'Welcone to Mail Contol, your one stop plugin to take control over your wordpress emails, feel to <a href="%s" >contact us</a> if you have any question.', 'mail-control' ), mc_fs()->contact_url() ) . '</p></div>' ;
         }
@@ -26,6 +27,11 @@ class Settings extends \WP_OSA
         $this->show_navigation();
         $this->show_forms();
         echo  '</div>' ;
+    }
+    
+    public function default_sanitization_error_message( $field_config )
+    {
+        return sprintf( __( 'Please insert a valid %s', 'mail-control' ), $field_config['type'] );
     }
 
 }
