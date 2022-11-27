@@ -1,17 +1,17 @@
 === Mail Control ===
 Contributors: rahal.aboulfeth
-Tags: email tracking, email stmp, email delivrability, email background, email tracker
+Tags: email tracking, email stmp, email deliverability, email background, email tracker
 Requires at least: 5.0
 Tested up to: 6.1
 Requires PHP: 7.4
 License: GPL
-Stable tag: 0.2.2
+Stable tag: 0.2.3
 
-Control your SMTP email delivrability, track your emails clicks and openings, and allow sending the emails as a background process to speed up your pages.
+Control your SMTP email deliverability, track your emails clicks and openings, and allow sending the emails as a background process to speed up your pages.
 
 == Description ==
 
-Control your SMTP email delivrability, track your emails clicks and openings, and allow sending the emails as a background process to speed up your pages.
+Control your SMTP email deliverability, track your emails clicks and openings, and allow sending the emails as a background process to speed up your pages.
 
 With Mail Control, you will be able to have a better control over how your emails are handled by wordpress
 
@@ -20,7 +20,7 @@ This will allow you to optimize how you craft your emails content and get the be
 === Sending Emails via an SMTP server ===
 Need a better deliverability for your emails? use a reputable SMTP server is the way to go.
 === Testing Email Delivrability of your SMTP server ===
-Help you make sure your smtp servers checks all the requierements for the perfect delivrability by testing your SFP, DKIM and DMARC setup (and more on this to come).
+Help you make sure your smtp servers checks all the requierements for the perfect deliverability by testing your SFP, DKIM and DMARC setup (and more on this to come).
 === Sending the emails by a background process to speed up your pages ==
 No more page timeout because the smtp server take too much time to respond, let a cronjob take care of sending your emails in a separate process.
 === Having a log of all the emails sent (and failed) by wordpress ===
@@ -36,7 +36,7 @@ What if you notice that a visitor reads you email multiple times? isn't it a goo
 
 Email Tracking will help you detect problems and opportunities so you can take action, it is an invaluable tool for the great marketer.
 
-= How Mail Control will help me solve my email delivrability problems? =
+= How Mail Control will help me solve my email deliverability problems? =
 
 With this plugin, you will be able to test your domain name's SPF, DKIM and DMARC records and have actionable suggestions to fix any detected issue.
 
@@ -63,7 +63,9 @@ If you get stuck, you can ask for help in the [Mail Control Plugin Forum](https:
 4. Test your smtp confirugation, "Send a test email" and "Test your SPF, DKIM, and domain DMARC setup"
 
 == Changelog ==
-= 0.2.2 : Email Delivrability testing  =
+= 0.2.3 =
+* Fix notice undefined variables and typo in readme file
+= 0.2.2 : Email Delivreability testing  =
 * SMTP Mailer : Added SPF, DKIM and DMARC Tester (experimental feature)
 * Settings page : Better sanitization, and showing validation error
 = 0.2.1 =

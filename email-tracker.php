@@ -127,13 +127,8 @@ function track_link( string $url, string $tracking )
 function track_email( PHPMailer $phpmailer, string $tracker_url )
 {
     // track clicks
-    $content = preg_replace_callback( '/<a(.*?)href="(.*?)"/', function ( $matches ) use( $tracker_url, $campaign, $source ) {
-        return '<a' . $matches[1] . 'href="' . track_link(
-            $matches[2],
-            $tracker_url,
-            $campaign,
-            $source
-        ) . '"';
+    $content = preg_replace_callback( '/<a(.*?)href="(.*?)"/', function ( $matches ) use( $tracker_url ) {
+        return '<a' . $matches[1] . 'href="' . track_link( $matches[2], $tracker_url ) . '"';
     }, $phpmailer->Body );
     // track read
     $content .= "<img src='{$tracker_url}' alt='pixel' />";
