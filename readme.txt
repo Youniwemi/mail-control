@@ -1,11 +1,11 @@
 === Mail Control ===
 Contributors: rahal.aboulfeth
-Tags: email tracking, email stmp, email deliverability, email background, email tracker
+Tags: email tracking, email, smtp, tracking, email deliverability, email background, mail tracker, email log, email marketing
 Requires at least: 5.0
 Tested up to: 6.1
 Requires PHP: 7.4
 License: GPL
-Stable tag: 0.2.3
+Stable tag: 0.2.4
 
 Control your SMTP email deliverability, track your emails clicks and openings, and allow sending the emails as a background process to speed up your pages.
 
@@ -15,7 +15,7 @@ Control your SMTP email deliverability, track your emails clicks and openings, a
 
 With Mail Control, you will be able to have a better control over how your emails are handled by wordpress
 
-=== Tracking emails openning and clicks ===
+=== Tracking emails opening and clicks ===
 This will allow you to optimize how you craft your emails content and get the better of your email marketing.
 === Sending Emails via an SMTP server ===
 Need a better deliverability for your emails? use a reputable SMTP server is the way to go.
@@ -63,6 +63,9 @@ If you get stuck, you can ask for help in the [Mail Control Plugin Forum](https:
 4. Test your smtp confirugation, "Send a test email" and "Test your SPF, DKIM, and domain DMARC setup"
 
 == Changelog ==
+= 0.2.4 =
+* Added Show details button in the log view to display the emails content, headers, errors as well as events details ( opens and clicks )
+* Emails logs and Mail Control settings can be accessed with "manage_options" permission
 = 0.2.3 =
 * Fix notice undefined variables and typo in readme file
 = 0.2.2 : Email Delivreability testing  =

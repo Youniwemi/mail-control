@@ -10,7 +10,7 @@ class Settings extends \WP_OSA
             'mail-control',
             'Settings',
             'Settings',
-            'manage_options',
+            MC_MANAGER_PERMISSION,
             'mail-control-settings',
             array( $this, 'plugin_page' )
         );
@@ -18,7 +18,6 @@ class Settings extends \WP_OSA
     
     public function plugin_page()
     {
-        add_thickbox();
         if ( isset( $_GET['welcome-message'] ) && $_GET['welcome-message'] == 'true' ) {
             echo  '<div class="notice notice-success is-dismissible"><p>' . sprintf( __( 'Welcone to Mail Contol, your one stop plugin to take control over your wordpress emails, feel to <a href="%s" >contact us</a> if you have any question.', 'mail-control' ), mc_fs()->contact_url() ) . '</p></div>' ;
         }

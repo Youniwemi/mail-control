@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Mail Control
  * Plugin URI: https://www.wpmailcontrol.com
- * Version: 0.2.3
+ * Version: 0.2.4
  * Author: Instareza
  * Author URI: https://www.instareza.com
  * Description: Have control over emails sent in your website, send using smtp, log and track emails clicks and opening, and allow sendind the emails in the background to speed up responses
@@ -10,7 +10,7 @@
  * Text Domain: mail-control
  * Domain Path: /languages
  * Requires PHP: 7.4
- * Stable tag: 0.2.3
+ * Stable tag: 0.2.4
  *
   * @package Mail_Control
  */
@@ -23,6 +23,7 @@ require __DIR__ . '/init_freemius.php';
 define('MC_EMAIL_TABLE', 'email');
 define('MC_EVENT_TABLE', 'email_event');
 define('MC_TRACK_URL', '/trackmail/');
+define('MC_MANAGER_PERMISSION', 'manage_options');
 
 require __DIR__ . '/vendor/autoload.php';
 

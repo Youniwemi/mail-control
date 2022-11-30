@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mail-control\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-26 01:38+0100\n"
+"POT-Creation-Date: 2022-11-30 00:12+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rahal <rahal.aboulfeth@gmail.com>\n"
 "Language-Team: \n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: ..\n"
-"X-Poedit-KeywordsList: __;_e;esc_attr_e;esc_attr__;esc_html__\n"
+"X-Poedit-KeywordsList: __;_e;esc_attr_e;esc_attr__;esc_html__;esc_html_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
@@ -21,6 +21,60 @@ msgstr ""
 #: admin.php:9
 msgid "Mail Control"
 msgstr "Mail Control"
+
+#: admin.php:90
+#, fuzzy
+#| msgid "Mail Control"
+msgid "Email Content"
+msgstr "Mail Control"
+
+#: admin.php:92 admin.php:115
+msgid "Headers"
+msgstr "Entetes"
+
+#: admin.php:94 admin.php:123
+msgid "Events"
+msgstr "Évènements"
+
+#: admin.php:98
+msgid "HTML version"
+msgstr "Version HTML"
+
+#: admin.php:111
+msgid "Plain Text version"
+msgstr "Version Texte"
+
+#: admin.php:132 emails-table.php:132
+msgid "Date"
+msgstr "Date"
+
+#: admin.php:133
+msgid "Event"
+msgstr "Évènement"
+
+#: admin.php:134
+msgid "URL"
+msgstr "URL"
+
+#: admin.php:135
+msgid "IP"
+msgstr "IP"
+
+#: admin.php:136
+msgid "User Agent"
+msgstr "Navigateur"
+
+#: admin.php:143
+msgid "Open"
+msgstr "Ouverture"
+
+#: admin.php:143
+msgid "Click"
+msgstr "Clic"
+
+#: admin.php:152
+msgid "Sorry, no events so far"
+msgstr "Désolé, aucun événement pour le moment"
 
 #: background-mailer.php:28
 msgid "Background Mailer"
@@ -67,7 +121,7 @@ msgstr ""
 "par ce plugin pour preparer ces entetes avant utilisation avant l’appel de "
 "wp_mail ,"
 
-#: email-tracker__premium_only.php:11
+#: email-tracker__premium_only.php:12
 msgid ""
 "If you are using Contact Form 7, you can setup those headers as Additionnal "
 "headers in Mail Panel, we suggest :\n"
@@ -75,17 +129,17 @@ msgid ""
 "X-Campaign: My Contact Form Name"
 msgstr ""
 
-#: email-tracker__premium_only.php:18
+#: email-tracker__premium_only.php:19
 msgid "Add utm_* to tracked links (Own domain only)"
 msgstr ""
 "Ajouter les tags utm_* sur les liens marqués (Sur notre propre nom de "
 "domaine uniquement)"
 
-#: email-tracker__premium_only.php:30
+#: email-tracker__premium_only.php:31
 msgid "Google analytics read (experimental)"
 msgstr "Suivi d’ouverture avec Google Analytics"
 
-#: email-tracker__premium_only.php:31
+#: email-tracker__premium_only.php:32
 msgid "Track reads with google analytics as well"
 msgstr "Faire le suivi des ouvertures avec google analytics"
 
@@ -93,7 +147,7 @@ msgstr "Faire le suivi des ouvertures avec google analytics"
 msgid "From"
 msgstr "De"
 
-#: emails-table.php:106 emails-table.php:131
+#: emails-table.php:106
 msgid "To"
 msgstr "à"
 
@@ -101,21 +155,17 @@ msgstr "à"
 msgid "Filter"
 msgstr "Filtrer"
 
-#: emails-table.php:130
-msgid "Date"
-msgstr "Date"
-
-#: emails-table.php:132
-msgid "Subject"
-msgstr "Objet"
-
-#: emails-table.php:133
-msgid "Excerpt"
-msgstr "Extrait"
-
-#: emails-table.php:134
+#: emails-table.php:131
 msgid "Status"
 msgstr "Etat"
+
+#: emails-table.php:133
+msgid "Recepient"
+msgstr "Destinataire"
+
+#: emails-table.php:134
+msgid "Subject"
+msgstr "Objet"
 
 #: emails-table.php:135
 msgid "Reads"
@@ -125,11 +175,39 @@ msgstr "Ouvertures"
 msgid "Clicks"
 msgstr "Clics"
 
-#: emails-table.php:191
+#: emails-table.php:137
+msgid "Detail"
+msgstr "Détail"
+
+#: emails-table.php:149
+msgid "Email Details"
+msgstr "Détails de l’email"
+
+#: emails-table.php:149
+msgid "Show details"
+msgstr "Afficher les détails"
+
+#: emails-table.php:154
+msgid "Resend"
+msgstr "Renvoyer"
+
+#: emails-table.php:163
+msgid "Queued"
+msgstr "File d’attente"
+
+#: emails-table.php:164
+msgid "Failed"
+msgstr "Echec"
+
+#: emails-table.php:165
+msgid "Sent"
+msgstr "Envoyé"
+
+#: emails-table.php:227
 msgid "Source"
 msgstr "Source"
 
-#: emails-table.php:192
+#: emails-table.php:228
 msgid "Campaign"
 msgstr "Campagne"
 
@@ -175,7 +253,7 @@ msgid ""
 "woocommerce defer feature will be disabled"
 msgstr ""
 
-#: settings.php:23
+#: settings.php:24
 #, php-format
 msgid ""
 "Welcone to Mail Contol, your one stop plugin to take control over your "
@@ -186,71 +264,85 @@ msgstr ""
 "wordpress, n’hésitez pas a nous <a href=\"%s\" >contacter</a> si vous avez "
 "la moindre question."
 
-#: settings.php:27
+#: settings.php:28
 msgid "Mail Control Settings"
 msgstr "Paramètrages Mail Control"
 
-#: settings.php:35
+#: settings.php:36
 #, php-format
 msgid "Please insert a valid %s"
-msgstr ""
+msgstr "Veuillez saisir un %s valide"
 
-#: smtp-checks.php:55
+#: smtp-checks.php:54
 #, php-format
 msgid "The smtp server %s doesn't seem to be a valid domain name or IP adress"
 msgstr ""
 
-#: smtp-checks.php:63
+#: smtp-checks.php:58
+msgid "SPF record verification"
+msgstr "Vérification de l'entrée SPF"
+
+#: smtp-checks.php:59
+#, php-format
+msgid ""
+"The main idea behind the SPF concept is to make sure all applications that "
+"send emails for your domain %s are included in your SPF record (their domain "
+"name or IP to be precise)."
+msgstr ""
+
+#: smtp-checks.php:65
 #, php-format
 msgid ""
 "There is no SPF record for you domain %s, some mail providers won't allow "
 "emails without spf records, you should add an spf record to you DNS"
 msgstr ""
 
-#: smtp-checks.php:66
+#: smtp-checks.php:68
 #, php-format
 msgid "We suggest you add this line : %s"
 msgstr ""
 
-#: smtp-checks.php:67
+#: smtp-checks.php:69
 #, php-format
 msgid ""
 "This line will tell receiving mail servers to allow emails coming from your "
 "MX servers as well as your smtp host %s"
 msgstr ""
 
-#: smtp-checks.php:71
+#: smtp-checks.php:73
 msgid "There seems to be more than one spf record!!"
 msgstr "Il semble qu’il y ait plus qu’une entrée SPF"
 
-#: smtp-checks.php:72
+#: smtp-checks.php:74
 msgid "This can cause your emails to get blocked, you should merge them"
 msgstr ""
 
-#: smtp-checks.php:79 smtp-checks.php:88
+#: smtp-checks.php:81
 #, php-format
 msgid "Your SPF record : %s"
-msgstr ""
+msgstr "Votre entrée SPF : %s"
 
-#: smtp-checks.php:83
+#: smtp-checks.php:85
 #, php-format
 msgid ""
 "Good! Your SMTP host %s seems to be allowed to send emails for your domain %s"
 msgstr ""
+"Bien! Votre hôte SMTP %s semble être autorisé a envoyer des emails pour "
+"votre domaine %s "
 
-#: smtp-checks.php:89
+#: smtp-checks.php:90
 #, php-format
 msgid ""
 "Aie Aie! Your SMTP host %s doesn't seem to be allowed to send emails for "
 "your domain %s"
 msgstr ""
 
-#: smtp-checks.php:90
+#: smtp-checks.php:91
 #, php-format
 msgid "Make sure you add \"%s\" after v=spf1 to your record"
 msgstr ""
 
-#: smtp-checks.php:96
+#: smtp-checks.php:97
 #, php-format
 msgid ""
 "Please keep in mind that this feature is experimental, you can find more "
@@ -258,51 +350,81 @@ msgid ""
 "record"
 msgstr ""
 
-#: smtp-checks.php:131
+#: smtp-checks.php:126
+msgid "DKIM record verification"
+msgstr "Vérification entrée DKIM"
+
+#: smtp-checks.php:127
+msgid ""
+"DKIM - DomainKeys Identified Mail, is an authentication method that allows "
+"the receiver to check that an email claimed to have come from a specific "
+"domain was indeed authorized by the owner of that domain"
+msgstr ""
+
+#: smtp-checks.php:130
+msgid ""
+"You did not provide a dkim selector so we could not test your dkim record"
+msgstr ""
+
+#: smtp-checks.php:143
 #, php-format
 msgid ""
 "There is no DKIM record for you domain %s, email providers won't be able to "
 "authenticate your emails"
 msgstr ""
 
-#: smtp-checks.php:134
-#, fuzzy
-#| msgid "There seems to be more tham one spf record!!"
+#: smtp-checks.php:146
 msgid "There seems to be more tham one dkim record for "
-msgstr "Il semble qu’il y ait plus qu’une entrée SPF"
+msgstr "Il semble qu’il y ait plus qu’une entrée DKIM"
 
-#: smtp-checks.php:135 smtp-checks.php:176
+#: smtp-checks.php:147 smtp-checks.php:191
 msgid ""
 "This can cause your emails to get blocked, you should remove the incorrect "
 "one :"
 msgstr ""
 
-#: smtp-checks.php:142
+#: smtp-checks.php:154
 #, php-format
 msgid "Your DKIM record : %s"
-msgstr ""
+msgstr "Votre entrée DKIM : %s"
 
-#: smtp-checks.php:143 smtp-checks.php:184
+#: smtp-checks.php:155 smtp-checks.php:199
 msgid ""
 "Please be aware that we only tested the presence of the record, not that its "
 "content is correct"
 msgstr ""
 
-#: smtp-checks.php:172
+#: smtp-checks.php:173
+msgid "DMARC record verification"
+msgstr "Vérification entrée DMARC"
+
+#: smtp-checks.php:174
+msgid ""
+"Domain-based Message Authentication, Reporting and Conformance (DMARC) is an "
+"email authentication protocol. It gives email domain owners the ability to "
+"protect their domain from unauthorized use"
+msgstr ""
+
+#: smtp-checks.php:175
+msgid ""
+"Dmarc's role is to tell the receiving servers what to do when the sent "
+"emails doesn't pass SPF and DKIM tests and where to send reports (so you "
+"could eventually fix your SPF records or ensure DKIM is well implemented)"
+msgstr ""
+
+#: smtp-checks.php:187
 #, php-format
 msgid "There is no DMARK record for you domain %s"
 msgstr ""
 
-#: smtp-checks.php:175
-#, fuzzy
-#| msgid "There seems to be more tham one spf record!!"
+#: smtp-checks.php:190
 msgid "There seems to be more tham one DMARK record for "
-msgstr "Il semble qu’il y ait plus qu’une entrée SPF"
+msgstr "Il semble qu’il y ait plus qu’une entrée DMAC"
 
-#: smtp-checks.php:183
+#: smtp-checks.php:198
 #, php-format
 msgid "Your DMARK record : %s"
-msgstr ""
+msgstr "Votre entrée DMARC : %s"
 
 #: smtp-mailer.php:10
 msgid "SMTP Mailer"
@@ -318,7 +440,7 @@ msgstr "Nom de domaine de votre serveur SMTP ( Ou IP )"
 
 #: smtp-mailer.php:18
 msgid "Please insert a valid hostname or IP"
-msgstr ""
+msgstr "Veuillez saisir un nom de hôte valide ou une adresse IP"
 
 #: smtp-mailer.php:23
 msgid "Smtp PORT"
@@ -391,59 +513,20 @@ msgstr "Vous devez saisir un email d’envoyeur pour lancer ce test"
 
 #: smtp-mailer.php:113
 msgid "You have to setup the smtp host to run this test"
-msgstr ""
+msgstr "Vous devez paramétrer votre hote SMTP pour lancer ce test "
 
-#: smtp-mailer.php:119
-msgid "SPF record verification"
-msgstr ""
-
-#: smtp-mailer.php:120
-#, php-format
-msgid ""
-"The main idea behind the SPF concept is to make sure all applications that "
-"send emails for your domain %s are included in your SPF record (their domain "
-"name or IP to be precise)."
-msgstr ""
-
-#: smtp-mailer.php:125
-msgid "DKIM record verification"
-msgstr ""
-
-#: smtp-mailer.php:126
-msgid ""
-"DKIM - DomainKeys Identified Mail, is an authentication method that allows "
-"the receiver to check that an email claimed to have come from a specific "
-"domain was indeed authorized by the owner of that domain"
-msgstr ""
-
-#: smtp-mailer.php:135
-msgid ""
-"You did not provide a dkim selector so we could not test your dkim record"
-msgstr ""
-
-#: smtp-mailer.php:139
-msgid "DMARC record verification"
-msgstr ""
-
-#: smtp-mailer.php:140
-msgid ""
-"Domain-based Message Authentication, Reporting and Conformance (DMARC) is an "
-"email authentication protocol. It gives email domain owners the ability to "
-"protect their domain from unauthorized use"
-msgstr ""
-
-#: smtp-mailer.php:145
+#: smtp-mailer.php:134
 msgid "Bravo! Our checks are succesful, still, make sure to send a test email"
 msgstr ""
 
-#: smtp-mailer.php:147
+#: smtp-mailer.php:136
 #, php-format
 msgid ""
 "Don't hesitate to request us for some assistance helping you setting your "
 "domains, feel to <a href=\"%s\" >contact us</a>"
 msgstr ""
 
-#: smtp-mailer.php:151
+#: smtp-mailer.php:141
 #, php-format
 msgid ""
 "For a more complete test, we suggest you go to %s. After clicking on \"Next "
@@ -452,21 +535,28 @@ msgid ""
 "feature to send your email"
 msgstr ""
 
-#: smtp-mailer.php:164
+#: smtp-mailer.php:154
 msgid "Test your setup"
 msgstr "Tester votre configuration"
 
-#: smtp-mailer.php:170
+#: smtp-mailer.php:160
 msgid "Send a test email"
 msgstr "Envoyer un email de test"
 
-#: smtp-mailer.php:180
-msgid "Test your SPF, DKIM, and domain DMARK setup (experimental):"
-msgstr ""
+#: smtp-mailer.php:166
+msgid "Test your SPF, DKIM, and domain DMARC setup (experimental):"
+msgstr "Testez votre nom de Domain, SPF, DKIM et DMARC (expérimental)"
 
-#: smtp-mailer.php:182
+#: smtp-mailer.php:172
+msgid "DKIM Selector"
+msgstr "Sélecteur DKIM"
+
+#: smtp-mailer.php:173
 msgid "Test your domain"
 msgstr "Testez votre domaine"
+
+#~ msgid "Excerpt"
+#~ msgstr "Extrait"
 
 #~ msgid "Smtp Secure"
 #~ msgstr "SMTP sécurisé"
