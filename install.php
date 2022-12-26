@@ -52,6 +52,9 @@ function install_or_upgrade($current_version)
     update_option("mc_db_version", MC_DB_VERSION);
 }
 
+/**
+ * Checks Database version and updates it if necessary
+ */
 function db_check()
 {
     $current_version = (int) get_option('mc_db_version', 0);

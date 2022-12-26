@@ -2,6 +2,9 @@
 
 namespace Mail_Control;
 
+/**
+ * Background Mailer settings
+ */
 add_filter( 'mail_control_settings', function ( $settings ) {
     $settings['BACKGROUND_MAILER'] = [
         'name'   => 'BACKGROUND_MAILER',
@@ -28,7 +31,7 @@ function get_email_queue()
 {
     global  $wpdb ;
     $email_table = $wpdb->prefix . MC_EMAIL_TABLE;
-    return $wpdb->get_results( "SELECT `id`, `to`, `subject`, `message`, `headers`, `attachments` FROM `{$email_table}`  WHERE `in_queue` = 1 order by date_time ASC" );
+    return $wpdb->get_results( "SELECT `id`, `to`, `subject`, `message`, `message_plain`, `headers`, `attachments` FROM `{$email_table}`  WHERE `in_queue` = 1 order by date_time ASC" );
 }
 
 /**
@@ -51,7 +54,7 @@ function add_to_email_queue( array $args )
         'to'            => $to,
         'subject'       => $subject,
         'message'       => $message,
-        'message_plain' => $message,
+        'message_plain' => ( isset( $message_plain ) ? $message_plain : $message ),
         'headers'       => ( is_array( $headers ) ? json_encode( $headers ) : $headers ),
         'attachments'   => json_encode( $attachments ),
         'in_queue'      => 1,
@@ -112,10 +115,21 @@ function process_email_queue( $time = null )
             }
             $headers[] = "X-Queue-id: {$args->id}";
             $attachments = json_decode( $args->attachments, ARRAY_A );
+            // if the message in the queue is already htmlized
+            
+            if ( $args->message != $args->message_plain ) {
+                $message = [
+                    'text/plain' => $args->message_plain,
+                    'text/html'  => $args->message,
+                ];
+            } else {
+                $message = $args->message;
+            }
+            
             wp_mail(
                 $args->to,
                 $args->subject,
-                $args->message,
+                $message,
                 $headers,
                 $attachments
             );

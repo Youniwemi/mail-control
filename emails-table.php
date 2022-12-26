@@ -139,7 +139,16 @@ class Emails_Table extends \WP_List_Table
             'height' => 700,
         ], admin_url( "admin-ajax.php" ) );
         $detail = '<a href="' . esc_url( $url ) . '" title="' . esc_attr__( 'Email Details', 'mail-control' ) . '" class="thickbox button button-secondary" >' . __( 'Show details', 'mail-control' ) . '</a>';
-        return $detail;
+        $url = add_query_arg( [
+            'id'     => $item['id'],
+            'action' => 'resend_email',
+            'width'  => 300,
+            'height' => 200,
+        ], admin_url( "admin-ajax.php" ) );
+        $actions = [
+            'resend' => '<a class="thickbox" title="' . esc_attr__( 'Resend Email', 'mail-control' ) . '"  href="' . esc_url( $url ) . '">' . esc_html__( 'Resend', 'mail-control' ) . '</a>',
+        ];
+        return sprintf( '%1$s %2$s', $detail, $this->row_actions( $actions ) );
     }
     
     public function column_status( $item )
@@ -184,8 +193,12 @@ class Emails_Table extends \WP_List_Table
         foreach ( $headers as $line ) {
             
             if ( is_string( $line ) ) {
-                list( $header, $value ) = array_map( 'trim', explode( ':', $line ) );
-                $arrayHeaders[$header] = $value;
+                
+                if ( strpos( $line, ':' ) !== false ) {
+                    list( $header, $value ) = array_map( 'trim', explode( ':', $line ) );
+                    $arrayHeaders[$header] = $value;
+                }
+            
             } else {
                 [ $header, $value ] = $line;
                 $arrayHeaders[$header] = $value;

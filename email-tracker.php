@@ -3,6 +3,9 @@
 namespace Mail_Control;
 
 use  PHPMailer\PHPMailer\PHPMailer ;
+/**
+ * Email tracker settings
+ */
 add_filter( 'mail_control_settings', function ( $settings ) {
     $tracking_config = [
         'name'   => 'EMAIL_TRACKING',
@@ -11,20 +14,66 @@ add_filter( 'mail_control_settings', function ( $settings ) {
         'id'      => 'ACTIVE_LOGGING',
         'type'    => 'checkbox',
         'title'   => __( 'Log Emails (Mandatory if we want to track emails)', 'mail-control' ),
-        'default' => true,
+        'default' => 'on',
     ], [
         'id'      => 'ACTIVE_TRACKING',
         'type'    => 'checkbox',
         'title'   => __( 'Enable opens and clicks tracking', 'mail-control' ),
-        'default' => true,
+        'default' => 'off',
         'show_if' => function () {
-        return defined( 'EMAIL_TRACKING_ACTIVE_LOGGING' ) && EMAIL_TRACKING_ACTIVE_LOGGING == 'on';
+        return EMAIL_TRACKING_ACTIVE_LOGGING == 'on';
     },
     ] ],
     ];
     $settings['EMAIL_TRACKING'] = $tracking_config;
     return $settings;
 } );
+/**
+ * Converts plain text email content to a simple html version (with clickable links and <br> tags ) 
+ *
+ * @param      string  $content  The plain text content
+ *
+ * @return     string  The html version
+ */
+function htmlize( $content )
+{
+    return nl2br( make_clickable( $content ) );
+}
+
+/**
+ * Determines if email headers has a certain header.
+ *
+ * @param      array   $headers  The headers
+ * @param      string  $key      The key
+ * @param      string  $value    The value (optionnal)
+ *
+ * @return     bool    True if email header has, false otherwise.
+ */
+function email_header_has( array $headers, $key, $value = null )
+{
+    if ( count( $headers ) ) {
+        foreach ( $headers as $header ) {
+            
+            if ( $header ) {
+                [ $h, $v ] = array_map( 'trim', explode( ':', $header ) );
+                
+                if ( strtolower( $h ) === strtolower( $key ) ) {
+                    if ( $value === null ) {
+                        return true;
+                    }
+                    // Content-type is special, Content-Type: text/html; charset=...
+                    // in this case, we compare with the first part
+                    $v = explode( ";", $v );
+                    return $value === $v[0];
+                }
+            
+            }
+        
+        }
+    }
+    return false;
+}
+
 /**
  * Update the mail status in the queue
  *
@@ -34,9 +83,8 @@ add_filter( 'mail_control_settings', function ( $settings ) {
  */
 function update_email( PHPMailer $phpmailer )
 {
-    global  $wpdb ;
     // look for queue id
-    $headers = $phpmailer->getCustomHeaders();
+    $headers = get_all_headers( $phpmailer );
     $update = null;
     foreach ( $headers as [ $key, $id ] ) {
         
@@ -46,21 +94,83 @@ function update_email( PHPMailer $phpmailer )
         }
     
     }
+    
     if ( $update ) {
+        global  $wpdb ;
         $wpdb->update( $wpdb->prefix . MC_EMAIL_TABLE, [
             'date_time'     => current_time( 'mysql' ),
             'message'       => $phpmailer->Body,
             'message_plain' => ( $phpmailer->AltBody ? $phpmailer->AltBody : $phpmailer->html2text( $phpmailer->Body ) ),
             'headers'       => json_encode( $headers ),
             'attachments'   => json_encode( array_map( function ( $a ) {
-            return $a[1];
+            return $a[0];
         }, $phpmailer->getAttachments() ) ),
             'in_queue'      => 0,
         ], [
             'id' => $update,
         ] );
     }
+    
     return $update;
+}
+
+/**
+ * Gets all headers (completes PhpMailer getCustomHeaders).
+ *
+ * @param      \PHPMailer\PHPMailer\PHPMailer  $phpmailer  The phpmailer
+ *
+ * @return     \PHPMailer\PHPMailer\PHPMailer  All headers.
+ */
+function get_all_headers( PHPMailer $phpmailer )
+{
+    $headers = $phpmailer->getCustomHeaders();
+    foreach ( [
+        'To'       => 'getToAddresses',
+        'Cc'       => 'getCcAddresses',
+        'Bcc'      => 'getBccAddresses',
+        'Reply-to' => 'getReplyToAddresses',
+    ] as $header => $getter ) {
+        
+        if ( $emails = $phpmailer->{$getter}() ) {
+            $recipients = [];
+            foreach ( $emails as $email ) {
+                [ $address, $name ] = $email;
+                
+                if ( $name ) {
+                    $recipients[] = "{$name} <{$address}>";
+                } else {
+                    $recipients[] = $address;
+                }
+            
+            }
+            if ( $recipients ) {
+                $headers[] = [ $header, implode( ', ', $recipients ) ];
+            }
+        }
+    
+    }
+    // Add content type
+    $content_type = $phpmailer->ContentType;
+    if ( $phpmailer->CharSet ) {
+        $content_type .= "; charset=" . $phpmailer->CharSet;
+    }
+    $headers[] = [ 'Content-Type', $content_type ];
+    return $headers;
+}
+
+/**
+ * Gets all the email "to" recipients, comma separated
+ *
+ * @param      \PHPMailer\PHPMailer\PHPMailer  $phpmailer  The phpmailer
+ *
+ * @return     string  Comma separated list of recipients.
+ */
+function get_email_recipients( PHPMailer $phpmailer )
+{
+    $recipients = array_map( function ( $recipient ) {
+        return $recipient[0];
+    }, $phpmailer->getToAddresses() );
+    return implode( ',', $recipients );
 }
 
 /**
@@ -75,13 +185,13 @@ function insert_email( PHPMailer $phpmailer )
     global  $wpdb ;
     $wpdb->insert( $wpdb->prefix . MC_EMAIL_TABLE, [
         'date_time'     => current_time( 'mysql' ),
-        'to'            => $phpmailer->getToAddresses()[0][0],
+        'to'            => get_email_recipients( $phpmailer ),
         'subject'       => $phpmailer->Subject,
         'message'       => $phpmailer->Body,
         'message_plain' => ( $phpmailer->AltBody ? $phpmailer->AltBody : $phpmailer->html2text( $phpmailer->Body ) ),
-        'headers'       => json_encode( $phpmailer->getCustomHeaders() ),
+        'headers'       => json_encode( get_all_headers( $phpmailer ) ),
         'attachments'   => json_encode( array_map( function ( $a ) {
-        return $a[1];
+        return $a[0];
     }, $phpmailer->getAttachments() ) ),
     ] );
     return $wpdb->insert_id;
@@ -128,33 +238,13 @@ function track_email( PHPMailer $phpmailer, string $tracker_url )
 {
     // track clicks
     $content = preg_replace_callback( '/<a(.*?)href="(.*?)"/', function ( $matches ) use( $tracker_url ) {
-        return '<a' . $matches[1] . 'href="' . track_link( $matches[2], $tracker_url ) . '"';
+        return '<a' . $matches[1] . 'href="' . esc_url( track_link( $matches[2], $tracker_url ) ) . '"';
     }, $phpmailer->Body );
     // track read
-    $content .= "<img src='{$tracker_url}' alt='pixel' />";
+    $content .= '<img src="' . esc_url( $tracker_url ) . '" alt="" />';
     return $content;
 }
 
-// Update headers to table.
-add_action(
-    'wp_mail_succeeded',
-    function ( $mail_data ) {
-    
-    if ( EMAIL_TRACKING_ACTIVE_LOGGING == 'on' || EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
-        global  $wpdb ;
-        $headers = $mail_data['headers'];
-        $id = ( isset( $headers['X-Queue-id'] ) ? (int) $headers['X-Queue-id'] : $wpdb->insert_id );
-        $wpdb->update( $wpdb->prefix . MC_EMAIL_TABLE, [
-            'headers' => json_encode( $headers ),
-        ], [
-            'id' => $id,
-        ] );
-    }
-
-},
-    100,
-    1
-);
 // Update fail message.
 add_action(
     'wp_mail_failed',
@@ -165,8 +255,7 @@ add_action(
         $headers = $error->error_data['wp_mail_failed']["headers"];
         $id = ( isset( $headers['X-Queue-id'] ) ? (int) $headers['X-Queue-id'] : $wpdb->insert_id );
         $wpdb->update( $wpdb->prefix . MC_EMAIL_TABLE, [
-            'fail'    => $error->get_error_messages()[0],
-            'headers' => json_encode( $headers ),
+            'fail' => $error->get_error_messages()[0],
         ], [
             'id' => $id,
         ] );
@@ -180,21 +269,29 @@ add_action(
 add_action(
     'phpmailer_init',
     function ( $phpmailer ) {
-    if ( EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
-        // if not html, convert to html
+    // if processed by the customizer, Body Would be an array
+    // if $message is array as well ( resend )
+    
+    if ( is_array( $phpmailer->Body ) ) {
+        $phpmailer->AltBody = $phpmailer->Body['text/plain'];
+        $phpmailer->Body = $phpmailer->Body['text/html'];
+    }
+    
+    if ( defined( 'EMAIL_TRACKING_ACTIVE_TRACKING' ) && EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
+        // if not html, convert to html =
         
         if ( $phpmailer->ContentType == PHPMailer::CONTENT_TYPE_PLAINTEXT ) {
             $phpmailer->AltBody = $phpmailer->Body;
-            $phpmailer->Body = nl2br( make_clickable( $phpmailer->Body ) );
+            $phpmailer->Body = htmlize( $phpmailer->Body );
             $phpmailer->isHTML( true );
         }
     
     }
     
-    if ( EMAIL_TRACKING_ACTIVE_LOGGING == 'on' || EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
+    if ( defined( 'EMAIL_TRACKING_ACTIVE_LOGGING' ) && EMAIL_TRACKING_ACTIVE_LOGGING == 'on' || defined( 'EMAIL_TRACKING_ACTIVE_TRACKING' ) && EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
         // insert email in log or remove from queue
         $email_id = null;
-        if ( BACKGROUND_MAILER_ACTIVE == 'on' ) {
+        if ( defined( 'BACKGROUND_MAILER_ACTIVE' ) && BACKGROUND_MAILER_ACTIVE == 'on' ) {
             $email_id = update_email( $phpmailer );
         }
         // maybe the mail is not found
@@ -204,7 +301,7 @@ add_action(
     }
     
     
-    if ( EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
+    if ( defined( 'EMAIL_TRACKING_ACTIVE_TRACKING' ) && EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
         // tracking code
         $tracker = tracker_url( $email_id );
         $phpmailer->Body = track_email( $phpmailer, $tracker );

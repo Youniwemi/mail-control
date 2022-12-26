@@ -3,21 +3,27 @@
 namespace Mail_Control;
 
 require __DIR__ . '/emails-table.php';
+/**
+ * Setup admin menu
+ */
 function admin_menu()
 {
     add_menu_page(
         'Mail Control',
         __( 'Mail Control', 'mail-control' ),
-        MC_MANAGER_PERMISSION,
+        MC_PERMISSION_VIEWER,
         'mail-control',
         'Mail_Control\\show_email_table',
-        "dashicons-email"
+        'data:image/svg+xml;base64,' . base64_encode( file_get_contents( MC_ASSETS_DIR . 'img/icon.svg' ) )
     );
     add_action( 'load-toplevel_page_mail-control', function () {
         add_thickbox();
     } );
 }
 
+/**
+ * Shows the email table.
+ */
 function show_email_table()
 {
     $emails = new Emails_Table();
@@ -82,10 +88,106 @@ function show_email_table()
 }
 
 /**
+ * Resend the email
+ */
+add_action( 'wp_ajax_resend_email', function () {
+    if ( !current_user_can( MC_PERMISSION_VIEWER ) ) {
+        wp_die( __( "You don't have permission to do this" ) );
+    }
+    $email = $_GET["id"];
+    if ( empty($email) || !is_numeric( $email ) ) {
+        wp_die( 'Wrong arguments' );
+    }
+    $email_id = intval( $email );
+    global  $wpdb ;
+    $email = $wpdb->get_row( $wpdb->prepare( "SELECT email.* FROM {$wpdb->prefix}" . MC_EMAIL_TABLE . " as email where  email.id = %d ", $email_id ) );
+    // disable queuing email
+    add_filter( 'mc_disable_email_queue', '__return_true' );
+    define( 'MC_RESENDING_EMAIL', true );
+    add_action( 'wp_mail_failed', function ( $error ) {
+        echo  '<p>' . esc_html__( 'Failed to resend the email', 'mail-control' ) . ' : ' . $error->getMessage() . '</p>' ;
+    } );
+    $headers = ( $email->headers ? string_header( json_decode( $email->headers, ARRAY_A ) ) : [] );
+    
+    if ( email_header_has( $headers, 'Content-Type', 'multipart/alternative' ) ) {
+        $message = [
+            'text/html'  => $email->message,
+            'text/plain' => $email->message_plain,
+        ];
+    } elseif ( email_header_has( $headers, 'Content-Type', 'text/html' ) ) {
+        $message = $email->message;
+    } else {
+        $message = $email->message_plain;
+    }
+    
+    $headers = array_filter( $headers, function ( $line ) {
+        [ $header, $value ] = explode( ': ', $line );
+        return strtolower( $header ) != 'to';
+    } );
+    $sent = wp_mail(
+        $email->to,
+        $email->subject,
+        $message,
+        $headers,
+        ( $email->attachments ? json_decode( $email->attachments, ARRAY_A ) : [] )
+    );
+    if ( $sent ) {
+        echo  '<p>' . esc_html__( 'Email resent succesfully', 'mail-control' ) . '</p>' ;
+    }
+    exit;
+} );
+/**
+ * Converts header for array form [$key, $content] to string form "$key: $content"
+ *
+ * @param      array  $headers  The headers
+ *
+ * @return     array  headers in string form
+ */
+function string_header( $headers )
+{
+    return array_map( function ( $header ) {
+        
+        if ( is_array( $header ) ) {
+            [ $key, $content ] = $header;
+            return "{$key}: {$content}";
+        }
+        
+        return $header;
+    }, $headers );
+}
+
+/**
+ * Gets the email header.
+ *
+ * @param      array  $headers  The headers
+ * @param      string  $header   The header key
+ *
+ * @return     string|null  The header value or null if not present
+ */
+function get_email_header( $headers, $header )
+{
+    // We may have a simple key => value array
+    foreach ( $headers as $key => $value ) {
+        
+        if ( is_array( $value ) ) {
+            [ $key, $value ] = $value;
+            if ( is_array( $value ) ) {
+                $value = implode( ', ', array_filter( $value ) );
+            }
+        }
+        
+        if ( $key == $header ) {
+            return $value;
+        }
+    }
+    return null;
+}
+
+/**
  * Detail Email
  */
 add_action( 'wp_ajax_detail_email', function () {
-    if ( !current_user_can( MC_MANAGER_PERMISSION ) ) {
+    if ( !current_user_can( MC_PERMISSION_VIEWER ) ) {
         wp_die( __( "You don't have permission to do this" ) );
     }
     $email = $_GET["id"];
@@ -97,6 +199,7 @@ add_action( 'wp_ajax_detail_email', function () {
     $email = $wpdb->get_row( $wpdb->prepare( "SELECT email.* FROM {$wpdb->prefix}" . MC_EMAIL_TABLE . " as email where  email.id = %d ", intval( $email ) ) );
     $events = $wpdb->get_results( $wpdb->prepare( "SELECT events.* FROM {$wpdb->prefix}" . MC_EVENT_TABLE . " as events where events.email_id = %d order by `when` ASC", $email_id ) );
     $headers = json_decode( $email->headers, ARRAY_A );
+    $attachments = json_decode( $email->attachments, ARRAY_A );
     $content_style = ( $email->fail ? ' style="display:none" ' : '' );
     ?>
     <div class="nav-tab-wrapper">
@@ -129,6 +232,17 @@ add_action( 'wp_ajax_detail_email', function () {
     ?>
     	<?php 
     
+    if ( count( $attachments ) ) {
+        ?>
+    		<a class="nav-tab" href="#email_attachments"><?php 
+        esc_html_e( 'Attachements', 'mail-control' );
+        ?></a>
+    	<?php 
+    }
+    
+    ?>
+    	<?php 
+    
     if ( !$email->fail ) {
         ?>
     	<a class="nav-tab" href="#email_events"><?php 
@@ -147,7 +261,15 @@ add_action( 'wp_ajax_detail_email', function () {
     esc_html_e( 'HTML version', 'mail-control' );
     ?></h3>
    			<?php 
-    $content = preg_replace( '#<script(.*?)>(.*?)</script>#is', '', $email->message ) . "<script>\n   \t\t\t\twindow.onload = function(){ \n   \t\t\t\t\twindow.parent.postMessage(\n   \t\t\t\t\tJSON.stringify({\n   \t\t\t\t\t\tfrom:'email_content',\n   \t\t\t\t\t\theight: document.documentElement.scrollHeight  \n   \t\t\t\t\t}), '*');\n   \t\t\t\t};</script>";
+    // if we don't have an head tag, let's add one with the charset
+    
+    if ( !preg_match( '#<head(.*?)>#is', $email->message ) && ($header = get_email_header( $headers, 'Content-Type' )) ) {
+        $content = "<head><meta http-equiv='Content-Type' content='{$header}'></head>" . $email->message;
+    } else {
+        $content = $email->message;
+    }
+    
+    $content = preg_replace( '#<script(.*?)>(.*?)</script>#is', '', $content ) . "<script>\n   \t\t\t\twindow.onload = function(){ \n   \t\t\t\t\twindow.parent.postMessage(\n   \t\t\t\t\tJSON.stringify({\n   \t\t\t\t\t\tfrom:'email_content',\n   \t\t\t\t\t\theight: document.documentElement.scrollHeight  \n   \t\t\t\t\t}), '*');\n   \t\t\t\t};</script>";
     ?>
    			<iframe src="<?php 
     echo  htmlspecialchars( 'data:text/html,' . rawurlencode( $content ) ) ;
@@ -166,6 +288,14 @@ add_action( 'wp_ajax_detail_email', function () {
    			<ul>
    			<?php 
     foreach ( $headers as $key => $value ) {
+        
+        if ( is_array( $value ) ) {
+            [ $key, $value ] = $value;
+            if ( is_array( $value ) ) {
+                $value = implode( ', ', array_filter( $value ) );
+            }
+        }
+        
         ?>
    				<li><strong><?php 
         echo  esc_html( $key ) ;
@@ -177,6 +307,60 @@ add_action( 'wp_ajax_detail_email', function () {
     ?>
    			</ul>
    		</div>
+   		<?php 
+    
+    if ( $attachments ) {
+        ?>
+   		<div id="email_attachments"  class='group' style="display: none;">
+   			<h3><?php 
+        esc_html_e( 'Attachements', 'mail-control' );
+        ?></h3>
+
+   			<?php 
+        foreach ( $attachments as $attachment ) {
+            $filename = basename( $attachment );
+            $filetype = strtolower( pathinfo( $attachment, PATHINFO_EXTENSION ) );
+            $mime = mime_content_type( $attachment );
+            ?>
+   				<h4><?php 
+            echo  esc_html( $filename ) ;
+            ?></h4>
+   				<?php 
+            // view it if an image
+            
+            if ( strpos( $mime, 'image/' ) === 0 ) {
+                ?> 
+   					<img style="max-width: 100%;" src="data:<?php 
+                echo  $mime ;
+                ?>;base64,<?php 
+                echo  base64_encode( file_get_contents( $attachment ) ) ;
+                ?>" alt='<?php 
+                echo  esc_attr( $filename ) ;
+                ?>'/>
+   				<?php 
+            } else {
+                // download it
+                ?>
+   					<a href="data:<?php 
+                echo  $mime ;
+                ?>;base64,<?php 
+                echo  base64_encode( file_get_contents( $attachment ) ) ;
+                ?>" download='<?php 
+                echo  esc_attr( $filename ) ;
+                ?>'>Download</a>
+   				<?php 
+            }
+            
+            ?>
+
+   			<?php 
+        }
+        ?>
+   		</div>
+   		<?php 
+    }
+    
+    ?>
    		<?php 
     
     if ( $email->fail ) {
@@ -199,9 +383,6 @@ add_action( 'wp_ajax_detail_email', function () {
 	   			<?php 
         
         if ( count( $events ) ) {
-            if ( $email->in_queue == 1 ) {
-                $headers = Emails_Table::normalize_headers( $headers );
-            }
             ?>
 	   			<table class="wp-list-table widefat striped table-view-list">
 	   				<thead>

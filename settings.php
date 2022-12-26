@@ -10,7 +10,7 @@ class Settings extends \WP_OSA
             'mail-control',
             'Settings',
             'Settings',
-            MC_MANAGER_PERMISSION,
+            MC_PERMISSION_MANAGER,
             'mail-control-settings',
             array( $this, 'plugin_page' )
         );
@@ -34,7 +34,36 @@ class Settings extends \WP_OSA
     }
 
 }
+function general_settings()
+{
+    $admin_capabilities = array_keys( get_role( 'administrator' )->capabilities );
+    $capabilities = [];
+    foreach ( $admin_capabilities as $cap ) {
+        $capabilities[$cap] = $cap;
+    }
+    $general_settings = [
+        'name'   => 'MC_PERMISSION',
+        'title'  => __( 'Permission Settings', 'mail-control' ),
+        'fields' => [ [
+        'id'      => 'MANAGER',
+        'type'    => 'select',
+        'title'   => __( 'Minimal permissions to acces settings', 'mail-control' ),
+        'default' => 'manage_options',
+        'options' => $capabilities,
+    ], [
+        'id'      => 'VIEWER',
+        'type'    => 'select',
+        'title'   => __( 'Minimal permissions to view email logs', 'mail-control' ),
+        'default' => 'edit_posts',
+        'options' => $capabilities,
+    ] ],
+    ];
+    return [
+        'MC_PERMISSION' => $general_settings,
+    ];
+}
+
 add_action( 'plugins_loaded', function () {
     load_plugin_textdomain( 'mail-control', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-    new Settings( apply_filters( 'mail_control_settings', [] ) );
+    new Settings( apply_filters( 'mail_control_settings', general_settings() ) );
 } );

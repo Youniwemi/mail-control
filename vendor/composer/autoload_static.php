@@ -10,6 +10,33 @@ class ComposerStaticInit5a8a260452a2706b960bbb6952c3bd05
         'cfb03dbdb221e442e2d454763906fa48' => __DIR__ . '/..' . '/ahmadawais/wp-oop-settings-api/class-wp-osa.php',
     );
 
+    public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Component\\CssSelector\\' => 30,
+            'Sabberworm\\CSS\\' => 15,
+        ),
+        'P' => 
+        array (
+            'Pelago\\Emogrifier\\' => 18,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Symfony\\Component\\CssSelector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/css-selector',
+        ),
+        'Sabberworm\\CSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
+        ),
+        'Pelago\\Emogrifier\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pelago/emogrifier/src',
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
@@ -17,6 +44,8 @@ class ComposerStaticInit5a8a260452a2706b960bbb6952c3bd05
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5a8a260452a2706b960bbb6952c3bd05::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5a8a260452a2706b960bbb6952c3bd05::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit5a8a260452a2706b960bbb6952c3bd05::$classMap;
 
         }, null, ClassLoader::class);

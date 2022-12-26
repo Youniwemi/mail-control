@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mail-control\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-30 00:12+0100\n"
+"POT-Creation-Date: 2022-12-26 16:52+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rahal <rahal.aboulfeth@gmail.com>\n"
 "Language-Team: \n"
@@ -11,98 +11,158 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;esc_attr_e;esc_attr__;esc_html__;esc_html_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
-#: admin.php:9
+#: admin.php:12
 msgid "Mail Control"
 msgstr "Mail Control"
 
-#: admin.php:90
+#: admin.php:84 admin.php:151
+msgid "You don't have permission to do this"
+msgstr "Vous n’avez pas le droit de faire ça"
+
+#: admin.php:100
+msgid "Failed to resend the email"
+msgstr "N’a pas réussi à renvoyer le mail"
+
+#: admin.php:123
+msgid "Email resent succesfully"
+msgstr "Email réenvoyé avec succès"
+
+#: admin.php:169 admin.php:240
+msgid "Email errors"
+msgstr "Erreur d’envoi de l’email"
+
+#: admin.php:171
 #, fuzzy
 #| msgid "Mail Control"
 msgid "Email Content"
 msgstr "Mail Control"
 
-#: admin.php:92 admin.php:115
+#: admin.php:173 admin.php:201
 msgid "Headers"
 msgstr "Entetes"
 
-#: admin.php:94 admin.php:123
+#: admin.php:176 admin.php:217
+msgid "Attachements"
+msgstr "Pièces jointes"
+
+#: admin.php:179 admin.php:245
 msgid "Events"
 msgstr "Évènements"
 
-#: admin.php:98
+#: admin.php:184
 msgid "HTML version"
 msgstr "Version HTML"
 
-#: admin.php:111
+#: admin.php:197
 msgid "Plain Text version"
 msgstr "Version Texte"
 
-#: admin.php:132 emails-table.php:132
+#: admin.php:254 emails-table.php:138
 msgid "Date"
 msgstr "Date"
 
-#: admin.php:133
+#: admin.php:255
 msgid "Event"
 msgstr "Évènement"
 
-#: admin.php:134
+#: admin.php:256
 msgid "URL"
 msgstr "URL"
 
-#: admin.php:135
+#: admin.php:257
 msgid "IP"
 msgstr "IP"
 
-#: admin.php:136
+#: admin.php:258
 msgid "User Agent"
 msgstr "Navigateur"
 
-#: admin.php:143
+#: admin.php:265
 msgid "Open"
 msgstr "Ouverture"
 
-#: admin.php:143
+#: admin.php:265
 msgid "Click"
 msgstr "Clic"
 
-#: admin.php:152
+#: admin.php:274
 msgid "Sorry, no events so far"
 msgstr "Désolé, aucun événement pour le moment"
 
-#: background-mailer.php:28
+#: background-mailer.php:32
 msgid "Background Mailer"
 msgstr "Envoie en tache de fond"
 
-#: background-mailer.php:33
+#: background-mailer.php:37
 msgid "Send emails in background"
 msgstr "Envoyer les emails en tache de fond"
 
-#: background-mailer.php:38
+#: background-mailer.php:42
 msgid "Sleep between emails in seconds ( in case of SMTP limitations)"
 msgstr ""
 "Temps de pause entre les emails (A utiliser dans le cas de limitations du "
 "serveur SMTP)"
 
-#: email-tracker.php:12
+#: email-customizer.php:20
+msgid "Email Customizer"
+msgstr "Personnaliseur des emails"
+
+#: email-customizer.php:25
+msgid "Activate Email customizations"
+msgstr "Activez les personnalisations des emails"
+
+#: email-customizer.php:30
+msgid "Customize Your Emails"
+msgstr "Personnalisez vos emails"
+
+#: email-customizer.php:86
+msgid "Setup your style"
+msgstr "Personnaliser votre style"
+
+#: email-customizer.php:87
+msgid "Setup your content"
+msgstr "Personnaliser votre contenu"
+
+#: email-customizer.php:103
+msgid "Choose your logo"
+msgstr "Choisissez votre logo"
+
+#: email-customizer.php:109
+msgid "Choose your main color"
+msgstr "Choisir la couleur principale"
+
+#: email-customizer.php:116
+msgid "Choose your link color"
+msgstr "Choisir la couleur des liens"
+
+#: email-customizer.php:123
+msgid "Container Width"
+msgstr "Largeur du conteneur"
+
+#: email-customizer.php:137
+msgid "Type your footer content"
+msgstr "Saisissez le contenu de votre pied de page"
+
+#: email-tracker.php:15
 msgid "Email Logging and Tracking"
 msgstr "Suivi d’ouvertures et clics des emails"
 
-#: email-tracker.php:17
+#: email-tracker.php:20
 msgid "Log Emails (Mandatory if we want to track emails)"
 msgstr ""
 "Journaliser les emails (Obligatoire si on souhaite faire le suivi des "
 "ouvertures et clics)"
 
-#: email-tracker.php:23
+#: email-tracker.php:26
 msgid "Enable opens and clicks tracking"
-msgstr "Suivi d’ouvertures et clics des emails"
+msgstr "Activer le suivi d’ouvertures et clics des emails"
 
 #: email-tracker__premium_only.php:8
 #, fuzzy
@@ -143,71 +203,79 @@ msgstr "Suivi d’ouverture avec Google Analytics"
 msgid "Track reads with google analytics as well"
 msgstr "Faire le suivi des ouvertures avec google analytics"
 
-#: emails-table.php:105
+#: emails-table.php:112
 msgid "From"
 msgstr "De"
 
-#: emails-table.php:106
+#: emails-table.php:113
 msgid "To"
 msgstr "à"
 
-#: emails-table.php:108
+#: emails-table.php:115
 msgid "Filter"
 msgstr "Filtrer"
 
-#: emails-table.php:131
-msgid "Status"
-msgstr "Etat"
-
-#: emails-table.php:133
+#: emails-table.php:139
 msgid "Recepient"
 msgstr "Destinataire"
 
-#: emails-table.php:134
+#: emails-table.php:140
 msgid "Subject"
 msgstr "Objet"
 
-#: emails-table.php:135
+#: emails-table.php:141
+msgid "Excerpt"
+msgstr "Extrait"
+
+#: emails-table.php:142
+msgid "Status"
+msgstr "Etat"
+
+#: emails-table.php:143
 msgid "Reads"
 msgstr "Ouvertures"
 
-#: emails-table.php:136
+#: emails-table.php:144
 msgid "Clicks"
 msgstr "Clics"
 
-#: emails-table.php:137
+#: emails-table.php:145
 msgid "Detail"
 msgstr "Détail"
 
-#: emails-table.php:149
+#: emails-table.php:157
 msgid "Email Details"
 msgstr "Détails de l’email"
 
-#: emails-table.php:149
+#: emails-table.php:157
 msgid "Show details"
 msgstr "Afficher les détails"
 
-#: emails-table.php:154
+#: emails-table.php:167
+msgid "Resend Email"
+msgstr "Renvoyer le mail"
+
+#: emails-table.php:167
 msgid "Resend"
 msgstr "Renvoyer"
 
-#: emails-table.php:163
+#: emails-table.php:175
 msgid "Queued"
 msgstr "File d’attente"
 
-#: emails-table.php:164
+#: emails-table.php:176
 msgid "Failed"
 msgstr "Echec"
 
-#: emails-table.php:165
+#: emails-table.php:177
 msgid "Sent"
 msgstr "Envoyé"
 
-#: emails-table.php:227
+#: emails-table.php:240
 msgid "Source"
 msgstr "Source"
 
-#: emails-table.php:228
+#: emails-table.php:241
 msgid "Campaign"
 msgstr "Campagne"
 
@@ -253,7 +321,7 @@ msgid ""
 "woocommerce defer feature will be disabled"
 msgstr ""
 
-#: settings.php:24
+#: settings.php:23
 #, php-format
 msgid ""
 "Welcone to Mail Contol, your one stop plugin to take control over your "
@@ -264,14 +332,26 @@ msgstr ""
 "wordpress, n’hésitez pas a nous <a href=\"%s\" >contacter</a> si vous avez "
 "la moindre question."
 
-#: settings.php:28
+#: settings.php:27
 msgid "Mail Control Settings"
 msgstr "Paramètrages Mail Control"
 
-#: settings.php:36
+#: settings.php:35
 #, php-format
 msgid "Please insert a valid %s"
 msgstr "Veuillez saisir un %s valide"
+
+#: settings.php:49
+msgid "Permission Settings"
+msgstr "Réglage des permissions"
+
+#: settings.php:54
+msgid "Minimal permissions to acces settings"
+msgstr "Permissions minimales pour pouvoir accéder aux réglages"
+
+#: settings.php:61
+msgid "Minimal permissions to view email logs"
+msgstr "Permissions minimales pour pouvoir accéder à l’historique des emails"
 
 #: smtp-checks.php:54
 #, php-format
@@ -294,7 +374,7 @@ msgstr ""
 #, php-format
 msgid ""
 "There is no SPF record for you domain %s, some mail providers won't allow "
-"emails without spf records, you should add an spf record to you DNS"
+"emails without an SPF record, you should add an spf record to you DNS"
 msgstr ""
 
 #: smtp-checks.php:68
@@ -358,7 +438,7 @@ msgstr "Vérification entrée DKIM"
 msgid ""
 "DKIM - DomainKeys Identified Mail, is an authentication method that allows "
 "the receiver to check that an email claimed to have come from a specific "
-"domain was indeed authorized by the owner of that domain"
+"domain was indeed signed by the key advertised in that domain DKIM record"
 msgstr ""
 
 #: smtp-checks.php:130
@@ -418,7 +498,9 @@ msgid "There is no DMARK record for you domain %s"
 msgstr ""
 
 #: smtp-checks.php:190
-msgid "There seems to be more tham one DMARK record for "
+#, fuzzy
+#| msgid "There seems to be more tham one DMARK record for "
+msgid "There seems to be more tham one DMARK record for"
 msgstr "Il semble qu’il y ait plus qu’une entrée DMAC"
 
 #: smtp-checks.php:198
@@ -426,137 +508,134 @@ msgstr "Il semble qu’il y ait plus qu’une entrée DMAC"
 msgid "Your DMARK record : %s"
 msgstr "Votre entrée DMARC : %s"
 
-#: smtp-mailer.php:10
+#: smtp-mailer.php:13
 msgid "SMTP Mailer"
 msgstr "Envoi par SMTP"
 
-#: smtp-mailer.php:15
+#: smtp-mailer.php:18
 msgid "Smtp Host"
 msgstr "Nom de l’hote SMTP"
 
-#: smtp-mailer.php:16
+#: smtp-mailer.php:19
 msgid "Your smtp mail server hostname (or IP)"
 msgstr "Nom de domaine de votre serveur SMTP ( Ou IP )"
 
-#: smtp-mailer.php:18
+#: smtp-mailer.php:21
 msgid "Please insert a valid hostname or IP"
 msgstr "Veuillez saisir un nom de hôte valide ou une adresse IP"
 
-#: smtp-mailer.php:23
+#: smtp-mailer.php:26
 msgid "Smtp PORT"
 msgstr "Numéro de port SMTP"
 
-#: smtp-mailer.php:24
+#: smtp-mailer.php:27
 msgid "You smtp mail server PORT"
 msgstr "Numéro de port de votre serveur SMTP"
 
-#: smtp-mailer.php:34
+#: smtp-mailer.php:37
 msgid "Smtp Encryption"
 msgstr "Cryptage SMTP"
 
-#: smtp-mailer.php:35
+#: smtp-mailer.php:38
 msgid "What type of encryption your server is using"
 msgstr "Quel type de cryptage votre serveur utilise"
 
-#: smtp-mailer.php:40
+#: smtp-mailer.php:43
 msgid "Smtp User"
 msgstr "Nom d’utilisateur SMTP"
 
-#: smtp-mailer.php:41
+#: smtp-mailer.php:44
 msgid "You smtp account's username"
 msgstr "Le nom de votre utilisateur SMTP"
 
-#: smtp-mailer.php:46
+#: smtp-mailer.php:49
 msgid "Smtp Password"
 msgstr "Mot de passe du compte SMTP"
 
-#: smtp-mailer.php:47
+#: smtp-mailer.php:50
 msgid "You smtp account's password"
 msgstr "Le mot de passe de votre compte SMTP"
 
-#: smtp-mailer.php:52
+#: smtp-mailer.php:55
 msgid "From Email"
 msgstr "Emails envoyés avec l’adresse"
 
-#: smtp-mailer.php:53
+#: smtp-mailer.php:56
 msgid "Your emails will be sent from this email adress"
 msgstr "Les emails partiront de cette adresse mail"
 
-#: smtp-mailer.php:58
+#: smtp-mailer.php:61
 msgid "From Name"
 msgstr "Nom de l’envoyeur"
 
-#: smtp-mailer.php:59
+#: smtp-mailer.php:62
 msgid "Your emails will be sent with this name"
 msgstr "Les emails partiront avec ce nom"
 
-#: smtp-mailer.php:83
+#: smtp-mailer.php:86
 msgid "Please fill the email field"
 msgstr "Veuillez saisir un email"
 
-#: smtp-mailer.php:87
+#: smtp-mailer.php:92
 msgid "Please fill a correct email field"
 msgstr "Veuillez saisir un email valide"
 
-#: smtp-mailer.php:94
+#: smtp-mailer.php:105
 msgid "Mail Control, test email"
 msgstr "Test d’envoi d’email Mail Control"
 
-#: smtp-mailer.php:95
+#: smtp-mailer.php:106
 #, php-format
 msgid "This is a test email sent mail control in by %s"
 msgstr "Ceci est un email de test envoyé par Mail Control sur le site %s"
 
-#: smtp-mailer.php:109
+#: smtp-mailer.php:120
 msgid "You have to setup From Email field to run this test"
 msgstr "Vous devez saisir un email d’envoyeur pour lancer ce test"
 
-#: smtp-mailer.php:113
+#: smtp-mailer.php:124
 msgid "You have to setup the smtp host to run this test"
-msgstr "Vous devez paramétrer votre hote SMTP pour lancer ce test "
+msgstr "Vous devez paramétrer votre hôte SMTP pour lancer ce test"
 
-#: smtp-mailer.php:134
+#: smtp-mailer.php:145
 msgid "Bravo! Our checks are succesful, still, make sure to send a test email"
 msgstr ""
 
-#: smtp-mailer.php:136
+#: smtp-mailer.php:147
 #, php-format
 msgid ""
 "Don't hesitate to request us for some assistance helping you setting your "
-"domains, feel to <a href=\"%s\" >contact us</a>"
+"domains, feel free to <a href=\"%s\" >contact us</a>"
 msgstr ""
 
-#: smtp-mailer.php:141
+#: smtp-mailer.php:152
 #, php-format
 msgid ""
 "For a more complete test, we suggest you go to %s. After clicking on \"Next "
 "Step\", you will be asked to send an email to a temporary address test-"
 "XXXXXXX@appmaildev.com. There, you can your use our \"send a test email\" "
-"feature to send your email"
+"feature to send your email and then receive a complete delivrability report."
 msgstr ""
 
-#: smtp-mailer.php:154
+#: smtp-mailer.php:165
 msgid "Test your setup"
 msgstr "Tester votre configuration"
 
-#: smtp-mailer.php:160
+#: smtp-mailer.php:171
 msgid "Send a test email"
 msgstr "Envoyer un email de test"
 
-#: smtp-mailer.php:166
+#: smtp-mailer.php:177
 msgid "Test your SPF, DKIM, and domain DMARC setup (experimental):"
 msgstr "Testez votre nom de Domain, SPF, DKIM et DMARC (expérimental)"
 
-#: smtp-mailer.php:172
+#: smtp-mailer.php:183
 msgid "DKIM Selector"
 msgstr "Sélecteur DKIM"
 
-#: smtp-mailer.php:173
+#: smtp-mailer.php:184
 msgid "Test your domain"
 msgstr "Testez votre domaine"
-
-#~ msgid "Excerpt"
-#~ msgstr "Extrait"
 
 #~ msgid "Smtp Secure"
 #~ msgstr "SMTP sécurisé"

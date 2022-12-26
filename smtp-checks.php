@@ -62,7 +62,7 @@ function test_spf_record(string $domain, string $smtp_host, array $report)
 
     $spf_ok = false;
     if ($spf_count == 0) {
-        $report[] = '<p class="notice notice-error">'.sprintf(__('There is no SPF record for you domain %s, some mail providers won\'t allow emails without spf records, you should add an spf record to you DNS', 'mail-control'), $domain).'</p>';
+        $report[] = '<p class="notice notice-error">'.sprintf(__('There is no SPF record for you domain %s, some mail providers won\'t allow emails without an SPF record, you should add an spf record to you DNS', 'mail-control'), $domain).'</p>';
 
         $report[] = '<p class="notice notice-info">';
         $report[] = sprintf(__('We suggest you add this line : %s', 'mail-control'), $spf_suggestion).'<br/>';
@@ -124,7 +124,7 @@ function test_dkim_record(string $dkim_host, array $report)
     // If we ever find a (free or very cheap) way to create a temp email, and access it's content via API, maybe then, we could do more than juste checking the presence (and number of records)
     //
     $report[] = '<h3>'.__('DKIM record verification', 'mail-control').'</h3>';
-    $report[] = '<p>'. __('DKIM - DomainKeys Identified Mail, is an authentication method that allows the receiver to check that an email claimed to have come from a specific domain was indeed authorized by the owner of that domain', 'mail-control').'</p>';
+    $report[] = '<p>'. __('DKIM - DomainKeys Identified Mail, is an authentication method that allows the receiver to check that an email claimed to have come from a specific domain was indeed signed by the key advertised in that domain DKIM record', 'mail-control').'</p>';
 
     if ($dkim_host==='') {
         $report[] = '<p class="notice notice-warning">'. __('You did not provide a dkim selector so we could not test your dkim record', 'mail-control') .'</p>';
@@ -187,7 +187,7 @@ function test_dmarc_record(string $domain, array $report)
         $report[] = '<p class="notice notice-error">'.sprintf(__('There is no DMARK record for you domain %s', 'mail-control'), $dmarc_host).'</p>';
     } elseif ($dmarc_count > 1) {
         $report[] = '<p class="notice notice-error">';
-        $report[] = __('There seems to be more tham one DMARK record for ', 'mail-control').  $dmarc_host ."<br/>";
+        $report[] = __('There seems to be more tham one DMARK record for', 'mail-control'). ' '. $dmarc_host ."<br/>";
         $report[] = __('This can cause your emails to get blocked, you should remove the incorrect one :', 'mail-control')."<br/>";
         foreach ($dmarc as $record) {
             $report[] = '- '.$record['txt']."<br/>";

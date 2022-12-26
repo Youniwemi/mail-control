@@ -3,6 +3,9 @@
 namespace Mail_Control;
 
 use  PHPMailer\PHPMailer\PHPMailer ;
+/**
+ * Smtp Mailer Settings
+ */
 add_filter( 'mail_control_settings', function ( $settings ) {
     $settings['SMTP_MAILER'] = [
         'name'   => 'SMTP_MAILER',
@@ -80,16 +83,18 @@ if ( is_admin() ) {
         if ( empty($_POST["SMTP_MAILER_TEST_EMAIL"]) ) {
             send_json_result( __( "Please fill the email field", 'mail-control' ), false );
         }
-        $email = sanitize_email( $_POST["SMTP_MAILER_TEST_EMAIL"] );
-        if ( empty($email) ) {
+        $emails = explode( ',', $_POST["SMTP_MAILER_TEST_EMAIL"] );
+        $to = array_map( 'sanitize_email', $emails );
+        if ( empty($to) ) {
             send_json_result( __( "Please fill a correct email field", 'mail-control' ), false );
         }
         init_test_email_mode();
+        $headers = [];
         $sent = wp_mail(
-            $email,
+            $to,
             __( 'Mail Control, test email', 'mail-control' ),
             sprintf( __( "This is a test email sent mail control in by %s", 'mail-control' ), get_home_url() ),
-            [ "X-Source: Mail Control", "X-Campaign: Send Test Email" ]
+            $headers
         );
         send_json_result( ob_get_clean(), $sent );
     } );
@@ -123,12 +128,12 @@ if ( is_admin() ) {
         if ( $config_ok ) {
             $report[] = '<p class="notice notice-success">' . __( 'Bravo! Our checks are succesful, still, make sure to send a test email', 'mail-control' ) . '<br/>';
         } else {
-            $report[] = '<p class="notice notice-info">' . sprintf( __( 'Don\'t hesitate to request us for some assistance helping you setting your domains, feel to <a href="%s" >contact us</a>', 'mail-control' ), mc_fs()->contact_url() ) . '<br/>';
+            $report[] = '<p class="notice notice-info">' . sprintf( __( 'Don\'t hesitate to request us for some assistance helping you setting your domains, feel free to <a href="%s" >contact us</a>', 'mail-control' ), mc_fs()->contact_url() ) . '<br/>';
         }
         
         $locale = substr( get_locale(), 0, 2 );
         $app_mail_dev = "https://www.appmaildev.com/{$locale}/dkim";
-        $report[] = sprintf( __( 'For a more complete test, we suggest you go to %s. After clicking on "Next Step", you will be asked to send an email to a temporary address test-XXXXXXX@appmaildev.com. There, you can your use our "send a test email" feature to send your email', 'mail-control' ), "<a href='{$app_mail_dev} ' target='_blank'>{$app_mail_dev} </a>" ) . '<br/>';
+        $report[] = sprintf( __( 'For a more complete test, we suggest you go to %s. After clicking on "Next Step", you will be asked to send an email to a temporary address test-XXXXXXX@appmaildev.com. There, you can your use our "send a test email" feature to send your email and then receive a complete delivrability report.', 'mail-control' ), "<a href='{$app_mail_dev} ' target='_blank'>{$app_mail_dev} </a>" ) . '<br/>';
         $report[] = '</p>';
         send_json_result( implode( '', $report ), $config_ok );
     } );
@@ -150,7 +155,7 @@ if ( is_admin() ) {
         ?>" />
 	    <input type="hidden"  name="action" value="send_test_email" />
 	    <div style="padding-left: 10px">
-	 	<input type="email" required class="medium-text" id="SMTP_MAILER_TEST_EMAIL" name="SMTP_MAILER_TEST_EMAIL" value="" placeholder="yourtestemail@domain.com" />
+	 	<input type="email" multiple required class="medium-text" id="SMTP_MAILER_TEST_EMAIL" name="SMTP_MAILER_TEST_EMAIL" value="" placeholder="yourtestemail@domain.com" />
 	 		<?php 
         submit_button(
             __( 'Send a test email', 'mail-control' ),
@@ -247,7 +252,10 @@ function init_phpmailer( PHPMailer $phpmailer )
     } else {
         $phpmailer->SMTPAuth = false;
     }
-
+    
+    if ( SMTP_MAILER_FROM_EMAIL && SMTP_MAILER_FROM_NAME ) {
+        $phpmailer->setFrom( sanitize_email( SMTP_MAILER_FROM_EMAIL ), SMTP_MAILER_FROM_NAME );
+    }
 }
 
 add_action( 'settings_ready', function () {
