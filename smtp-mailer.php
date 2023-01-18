@@ -90,6 +90,7 @@ if ( is_admin() ) {
         }
         init_test_email_mode();
         $headers = [];
+        ob_start();
         $sent = wp_mail(
             $to,
             __( 'Mail Control, test email', 'mail-control' ),

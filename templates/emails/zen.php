@@ -1,4 +1,7 @@
 <?php
+
+namespace Mail_Control;
+
 /**
  * This template originated from github.com:sendwithus/templates.git projet
  */
@@ -14,6 +17,7 @@ if (! defined('ABSPATH')) {
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title><?= $SUBJECT ?></title>
+  <?php do_action('mc_header'); ?>
   <style type="text/css" media="screen">
 
     /* Force Hotmail to display emails at full width */
@@ -43,20 +47,32 @@ if (! defined('ABSPATH')) {
       margin: 0;
       padding: 0;
     }
-
+    h1,h2,h3,h4,h5{
+      color: <?= $title_color ?>;
+      font-size: <?= $title_font_size ?>px;
+      margin-bottom: <?= $title_margin_bottom ?>px;
+      text-transform:uppercase ;
+    }
     body,
     p,
     td {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 15px;
-      color: <?= $main_color ?>;
+      font-family: <?= $main_font_family ? get_font_family($main_font_family) : 'inherit' ?>;
+      font-size: <?= $main_font_size ?>px;
       line-height: 1.5em;
     }
 
     h1 {
-      font-size: 24px;
+      font-size: <?= round($title_font_size*1.4) ?>px;
       font-weight: normal;
-      line-height: 24px;
+      line-height: 1.5em;
+    }
+    h2 {
+      font-size: <?= round($title_font_size*1.3) ?>px;
+      line-height: 1.4em;
+    }
+    h3 {
+      font-size: <?= round($title_font_size*1.2) ?>px;
+      line-height: 1.3em;
     }
 
     body,
@@ -65,7 +81,6 @@ if (! defined('ABSPATH')) {
       -webkit-text-size-adjust: none;
       -ms-text-size-adjust: none;
     }
-
     img {
       outline: none;
       text-decoration: none;
@@ -76,14 +91,27 @@ if (! defined('ABSPATH')) {
       border: none;
     }
 
-    .background {
-      background-color: <?= $main_color ?>;
+    td.background {
+      background-color: <?= $main_bg_color ?>;
     }
 
     table.background {
       margin: 0;
       padding: 0;
       width: 100% !important;
+    }
+    
+    p {
+      margin-bottom: 10px;
+      color: <?= $txt_color ?>;
+    }
+
+    ul {
+      padding-left: 0px;
+    }
+    
+    li{
+      color: <?= $txt_color ?>;
     }
 
     .block-img {
@@ -123,19 +151,20 @@ if (! defined('ABSPATH')) {
     }
 
     .header-cell {
-      background-color: #eeeeee;
+      background-color: <?= $header_color ?>;
       font-size: 24px;
       color: #ffffff;
     }
 
     .body-cell {
       background-color: #ffffff;
-      padding-top: 30px;
-      padding-bottom: 34px;
+      color: #595959;
+      padding: <?= $container_padding;?>px;
     }
 
     .footer-cell {
-      background-color: #eeeeee;
+      background-color: <?= $footer_bg_color ?>;
+      color: <?= $footer_txt_color ?>;;
       text-align: center;
       font-size: 13px;
       padding-top: 30px;
@@ -164,6 +193,27 @@ if (! defined('ABSPATH')) {
       width: 100% !important;
     }
 
+    /** BUTTON STYLE **/
+
+    a.btn,a.button {
+      background:<?= $button_bg_color ?>;
+      color: <?= $button_txt_color ?>;
+      font-size: <?= $button_font_size ?>px;
+      padding: <?= $button_padding_tb ?>px <?= $button_padding_lr ?>px;
+      border-radius: <?= $button_radius ?>px;
+      width: auto;
+      display: inline-flex;
+      border: none;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      text-decoration: none;
+    }
+
+    a.btn:hover,a.button:hover {
+      background:<?= $button_bg_color_hv ?>;
+      color: <?= $button_txt_color_hv ?>;
+    }
+
 
   </style>
   <style type="text/css" media="only screen and (max-width: 600px)">
@@ -171,7 +221,7 @@ if (! defined('ABSPATH')) {
       body[class*="background"],
       table[class*="background"],
       td[class*="background"] {
-        background: #eeeeee !important;
+        background: <?= $main_bg_color ?> !important;
       }
 
       table[class="card"] {
@@ -198,6 +248,9 @@ if (! defined('ABSPATH')) {
       }
     }
   </style>
+  <?php if($additional_css) {
+      echo '<style type="text/css" >'.wp_kses_post($additional_css).'</style>';
+  } ?>
 </head>
 
 <body id="email_body" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="" class="background">
@@ -210,9 +263,9 @@ if (! defined('ABSPATH')) {
               <td valign="top" class="wrap-cell" style="padding-top:30px; padding-bottom:30px;">
                 <table cellpadding="0" cellspacing="0" class="force-full-width">
                   <tr>
-                   <td height="60" valign="top" class="header-cell">
-                      <img id="email_logo" width="196" height="60" src="<?php echo esc_url($logo) ;?>" alt="logo">
-                    </td>
+                  <td id="email_logo" height="60" valign="top" class="header-cell">
+                    <img  width="196" height="60" src="<?php echo esc_url($logo) ;?>" alt="logo" />
+                  </td>
                   </tr>
                   <tr>
                     <td valign="top" class="body-cell">
@@ -221,11 +274,20 @@ if (! defined('ABSPATH')) {
                   </tr>
                   <?php if($footer): ?>
                   <tr>
-                    <td valign="top" class="footer-cell">
-                      <?php echo esc_html($footer) ;?>
+                    <td id="footer_text" valign="top" class="footer-cell">
+                    <?php echo wp_kses_post($footer) ; ?>
                     </td>
                   </tr>
                   <?php endif; ?>
+                  <tr>
+                   <td id="footer_widget" valign="top" class="footer-cell">
+                    <?php
+                      if (is_active_sidebar('mc_email_footer')) {
+                          dynamic_sidebar('mc_email_footer');
+                      }
+?>
+                    </td>
+                   </tr>
                 </table>
               </td>
             </tr>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mail-control\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-26 16:52+0100\n"
+"POT-Creation-Date: 2023-01-17 05:48+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rahal <rahal.aboulfeth@gmail.com>\n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Mail Control"
 msgstr "Mail Control"
 
-#: admin.php:84 admin.php:151
+#: admin.php:84 admin.php:175
 msgid "You don't have permission to do this"
 msgstr "Vous n’avez pas le droit de faire ça"
 
@@ -34,65 +34,65 @@ msgstr "N’a pas réussi à renvoyer le mail"
 msgid "Email resent succesfully"
 msgstr "Email réenvoyé avec succès"
 
-#: admin.php:169 admin.php:240
+#: admin.php:193 admin.php:271
 msgid "Email errors"
 msgstr "Erreur d’envoi de l’email"
 
-#: admin.php:171
+#: admin.php:195
 #, fuzzy
 #| msgid "Mail Control"
 msgid "Email Content"
 msgstr "Mail Control"
 
-#: admin.php:173 admin.php:201
+#: admin.php:197 admin.php:232
 msgid "Headers"
 msgstr "Entetes"
 
-#: admin.php:176 admin.php:217
+#: admin.php:200 admin.php:248
 msgid "Attachements"
 msgstr "Pièces jointes"
 
-#: admin.php:179 admin.php:245
+#: admin.php:203 admin.php:276
 msgid "Events"
 msgstr "Évènements"
 
-#: admin.php:184
+#: admin.php:208
 msgid "HTML version"
 msgstr "Version HTML"
 
-#: admin.php:197
+#: admin.php:228
 msgid "Plain Text version"
 msgstr "Version Texte"
 
-#: admin.php:254 emails-table.php:138
+#: admin.php:282 emails-table.php:138
 msgid "Date"
 msgstr "Date"
 
-#: admin.php:255
+#: admin.php:283
 msgid "Event"
 msgstr "Évènement"
 
-#: admin.php:256
+#: admin.php:284
 msgid "URL"
 msgstr "URL"
 
-#: admin.php:257
+#: admin.php:285
 msgid "IP"
 msgstr "IP"
 
-#: admin.php:258
+#: admin.php:286
 msgid "User Agent"
 msgstr "Navigateur"
 
-#: admin.php:265
+#: admin.php:293
 msgid "Open"
 msgstr "Ouverture"
 
-#: admin.php:265
+#: admin.php:293
 msgid "Click"
 msgstr "Clic"
 
-#: admin.php:274
+#: admin.php:302
 msgid "Sorry, no events so far"
 msgstr "Désolé, aucun événement pour le moment"
 
@@ -110,7 +110,7 @@ msgstr ""
 "Temps de pause entre les emails (A utiliser dans le cas de limitations du "
 "serveur SMTP)"
 
-#: email-customizer.php:20
+#: email-customizer.php:20 email-customizer.php:490
 msgid "Email Customizer"
 msgstr "Personnaliseur des emails"
 
@@ -122,33 +122,139 @@ msgstr "Activez les personnalisations des emails"
 msgid "Customize Your Emails"
 msgstr "Personnalisez vos emails"
 
-#: email-customizer.php:86
-msgid "Setup your style"
-msgstr "Personnaliser votre style"
+#: email-customizer.php:125
+msgid "General Style"
+msgstr ""
 
-#: email-customizer.php:87
-msgid "Setup your content"
-msgstr "Personnaliser votre contenu"
+#: email-customizer.php:127
+#, fuzzy
+#| msgid "Headers"
+msgid "Header"
+msgstr "Entetes"
 
-#: email-customizer.php:103
+#: email-customizer.php:129
+msgid "Title style"
+msgstr ""
+
+#: email-customizer.php:131
+msgid "Content Syle"
+msgstr ""
+
+#: email-customizer.php:133
+msgid "Button"
+msgstr ""
+
+#: email-customizer.php:135
+msgid "Footer"
+msgstr ""
+
+#: email-customizer.php:153
 msgid "Choose your logo"
 msgstr "Choisissez votre logo"
 
-#: email-customizer.php:109
-msgid "Choose your main color"
+#: email-customizer.php:161
+#, fuzzy
+#| msgid "Choose your main color"
+msgid "Choose your main Header color"
 msgstr "Choisir la couleur principale"
 
-#: email-customizer.php:116
-msgid "Choose your link color"
-msgstr "Choisir la couleur des liens"
+#: email-customizer.php:170
+#, fuzzy
+#| msgid "Choose your main color"
+msgid "Choose main background color"
+msgstr "Choisir la couleur principale"
 
-#: email-customizer.php:123
+#: email-customizer.php:179
+#, fuzzy
+#| msgid "Choose your main color"
+msgid "Choose your main font size"
+msgstr "Choisir la couleur principale"
+
+#: email-customizer.php:191
+#, fuzzy
+#| msgid "Choose your main color"
+msgid "Choose your main font family"
+msgstr "Choisir la couleur principale"
+
+#: email-customizer.php:199
 msgid "Container Width"
 msgstr "Largeur du conteneur"
 
-#: email-customizer.php:137
+#: email-customizer.php:210
+msgid "Additional CSS"
+msgstr ""
+
+#: email-customizer.php:223
+#, fuzzy
+#| msgid "Choose your main color"
+msgid "Choose your text color"
+msgstr "Choisir la couleur principale"
+
+#: email-customizer.php:232
+msgid "Choose your link color"
+msgstr "Choisir la couleur des liens"
+
+#: email-customizer.php:239
+msgid "Content padding"
+msgstr ""
+
+#: email-customizer.php:248
+#, fuzzy
+#| msgid "Choose your main color"
+msgid "Choose Title color"
+msgstr "Choisir la couleur principale"
+
+#: email-customizer.php:259 email-customizer.php:331
+msgid "Text color"
+msgstr ""
+
+#: email-customizer.php:268
+#, fuzzy
+#| msgid "Background Mailer"
+msgid "Background color"
+msgstr "Envoie en tache de fond"
+
+#: email-customizer.php:275
+msgid "Text hover color"
+msgstr ""
+
+#: email-customizer.php:282
+#, fuzzy
+#| msgid "Background Mailer"
+msgid "Background hover color"
+msgstr "Envoie en tache de fond"
+
+#: email-customizer.php:289
+msgid "Button font size"
+msgstr ""
+
+#: email-customizer.php:301
+msgid "Left & Right padding"
+msgstr ""
+
+#: email-customizer.php:308
+msgid "Top & Bottom padding"
+msgstr ""
+
+#: email-customizer.php:315
+msgid "Border Radius"
+msgstr ""
+
+#: email-customizer.php:324
+#, fuzzy
+#| msgid "Choose your main color"
+msgid "Choose your Background Footer color"
+msgstr "Choisir la couleur principale"
+
+#: email-customizer.php:340
 msgid "Type your footer content"
 msgstr "Saisissez le contenu de votre pied de page"
+
+#: email-customizer.php:540
+#, fuzzy
+#| msgid "Mail Control"
+msgid "Email Footer"
+msgstr "Mail Control"
 
 #: email-tracker.php:15
 msgid "Email Logging and Tracking"
@@ -322,9 +428,13 @@ msgid ""
 msgstr ""
 
 #: settings.php:23
-#, php-format
+#, fuzzy, php-format
+#| msgid ""
+#| "Welcone to Mail Contol, your one stop plugin to take control over your "
+#| "wordpress emails, feel to <a href=\"%s\" >contact us</a> if you have any "
+#| "question."
 msgid ""
-"Welcone to Mail Contol, your one stop plugin to take control over your "
+"Welcome to Mail Contol, your one stop plugin to take control over your "
 "wordpress emails, feel to <a href=\"%s\" >contact us</a> if you have any "
 "question."
 msgstr ""
@@ -636,6 +746,12 @@ msgstr "Sélecteur DKIM"
 #: smtp-mailer.php:184
 msgid "Test your domain"
 msgstr "Testez votre domaine"
+
+#~ msgid "Setup your style"
+#~ msgstr "Personnaliser votre style"
+
+#~ msgid "Setup your content"
+#~ msgstr "Personnaliser votre contenu"
 
 #~ msgid "Smtp Secure"
 #~ msgstr "SMTP sécurisé"

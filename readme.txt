@@ -5,7 +5,7 @@ Requires at least: 5.0
 Tested up to: 6.1
 Requires PHP: 7.4
 License: GPL
-Stable tag: 0.2.5
+Stable tag: 0.2.6
 
 Control your SMTP email deliverability, track your emails clicks and openings, and allow defering the emails as a background process to speed up your pages.
 
@@ -78,6 +78,9 @@ If you get stuck, you can ask for help in the [Mail Control Plugin Forum](https:
 4. Test your smtp confirugation, "Send a test email" and "Test your SPF, DKIM, and domain DMARC setup"
 
 == Changelog ==
+= 0.2.6 =
+* Fix regression : send test email result doesn't show
+* Fix composer dependencies : downgrade symfony/cssselector to 5.4.17 to keep minimum php version to 7.4
 = 0.2.5 : Resend Wordpress emails =
 * Added possibility to resend emails
 * Email Detail will list and show email attachments (image viewer or download link)

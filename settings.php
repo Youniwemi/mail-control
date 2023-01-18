@@ -19,10 +19,10 @@ class Settings extends \WP_OSA
     public function plugin_page()
     {
         if ( isset( $_GET['welcome-message'] ) && $_GET['welcome-message'] == 'true' ) {
-            echo  '<div class="notice notice-success is-dismissible"><p>' . sprintf( __( 'Welcone to Mail Contol, your one stop plugin to take control over your wordpress emails, feel to <a href="%s" >contact us</a> if you have any question.', 'mail-control' ), mc_fs()->contact_url() ) . '</p></div>' ;
+            echo  '<div class="notice notice-success is-dismissible"><p>' . sprintf( __( 'Welcome to Mail Contol, your one stop plugin to take control over your wordpress emails, feel to <a href="%s" >contact us</a> if you have any question.', 'mail-control' ), mc_fs()->contact_url() ) . '</p></div>' ;
         }
         echo  '<div class="wrap">' ;
-        echo  '<h1>' . __( 'Mail Control Settings', 'mail-control' ) . '</h1>' ;
+        echo  '<h1>' . esc_html__( 'Mail Control Settings', 'mail-control' ) . '</h1>' ;
         $this->show_navigation();
         $this->show_forms();
         echo  '</div>' ;
