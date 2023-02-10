@@ -1,25 +1,28 @@
-=== Mail Control - SMTP Deliverability, Email logging, opens and clicks Tracking ===
+=== Mail Control - Email Customizer, SMTP Deliverability, logging, open and click Tracking ===
 Contributors: rahal.aboulfeth
-Tags: email tracking, email, smtp, email log, email deliverability, tracking, email marketing
+Tags: email customizer, smtp, email, email log, email deliverability, email tracking
 Requires at least: 5.0
-Tested up to: 6.1
+Tested up to: 6.1.1
 Requires PHP: 7.4
 License: GPL
-Stable tag: 0.2.6
+Stable tag: 0.2.7
 
-Control your SMTP email deliverability, track your emails clicks and openings, and allow defering the emails as a background process to speed up your pages.
+Design and customize email templates, control your SMTP email deliverability, track your emails clicks and openings, and allow defering the emails as a background process to speed up your pages.
 
 == Description ==
 
-Control your SMTP email deliverability, track your emails clicks and openings (reads), and allow defering the emails as a background process to speed up your pages.
+Design and customize your emails using Wordpress native customizer (compatible with WooCommerce), control your SMTP email deliverability, track your emails clicks and openings (reads), and allow defering the emails as a background process to speed up your pages.
 
-With Mail Control, you will be able to have a better control over how your emails are handled by wordpress.
+With Mail Control, you will have a better control over how your emails are handled by wordpress (and WooCommerce) from email design and customization to smtp delivery and click tracking.
+
+=== Email Designer using Wordpress native customizer ===
+Design beautiful email using the Woocommerce compatible Email Customizer. The UI provided by Wordpress Native Customizer makes it easy to customize the look and feel of your emails. 
 
 === Tracking and logging emails opening and clicks ===
 This will allow you to optimize how you craft your emails content and get the better of your email marketing.
 
 === Sending Emails via an SMTP server ===
-Need a better deliverability for your emails? use a reputable SMTP server is the way to go.
+For a better deliverability for your emails, Mail Control lets you setup easily you favorite SMTP server.
 
 === Testing Email Deliverability of your SMTP server ===
 Help you make sure your smtp servers checks all the requierements for the perfect deliverability by testing your SFP, DKIM and DMARC setup (and more on this to come).
@@ -35,6 +38,9 @@ You can find all the emails handled by wordpress (or still in the queue), and re
 [Mail Control Online Documentation](https://www.wpmailcontrol.com/docs/) writing is in progress.
 
 == Frequently Asked Questions ==
+
+= How can I customize wordpress and WooCommerce emails? =
+After installing Mail Control, you can access the Email customizer to design you emails (you will be able to select what email to customize) and send a preview email before activating the feature.
 
 = Why should I use an Email Tracker to track Email Opening and clicks? =
 
@@ -62,6 +68,19 @@ Probably, as long as your theme or plugin doesn't override the wp_mail function.
 
 As tested now, mail control is compatible with "Contact Form 7" and "WooCommerce".
 
+= Can Mail Control send emails using Gmail? =
+Sure, you can setup the SMTP Mailer to use Gmail. 
+First, you should create a [password application](https://myaccount.google.com/apppasswords) for your wordpress site, this will allow Mail Control to send emails using your gmail account.
+SMTP Host : smtp.gmail.com
+SMTP Port : 465
+Encryption : ssl
+Smtp User : your-gmail-adress@gmail.com
+Smtp Password : The password your created earlier
+From Email : your-gmail-adress@gmail.com
+
+Please be aware that there is a [500 emails limit per day](https://support.google.com/mail/answer/22839).
+
+
 = Where can I get support? =
 
 If you get stuck, you can ask for help in the [Mail Control Plugin Forum](https://wordpress.org/support/plugin/mail-control).
@@ -78,6 +97,8 @@ If you get stuck, you can ask for help in the [Mail Control Plugin Forum](https:
 4. Test your smtp confirugation, "Send a test email" and "Test your SPF, DKIM, and domain DMARC setup"
 
 == Changelog ==
+= 0.2.7 : Email Customizer =
+* Customize emails using wordpress native customizer (compatible with WooCommerce)
 = 0.2.6 =
 * Fix regression : send test email result doesn't show
 * Fix composer dependencies : downgrade symfony/cssselector to 5.4.17 to keep minimum php version to 7.4
