@@ -36,6 +36,9 @@ class Settings extends \WP_OSA
     }
 }
 
+
+
+
 function general_settings()
 {
     $admin_capabilities = array_keys(get_role('administrator')->capabilities);

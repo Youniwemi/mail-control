@@ -49,6 +49,7 @@ function get_email_queue()
 function add_to_email_queue(array $args)
 {
     global $wpdb;
+
     extract($args);
     if (is_string($headers)) {
         // make sure we have an array
@@ -60,7 +61,8 @@ function add_to_email_queue(array $args)
             'date_time'=> current_time('mysql'),
             'to'=> $to ,
             'subject' => $subject ,
-            'message' => $message ,
+            // customizer runs first, and sets text/html if content type is not html. see beautify
+            'message' => isset($message['text/html']) ? $message['text/html'] : $message,
             // message plain chan be set by customizer when transforming text to html
             'message_plain' => isset($message_plain) ? $message_plain : $message ,
             // We save as json
@@ -69,6 +71,7 @@ function add_to_email_queue(array $args)
             'in_queue' => 1
         ]
     );
+
 
     return $wpdb->insert_id;
 }
@@ -96,10 +99,9 @@ function queue_wp_mail(bool $return=null, array $atts)
     if ($queued && $added === null) {
         // schedule for right away
         $time = time();
-        $return = wp_schedule_single_event($time, 'mc_process_email_queue', [
+        wp_schedule_single_event($time, 'mc_process_email_queue', [
             'time' =>  $time  // force scheduling ( caching may prevent adding new cron )
         ]);
-
         add_action('shutdown', 'spawn_cron');
         $added = true;
     }
@@ -116,6 +118,7 @@ function process_email_queue($time = null)
 {
     defined('MC_PROCESSING_MAIL_QUEUE') || define('MC_PROCESSING_MAIL_QUEUE', true);
     $queue = get_email_queue();
+
     if (! empty($queue)) {
         $count = count($queue);
         foreach ($queue as $key => $args) {
@@ -125,7 +128,7 @@ function process_email_queue($time = null)
             }
             $headers[] = "X-Queue-id: {$args->id}";
 
-            $attachments = json_decode($args->attachments, ARRAY_A);
+            $attachments = $args->attachments ? json_decode($args->attachments, ARRAY_A) : [];
 
             // if the message in the queue is already htmlized
             if ($args->message != $args->message_plain) {
@@ -133,9 +136,12 @@ function process_email_queue($time = null)
                     'text/plain' => $args->message_plain,
                     'text/html' => $args->message
                 ];
+                // Ensure header is set as alternative
+                $headers = email_header_set($headers, 'Content-Type', 'multipart/alternative');
             } else {
                 $message = $args->message;
             }
+
             wp_mail($args->to, $args->subject, $message, $headers, $attachments);
             $count--;
             if ($count > 0 && BACKGROUND_MAILER_SLEEP_BETWEEN_EMAILS>0) {

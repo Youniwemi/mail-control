@@ -5,7 +5,7 @@ Requires at least: 5.0
 Tested up to: 6.1.1
 Requires PHP: 7.4
 License: GPL
-Stable tag: 0.2.7
+Stable tag: 0.2.8
 
 Design and customize email templates, control your SMTP email deliverability, track your emails clicks and openings, and allow defering the emails as a background process to speed up your pages.
 
@@ -16,7 +16,7 @@ Design and customize your emails using Wordpress native customizer (compatible w
 With Mail Control, you will have a better control over how your emails are handled by wordpress (and WooCommerce) from email design and customization to smtp delivery and click tracking.
 
 === Email Designer using Wordpress native customizer ===
-Design beautiful email using the Woocommerce compatible Email Customizer. The UI provided by Wordpress Native Customizer makes it easy to customize the look and feel of your emails. 
+Design beautiful emails using the WooCommerce compatible Email Customizer. The UI provided by Wordpress Native Customizer makes it easy to customize the look and feel of your emails.
 
 === Tracking and logging emails opening and clicks ===
 This will allow you to optimize how you craft your emails content and get the better of your email marketing.
@@ -97,6 +97,8 @@ If you get stuck, you can ask for help in the [Mail Control Plugin Forum](https:
 4. Test your smtp confirugation, "Send a test email" and "Test your SPF, DKIM, and domain DMARC setup"
 
 == Changelog ==
+= 0.2.8 =
+* Bug fix : customized message was not saved correctly to mail queue if background mailer is active.
 = 0.2.7 : Email Customizer =
 * Customize emails using wordpress native customizer (compatible with WooCommerce)
 = 0.2.6 =

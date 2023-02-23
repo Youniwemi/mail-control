@@ -187,11 +187,9 @@ function get_font_family( $key = null )
 /**
  * Gets the font transforms.
  *
- * @param      <type>  $key    The key
- *
  * @return     array   The font transforms.
  */
-function get_font_transforms( $key = null )
+function get_font_transforms()
 {
     static  $font_transform ;
     if ( $font_transform == null ) {
@@ -208,16 +206,14 @@ function get_font_transforms( $key = null )
 /**
  * Gets the text align.
  *
- * @param      string  $key    The key
- *
  * @return     array   The text align.
  */
-function get_text_align( $key = null )
+function get_text_align()
 {
     static  $text_align ;
     if ( $text_align == null ) {
         $text_align = [
-            'Left'   => __( 'Left', 'mail-control' ),
+            'left'   => __( 'Left', 'mail-control' ),
             'center' => __( 'Center', 'mail-control' ),
             'right'  => __( 'Right', 'mail-control' ),
         ];
@@ -559,7 +555,7 @@ function beautify( $atts )
             'text/html'  => htmlize( $atts['message'] ),
             'text/plain' => $atts['message_plain'],
         ];
-        $atts['headers'][] = 'Content-Type: multipart/alternative';
+        $atts['headers'] = email_header_set( $atts['headers'], 'Content-Type', 'multipart/alternative' );
     }
     
     $content = ( isset( $atts['message']['text/html'] ) ? $atts['message']['text/html'] : $atts['message'] );

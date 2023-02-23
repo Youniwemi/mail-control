@@ -13,7 +13,7 @@ function admin_menu()
         __( 'Mail Control', 'mail-control' ),
         MC_PERMISSION_VIEWER,
         'mail-control',
-        'Mail_Control\\show_email_table',
+        __NAMESPACE__ . '\\show_email_table',
         'data:image/svg+xml;base64,' . base64_encode( file_get_contents( MC_ASSETS_DIR . 'img/icon.svg' ) )
     );
     add_action( 'load-toplevel_page_mail-control', function () {

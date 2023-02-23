@@ -75,6 +75,52 @@ function email_header_has( array $headers, $key, $value = null )
 }
 
 /**
+ * Adds or updates email header
+ *
+ * @param      array   $headers  The headers
+ * @param      string  $key      The key
+ * @param      string  $value    The value
+ *
+ * @return     array    updated headers
+ */
+function email_header_set( array $headers, $key, $value )
+{
+    
+    if ( count( $headers ) ) {
+        $found = false;
+        foreach ( $headers as $i => $header ) {
+            
+            if ( $header ) {
+                [ $h, $v ] = array_map( 'trim', explode( ':', $header ) );
+                
+                if ( strtolower( $h ) === strtolower( $key ) ) {
+                    $found = true;
+                    // Content-type is special, Content-Type: text/html; charset=...
+                    // in this case, we compare with the first part
+                    $v = explode( ";", $v );
+                    array_shift( $v );
+                    
+                    if ( count( $v ) == 0 ) {
+                        $headers[$i] = "{$key}: {$value}";
+                    } else {
+                        $headers[$i] = "{$key}: {$value}; " . implode( "; ", $v );
+                    }
+                    
+                    break;
+                }
+            
+            }
+        
+        }
+        if ( !$found ) {
+            $headers[] = "{$key}: {$value}";
+        }
+    }
+    
+    return $headers;
+}
+
+/**
  * Update the mail status in the queue
  *
  * @param \PHPMailer\PHPMailer\PHPMailer $phpmailer The phpmailer
