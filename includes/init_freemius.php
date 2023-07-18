@@ -69,7 +69,6 @@ if ( !function_exists( 'mc_fs' ) ) {
         10,
         6
     );
-    $mc_fs->add_action( 'after_uninstall', 'mc_fs_uninstall_cleanup' );
     // Signal that SDK was initiated.
     do_action( 'mc_fs_loaded' );
 }

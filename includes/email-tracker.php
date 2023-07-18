@@ -121,6 +121,41 @@ function email_header_set( array $headers, $key, $value )
 }
 
 /**
+ * Sanitizes the html content
+ *
+ * @param      string  $content  The content
+ *
+ * @return     string  Sanitized html
+ */
+function sanitize_html_email_content( $content )
+{
+    // we basically use allowed tags in posts and
+    $allowed_html = wp_kses_allowed_html( 'post' );
+    // Allow essential tags
+    foreach ( [
+        'html',
+        'head',
+        'body',
+        'meta',
+        'link',
+        'style'
+    ] as $tag ) {
+        $allowed_html[$tag] = _wp_add_global_attributes( true );
+    }
+    $allowed_html['meta'] += [
+        'http-equiv' => true,
+        'name'       => true,
+        'content'    => true,
+    ];
+    $allowed_html['link'] += [
+        'rel'  => true,
+        'type' => true,
+        'href' => true,
+    ];
+    return wp_kses( $content, $allowed_html );
+}
+
+/**
  * Update the mail status in the queue
  *
  * @param \PHPMailer\PHPMailer\PHPMailer $phpmailer The phpmailer
@@ -143,9 +178,11 @@ function update_email( PHPMailer $phpmailer )
     
     if ( $update ) {
         global  $wpdb ;
+        // We save the email as it was sent, so we can resend it as is.
+        // IMPORTANT : we have to watch out if we need to print in log view
         $wpdb->update( $wpdb->prefix . MC_EMAIL_TABLE, [
             'date_time'     => current_time( 'mysql' ),
-            'message'       => $phpmailer->Body,
+            'message'       => sanitize_html_email_content( $phpmailer->Body ),
             'message_plain' => ( $phpmailer->AltBody ? $phpmailer->AltBody : $phpmailer->html2text( $phpmailer->Body ) ),
             'headers'       => json_encode( $headers ),
             'attachments'   => json_encode( array_map( function ( $a ) {
@@ -233,7 +270,7 @@ function insert_email( PHPMailer $phpmailer )
         'date_time'     => current_time( 'mysql' ),
         'to'            => get_email_recipients( $phpmailer ),
         'subject'       => $phpmailer->Subject,
-        'message'       => $phpmailer->Body,
+        'message'       => sanitize_html_email_content( $phpmailer->Body ),
         'message_plain' => ( $phpmailer->AltBody ? $phpmailer->AltBody : $phpmailer->html2text( $phpmailer->Body ) ),
         'headers'       => json_encode( get_all_headers( $phpmailer ) ),
         'attachments'   => json_encode( array_map( function ( $a ) {

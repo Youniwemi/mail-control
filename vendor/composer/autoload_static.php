@@ -6,44 +6,44 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit5a8a260452a2706b960bbb6952c3bd05
 {
-    public static $files = array (
+    public static $files = array(
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
-        'cfb03dbdb221e442e2d454763906fa48' => __DIR__ . '/..' . '/ahmadawais/wp-oop-settings-api/class-wp-osa.php',
+        '0d4507a35308200d41425eaae4b516fa' => __DIR__ . '/..' . '/youniwemi/wp-settings-kit/class-wp-settings-kit.php',
     );
 
-    public static $prefixLengthsPsr4 = array (
-        'S' => 
-        array (
+    public static $prefixLengthsPsr4 = array(
+        'S' =>
+        array(
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Component\\CssSelector\\' => 30,
             'Sabberworm\\CSS\\' => 15,
         ),
-        'P' => 
-        array (
+        'P' =>
+        array(
             'Pelago\\Emogrifier\\' => 18,
         ),
     );
 
-    public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Php80\\' => 
-        array (
+    public static $prefixDirsPsr4 = array(
+        'Symfony\\Polyfill\\Php80\\' =>
+        array(
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
-        'Symfony\\Component\\CssSelector\\' => 
-        array (
+        'Symfony\\Component\\CssSelector\\' =>
+        array(
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
-        'Sabberworm\\CSS\\' => 
-        array (
+        'Sabberworm\\CSS\\' =>
+        array(
             0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
         ),
-        'Pelago\\Emogrifier\\' => 
-        array (
+        'Pelago\\Emogrifier\\' =>
+        array(
             0 => __DIR__ . '/..' . '/pelago/emogrifier/src',
         ),
     );
 
-    public static $classMap = array (
+    public static $classMap = array(
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',

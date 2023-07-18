@@ -2,8 +2,9 @@
 
 namespace Mail_Control;
 
-class Settings extends \WP_OSA
+class Settings extends \WP_Settings_Kit
 {
+    protected $settings_name = 'mc';
     public function admin_menu()
     {
         add_submenu_page(

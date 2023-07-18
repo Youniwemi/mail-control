@@ -1,9 +1,11 @@
-<?php return array(
+<?php
+
+return array(
     'root' => array(
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'fba50818631f2e4eb61ac23d65944d269d1a25f9',
+        'reference' => '90725a4932ea67bfcf4fda5e80323c9802430646',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,27 +15,16 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'fba50818631f2e4eb61ac23d65944d269d1a25f9',
+            'reference' => '90725a4932ea67bfcf4fda5e80323c9802430646',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'ahmadawais/wp-oop-settings-api' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'f06a7c04c0d72c9dc5bf8c7b47ceb9dc75ad6f56',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../ahmadawais/wp-oop-settings-api',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
-            'dev_requirement' => false,
-        ),
         'freemius/wordpress-sdk' => array(
-            'pretty_version' => '2.5.3',
-            'version' => '2.5.3.0',
-            'reference' => '2e56d683dd7b30445940679ecb401d2aff746c9e',
+            'pretty_version' => '2.5.10',
+            'version' => '2.5.10.0',
+            'reference' => null,
             'type' => 'library',
             'install_path' => __DIR__ . '/../freemius/wordpress-sdk',
             'aliases' => array(),
@@ -72,6 +63,15 @@
             'reference' => '7a6ff3f1959bb01aefccb463a0f2cd3d3d2fd936',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php80',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'youniwemi/wp-settings-kit' => array(
+            'pretty_version' => '1.1.0',
+            'version' => '1.1.0.0',
+            'reference' => '7071d0bda386510c214b80408671321c72aa4d36',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../youniwemi/wp-settings-kit',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

@@ -162,7 +162,7 @@ add_action('wp_ajax_process_mail_queue', function () {
     }
 });
 
-add_action('settings_ready', function () {
+add_action('settings_ready_mc', function () {
     if (defined('BACKGROUND_MAILER_ACTIVE') && BACKGROUND_MAILER_ACTIVE == 'on') {
         if (defined('DOING_CRON') && DOING_CRON==1) {
             add_action('mc_process_email_queue', 'Mail_Control\\process_email_queue', 10, 1);

@@ -158,7 +158,9 @@ if (! defined('ABSPATH')) {
       padding-top: 20px;
       padding-bottom: 20px;
       text-align: <?= esc_attr($logo_position) ?>;
-      
+    }
+    td.header-cell img{
+      width: <?= intval($logo_width) ?>px;
     }
 
     .body-cell {

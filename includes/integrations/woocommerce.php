@@ -200,7 +200,7 @@ add_filter( 'mc_customizer_defaults', function ( $defaults ) {
     ];
     return $defaults;
 } );
-add_action( 'settings_ready', function () {
+add_action( 'settings_ready_mc', function () {
     setup_woocommerce_customizer();
     if ( defined( 'EMAIL_CUSTOMIZER_ACTIVE' ) && EMAIL_CUSTOMIZER_ACTIVE == 'on' || MC_TEST_EMAIL_CUSTOMIZATION ) {
         

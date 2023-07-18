@@ -283,7 +283,7 @@ add_action( 'wp_ajax_detail_email', function () {
         $content = $email->message;
     }
     
-    $content = preg_replace( '#<script(.*?)>(.*?)</script>#is', '', $content ) . "<script>\n   \t\t\t\twindow.onload = function(){ \n   \t\t\t\t\twindow.parent.postMessage(\n   \t\t\t\t\tJSON.stringify({\n   \t\t\t\t\t\tfrom:'email_content',\n   \t\t\t\t\t\theight: document.documentElement.scrollHeight  \n   \t\t\t\t\t}), '*');\n   \t\t\t\t};</script>";
+    $content = sanitize_html_email_content( $content ) . "<script>\n   \t\t\t\twindow.onload = function(){ \n   \t\t\t\t\twindow.parent.postMessage(\n   \t\t\t\t\tJSON.stringify({\n   \t\t\t\t\t\tfrom:'email_content',\n   \t\t\t\t\t\theight: document.documentElement.scrollHeight  \n   \t\t\t\t\t}), '*');\n   \t\t\t\t};</script>";
     ?>
    			<iframe src="<?php 
     echo  htmlspecialchars( 'data:text/html,' . rawurlencode( $content ) ) ;

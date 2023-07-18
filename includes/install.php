@@ -31,4 +31,4 @@ function db_check()
     }
 }
 
-add_action( 'plugins_loaded', 'Mail_Control\\db_check' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\db_check' );

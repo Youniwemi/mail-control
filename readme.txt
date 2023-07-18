@@ -2,10 +2,10 @@
 Contributors: rahal.aboulfeth
 Tags: email customizer, smtp, email, email log, email deliverability, email tracking
 Requires at least: 5.0
-Tested up to: 6.1.1
+Tested up to: 6.2.2
 Requires PHP: 7.4
 License: GPL
-Stable tag: 0.2.8
+Stable tag: 0.3.0
 
 Design and customize email templates, control your SMTP email deliverability, track your emails clicks and openings, and allow defering the emails as a background process to speed up your pages.
 
@@ -97,6 +97,9 @@ If you get stuck, you can ask for help in the [Mail Control Plugin Forum](https:
 4. Test your smtp confirugation, "Send a test email" and "Test your SPF, DKIM, and domain DMARC setup"
 
 == Changelog ==
+= 0.3.0 =
+* Update dependencies
+* Escape before printing admin table
 = 0.2.8 =
 * Bug fix : customized message was not saved correctly to mail queue if background mailer is active.
 = 0.2.7 : Email Customizer =

@@ -1,11 +1,15 @@
 <?php
+
 /**
- * Main Class file for `WP_OSA`
+ * This file is part of Wp Settings Kit, a fork of "WP-OOP-Settings-API" maintained by "Rahal Aboulfeth".
+ * "WP-OOP-Settings-API" was created by ( Ahmad Awais :@MrAhmadAwais )  and is licensed under GNU GENERAL PUBLIC Version 2 LICENSE].
+ * This fork includes additional features and improvements by "Rahal Aboulfeth". and is released under the same license (GPL2).
  *
- * Main class that deals with all other classes.
+ * @copyright Copyright (c) 2023 Rahal Aboulfeth
+ * @license  GPL2
  *
- * @since   1.0.0
- * @package WPOSA
+ * @package WP_SKIT_VERSION
+ * @version '1.1.0'
  */
 
 // Exit if accessed directly.
@@ -13,17 +17,20 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
+
+define('WP_SKIT_VERSION', '1.1.0');
+
 /**
- * WP_OSA.
+ * WP_Settings_Kit.
  *
- * WP Settings API Class.
+ * WP Settings Kit Class.
  *
  * @since 1.0.0
  */
 
-if (! class_exists('WP_OSA')) :
+if (! class_exists('WP_Settings_Kit')) :
 
-    class WP_OSA
+    class WP_Settings_Kit
     {
         /**
          * Sections array.
@@ -31,7 +38,7 @@ if (! class_exists('WP_OSA')) :
          * @var   array
          * @since 1.0.0
          */
-        protected $sections_array = array();
+        private $sections_array = array();
 
         /**
          * Fields array.
@@ -39,7 +46,12 @@ if (! class_exists('WP_OSA')) :
          * @var   array
          * @since 1.0.0
          */
-        protected $fields_array = array();
+        private $fields_array = array();
+
+
+        private $metabox = null;
+        private $options = null;
+        protected $settings_name = null;
 
 
         /**
@@ -47,23 +59,37 @@ if (! class_exists('WP_OSA')) :
          *
          * @since  1.0.0
          */
-        public function __construct($options = null)
+        public function __construct($options = null, $metabox = null)
         {
             $this->options = $options;
-            $this->init_consts();
-            if(is_admin()) {
-                // Enqueue the admin scripts.
-                add_action('admin_enqueue_scripts', array( $this, 'admin_scripts' ));
+            if($metabox) {
+                // Use for post metabox
+                $this->metabox = $metabox;
+                add_action('admin_init', array($this, 'add_metabox'));
+                add_action('save_post', array($this, 'save_metabox'), 10, 2);
+            } else {
+                $this->init_consts();
+                if(is_admin()) {
+                    // Enqueue the admin scripts.
+                    add_action('admin_enqueue_scripts', array( $this, 'admin_scripts' ));
 
-                // Hook it up.
-                add_action('admin_init', array( $this, 'admin_init' ));
+                    // Hook it up.
+                    add_action('admin_init', array( $this, 'admin_init' ));
 
-                // Menu.
-                add_action('admin_menu', array( $this, 'admin_menu' ));
-                $this->init_options();
+                    // Menu.
+                    add_action('admin_menu', array( $this, 'admin_menu' ));
+                    $this->init_options();
+                }
+
+                // To allow multiple instanciations off this class
+                if ($this->settings_name) {
+                    do_action('settings_ready_'. $this->settings_name);
+                } else {
+                    do_action('settings_ready');
+                }
             }
-            do_action('settings_ready');
         }
+
 
         /**
          * Initializes the sections and fields.
@@ -88,23 +114,7 @@ if (! class_exists('WP_OSA')) :
                             }
                         }
 
-                        $this->add_field(
-                            $name,
-                            [
-                                'id'      => $field['id'],
-                                'type'    => $field['type'],
-                                'name'    => $field['title'],
-                                'label_for' => isset($field['label_for']) ? $field['label_for'] : null,
-                                'desc'    => isset($field['description']) ? $field['description'] : null,
-                                'default' => isset($field['default']) ? $field['default'] : null,
-                                'size' => isset($field['size']) ? $field['size'] : null,
-                                'options' => isset($field['options']) ? $field['options'] : null,
-                                'query' => isset($field['query']) ? $field['query'] : null,
-                                'placeholder' => isset($field['placeholder']) ? $field['placeholder'] : null,
-                                'sanitize_callback' => isset($field['sanitize_callback']) ? $field['sanitize_callback'] : null,
-                                'sanitization_error_message' => isset($field['sanitization_error_message']) ? $field['sanitization_error_message'] : null,
-                            ]
-                        );
+                        $this->add_field($name, $field);
                     }
                 }
             }
@@ -218,6 +228,22 @@ if (! class_exists('WP_OSA')) :
         }
 
 
+        public const default_field = [
+            'id' => '',
+            'name' => 'No name',
+            'desc' => '',
+            'type'    => 'text',
+            'label_for' => null,
+            'default' => null,
+            'std' => null,
+            'size' => null,
+            'options' => null,
+            'query' => null,
+            'callback' => null,
+            'placeholder' => null,
+            'sanitize_callback' => null,
+            'sanitization_error_message' => null
+        ];
 
         /**
          * Add a single field.
@@ -226,16 +252,20 @@ if (! class_exists('WP_OSA')) :
          */
         public function add_field($section, $field_array)
         {
-            // Set the defaults
-            $defaults = array(
-                'id'   => '',
-                'name' => '',
-                'desc' => '',
-                'type' => 'text',
-            );
-
             // Combine the defaults with user's arguements.
-            $arg = wp_parse_args($field_array, $defaults);
+            $field_array['section'] =  $section;
+            if(isset($field_array['default'])) {
+                $field_array['std'] =  $field_array['default']  ;
+            }
+            if(isset($field_array['title'])) {
+                $field_array['name'] =  $field_array['title']  ;
+            }
+            if(isset($field_array['description'])) {
+                $field_array['desc'] =  $field_array['description']  ;
+            }
+            $field_array['label_for'] = "{$section}[{$field_array['id']}]";
+
+            $arg = wp_parse_args($field_array, self::default_field);
 
             // Each field is an array named against its section.
             $this->fields_array[ $section ][] = $arg;
@@ -332,54 +362,6 @@ if (! class_exists('WP_OSA')) :
              */
             foreach ($this->fields_array as $section => $field_array) {
                 foreach ($field_array as $field) {
-                    // ID.
-                    $id = isset($field['id']) ? $field['id'] : false;
-
-                    // Type.
-                    $type = isset($field['type']) ? $field['type'] : 'text';
-
-                    // Name.
-                    $name = isset($field['name']) ? $field['name'] : 'No Name Added';
-
-                    // Label for.
-                    $label_for = "{$section}[{$field['id']}]";
-
-                    // Description.
-                    $description = isset($field['desc']) ? $field['desc'] : '';
-
-                    // Size.
-                    $size = isset($field['size']) ? $field['size'] : null;
-
-                    // Options.
-                    $options = isset($field['options']) ? $field['options'] : '';
-
-                    // Standard default value.
-                    $default = isset($field['default']) ? $field['default'] : '';
-
-                    // Standard default placeholder.
-                    $placeholder = isset($field['placeholder']) ? $field['placeholder'] : '';
-
-                    // Sanitize Callback.
-                    $sanitize_callback = isset($field['sanitize_callback']) ? $field['sanitize_callback'] : '';
-
-                    // Sanitization error message.
-                    $sanitization_error_message = isset($field['sanitization_error_message']) ? $field['sanitization_error_message'] : null;
-
-                    $args = array(
-                        'id'                => $id,
-                        'type'              => $type,
-                        'name'              => $name,
-                        'label_for'         => $label_for,
-                        'desc'              => $description,
-                        'section'           => $section,
-                        'size'              => $size,
-                        'options'           => $options,
-                        'std'               => $default,
-                        'placeholder'       => $placeholder,
-                        'sanitize_callback' => $sanitize_callback,
-                        'sanitization_error_message' => $sanitization_error_message,
-                    );
-
                     /**
                      * Add a new field to a section of a settings page.
                      *
@@ -394,14 +376,15 @@ if (! class_exists('WP_OSA')) :
 
                     // @param string 	$id
                     $field_id = $section . '[' . $field['id'] . ']';
-
+                    $type =  $field['type'];
+                    $name =  $field['name'];
                     add_settings_field(
                         $field_id,
                         $name,
                         array( $this, 'callback_' . $type ),
                         $section,
                         $section,
-                        $args
+                        $field
                     );
                 } // foreach ended.
             } // foreach ended.
@@ -428,6 +411,22 @@ if (! class_exists('WP_OSA')) :
             return sprintf(__('Please insert a valid %s'), $field_config['type']);
         }
 
+
+        protected function get_sanitizer($field_config)
+        {
+            return isset($field_config['sanitize_callback']) && is_callable($field_config['sanitize_callback']) ?
+                $field_config['sanitize_callback'] :
+                function ($field_value) use ($field_config) {
+                    return $this->sanitize_field($field_value, $field_config);
+                };
+        }
+        protected function get_error_message($field_config)
+        {
+            return isset($field_config['sanitization_error_message']) ?
+                                $field_config['sanitization_error_message'] :
+                                $this->default_sanitization_error_message($field_config);
+        }
+
         /**
          * Sanitize callback for Settings API fields.
          *
@@ -442,30 +441,22 @@ if (! class_exists('WP_OSA')) :
             foreach ($fields as $field_slug => $field_value) {
                 if (!empty($field_value) && $field_config = $this->get_field_config($section_id, $field_slug)) {
                     // Use sanitizer from field config, if not provided, use internal sanitization
-                    $sanitize_callback = isset($field_config['sanitize_callback']) && is_callable($field_config['sanitize_callback']) ?
-                        $field_config['sanitize_callback'] :
-                        function ($field_value) use ($field_config) {
-                            return $this->sanitize_field($field_value, $field_config);
-                        };
-                    if ($sanitize_callback) {
-                        $sanitized = call_user_func($sanitize_callback, $field_value);
-                        if (empty($sanitized)) {
-                            $error_message = isset($field_config['sanitization_error_message']) ?
-                                $field_config['sanitization_error_message'] :
-                                $this->default_sanitization_error_message($field_config);
-                            add_settings_error(
-                                $section_id,
-                                $section_id.'['.$field_slug.']', // so we can easily access the field ( see script method sanitization errors )
-                                $error_message,
-                                'error'
-                            );
-                            if(isset($old_values[$field_slug])) {
-                                // Get the old value
-                                $sanitized = $old_values[$field_slug];
-                            }
+                    $sanitize_callback = $this->get_sanitizer($field_config);
+
+                    $sanitized = call_user_func($sanitize_callback, $field_value);
+                    if (empty($sanitized)) {
+                        add_settings_error(
+                            $section_id,
+                            $section_id.'['.$field_slug.']', // so we can easily access the field ( see script method sanitization errors )
+                            $this->get_error_message($field_config),
+                            'error'
+                        );
+                        if(isset($old_values[$field_slug])) {
+                            // Get the old value
+                            $sanitized = $old_values[$field_slug];
                         }
-                        $fields[ $field_slug ] = $sanitized ;
                     }
+                    $fields[ $field_slug ] = $sanitized ;
                 }
             }
             return $fields;
@@ -485,6 +476,7 @@ if (! class_exists('WP_OSA')) :
             switch ($type) {
                 case 'checkbox':
                     return $field_value == 'on' ? 'on' : 'off' ;
+                case 'range':
                 case 'number':
                     return (is_numeric($field_value)) ? $field_value : 0;
                 case 'textarea':
@@ -563,8 +555,10 @@ if (! class_exists('WP_OSA')) :
             $value = esc_attr($this->get_option($args['id'], $args['section'], $args['std'], $args['placeholder']));
             $size  = isset($args['size']) && ! is_null($args['size']) ? $args['size'] : 'regular';
             $type  = isset($args['type']) ? $args['type'] : 'text';
+            $attributes  = isset($args['attributes']) && is_array($args['attributes']) ? wp_sanitize_script_attributes($args['attributes']) : '';
+            $after  = isset($args['after']) ? $args['after'] : '';
 
-            $html  = sprintf('<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"placeholder="%6$s"/>', $type, $size, $args['section'], $args['id'], $value, $args['placeholder']);
+            $html  = sprintf('<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s" placeholder="%6$s" %7$s /> %8$s', $type, $size, $args['section'], $args['id'], $value, $args['placeholder'], $attributes, $after);
             $html .= $this->get_field_description($args);
 
             echo $html;
@@ -577,6 +571,16 @@ if (! class_exists('WP_OSA')) :
          * @param array $args settings field args
          */
         public function callback_url($args)
+        {
+            $this->callback_text($args);
+        }
+
+        /**
+         * Displays a date field for a settings field
+         *
+         * @param array $args settings field args
+         */
+        public function callback_date($args)
         {
             $this->callback_text($args);
         }
@@ -602,12 +606,18 @@ if (! class_exists('WP_OSA')) :
         }
 
         /**
-         * Displays a date field for a settings field
+         * Displays a range field for a settings field
          *
          * @param array $args settings field args
          */
-        public function callback_date($args)
+        public function callback_range($args)
         {
+            $value = esc_html($this->get_option($args['id'], $args['section'], $args['std']));
+            $args['after'] = "<output>$value</output>";
+            if (!isset($args['attributes']) ||  !is_array($args['attributes'])) {
+                $args['attributes'] = [];
+            }
+            $args['attributes']['oninput']="this.nextElementSibling.value = this.value";
             $this->callback_text($args);
         }
 
@@ -684,7 +694,14 @@ if (! class_exists('WP_OSA')) :
             $size  = isset($args['size']) && ! is_null($args['size']) ? $args['size'] : 'regular';
 
             $html = sprintf('<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]">', $size, $args['section'], $args['id']);
-            foreach ($args['options'] as $key => $label) {
+            $options = isset($args['options']) ? $args['options'] : [];
+            if (isset($args['query']) && $args['query']['type']=='callback') {
+                if (is_callable($args['query']['function'])) {
+                    $query_args = isset($args['query']['args']) ? $args['query']['args'] : [];
+                    $options = call_user_func($args['query']['function'], $query_args);
+                }
+            }
+            foreach ($options as $key => $label) {
                 $html .= sprintf('<option value="%s"%s>%s</option>', $key, selected($value, $key, false), $label);
             }
             $html .= sprintf('</select>');
@@ -719,6 +736,28 @@ if (! class_exists('WP_OSA')) :
         {
             echo $this->get_field_description($args);
         }
+
+
+        /**
+         * Displays a content ( generate via callback )
+         *
+         * @param array $args settings field args.
+         * @return string
+         */
+        public function callback_content($args)
+        {
+            echo $this->get_field_description($args);
+            if (isset($args['callback'])) {
+                $callback = $args['callback'];
+                if(isset($callback['function']) && is_callable($callback['function'])) {
+                    $args = (isset($callback['args'])) ? $callback['args'] : '';
+                    echo  call_user_func($callback['function'], $args);
+                } else {
+                    echo 'Error wrong callback '.print_r($callback);
+                }
+            }
+        }
+
 
         /**
          * Displays a rich text textarea for a settings field
@@ -840,7 +879,7 @@ if (! class_exists('WP_OSA')) :
 
 
         /**
-         * Get the value of a settings field
+         * Get the value of a settings field (or meta)
          *
          * @param string $option  settings field name.
          * @param string $section the section name this field belongs to.
@@ -849,10 +888,20 @@ if (! class_exists('WP_OSA')) :
          */
         public function get_option($option, $section, $default = '')
         {
-            $options = get_option($section);
-
-            if (isset($options[ $option ])) {
-                return $options[ $option ];
+            if(isset($this->metabox)) {
+                global $post;
+                static $metas;
+                if($metas == null) {
+                    $metas = get_post_meta($post->ID);
+                }
+                if(isset($metas[$section.'_'.$option])) {
+                    return $metas[$section.'_'.$option][0];
+                }
+            } else {
+                $options = get_option($section);
+                if (isset($options[ $option ])) {
+                    return $options[ $option ];
+                }
             }
 
             return $default;
@@ -875,10 +924,10 @@ if (! class_exists('WP_OSA')) :
         {
             // add_options_page( $page_title, $menu_title, $capability, $menu_slug, array( $this, $callable ) );
             add_options_page(
-                'WP OOP Settings API',
-                'WP OOP Settings API',
+                'WP Settings Kit',
+                'WP Settings Kit',
                 'manage_options',
-                'wp_osa_settings',
+                'wp_settings_kit',
                 array( $this, 'plugin_page' )
             );
         }
@@ -886,7 +935,7 @@ if (! class_exists('WP_OSA')) :
         public function plugin_page()
         {
             echo '<div class="wrap">';
-            echo '<h1>WP OOP Settings API <span style="font-size:50%;">v' . WPOSA_VERSION . '</span></h1>';
+            echo '<h1>WP Settings Kit <span style="font-size:50%;">v' . WP_SKIT_VERSION . '</span></h1>';
             $this->show_navigation();
             $this->show_forms();
             echo '</div>';
@@ -940,6 +989,97 @@ if (! class_exists('WP_OSA')) :
 			</div>
 			<?php
             $this->script();
+        }
+
+        /**
+         * Adds a metabox.
+         */
+        public function add_metabox()
+        {
+            $this->init_options();
+            add_meta_box(
+                $this->metabox['id'],
+                $this->metabox['title'],
+                array( $this, 'display_metas' ),
+                $this->metabox['post_types'],
+                $this->metabox['context'],
+                $this->metabox['priority']
+            );
+        }
+
+        /**
+         * Display the metabox
+         */
+        public function display_metas()
+        {
+            $this->show_navigation();
+            $this->show_forms_metabox();
+        }
+
+
+
+        /**
+         * Show the section settings forms
+         *
+         * This function displays every sections in a different form
+         */
+        public function show_forms_metabox()
+        {
+            ?>
+			<div class="metabox-holder">
+				<?php foreach ($this->sections_array as $form) {
+				    $section  = $form['id'];
+				    echo "<div id='$section' class='group' ><h3>{$form['title']}</h3>\n";
+				    echo '<table class="form-table" role="presentation">';
+				    $fields = $this->fields_array[$section];
+				    foreach ($fields as $field) {
+				        $label_for = $field['label_for'];
+				        $name = $field['name'];
+				        $type = $field['type'];
+				        $callback = 'callback_'.$type;
+				        echo "<tr>";
+				        if ($label_for) {
+				            echo '<th scope="row"><label for="' . esc_attr($label_for) . '">' . $name  . '</label></th>';
+				        } else {
+				            echo '<th scope="row">' . $name  . '</th>';
+				        }
+				        echo '<td>';
+				        $this->$callback($field);
+				        echo '</td>';
+				        echo '</tr>';
+				    }
+				    echo '</table></div>';
+				} ?>
+			</div>
+			<?php
+            $this->script();
+        }
+
+        /**
+         * Saves the metabox hook
+         *
+         * @param      int  $post_id  The post ID
+         * @param      mixed $post  The post
+         */
+        public function save_metabox($post_id, $post)
+        {
+            $posted_data = $_POST;
+            if (isset($posted_data['post_type']) && in_array($posted_data['post_type'], $this->metabox['post_types'])) {
+                foreach ($this->sections_array as $section) {
+                    $section_id = $section['id'];
+                    $section_data = isset($posted_data[ $section_id  ]) ? $posted_data[$section_id ] : null ;
+                    if ($section_data) {
+                        foreach($section_data as $field_name=>$field_value) {
+                            $field_config = $this->get_field_config($section_id, $field_name);
+                            $sanitizer = $this->get_sanitizer($field_config);
+                            if($sanitizer) {
+                                $field_value = call_user_func($sanitizer, $field_value);
+                            }
+                            update_post_meta($post_id, $section_id.'_'.$field_name, $field_value);
+                        }
+                    }
+                }
+            }
         }
 
         /**
@@ -1098,6 +1238,12 @@ if (! class_exists('WP_OSA')) :
 					box-shadow: 0 0 0 1px #d63638;
 					outline: 2px solid transparent;
 				}
+
+                tr output{ 
+                   font-weight: bold;
+                   vertical-align: top;
+                   margin-left: 1em; 
+                }
 			</style>
 			<?php
         }

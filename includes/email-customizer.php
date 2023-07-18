@@ -64,7 +64,9 @@ function get_defaults( string $key = null )
         $defaults = apply_filters( 'mc_customizer_defaults', [
             'email_type'          => 'default',
             'logo'                => null,
-            'logo_position'       => 'left',
+            'logo_position'       => 'center',
+            'logo_size'           => null,
+            'logo_width'          => 100,
             'main_bg_color'       => '#f7f9ff',
             'main_font_family'    => 'arial',
             'main_font_size'      => 11,
@@ -286,6 +288,17 @@ function get_customizer_settings()
                 'choices' => get_text_align(),
                 'default' => get_defaults( 'logo_position' ),
             ],
+            [
+                'id'          => 'logo_width',
+                'label'       => __( 'Logo Width (px)', 'mail-control' ),
+                'section'     => 'header_style',
+                'type'        => 'range',
+                'default'     => get_defaults( 'logo_width' ),
+                'input_attrs' => [
+                'min' => 90,
+                'max' => 300,
+            ],
+            ],
             //GENERAL STYLE (BACKGROUND MAIL COLOR,FONT FAMILY...)
             [
                 'id'        => 'main_bg_color',
@@ -298,7 +311,7 @@ function get_customizer_settings()
             ],
             [
                 'id'          => 'main_font_size',
-                'label'       => __( 'Choose your main font size', 'mail-control' ),
+                'label'       => __( 'Choose your main font size (px)', 'mail-control' ),
                 'section'     => 'style',
                 'type'        => 'range',
                 'input_attrs' => [
@@ -318,7 +331,7 @@ function get_customizer_settings()
             ],
             [
                 'id'          => 'container_width',
-                'label'       => __( 'Container Width', 'mail-control' ),
+                'label'       => __( 'Container Width (px)', 'mail-control' ),
                 'section'     => 'style',
                 'type'        => 'range',
                 'default'     => get_defaults( 'container_width' ),
@@ -357,7 +370,7 @@ function get_customizer_settings()
             ],
             [
                 'id'      => 'container_padding',
-                'label'   => __( 'Content padding', 'mail-control' ),
+                'label'   => __( 'Content padding (px)', 'mail-control' ),
                 'section' => 'content',
                 'type'    => 'range',
                 'default' => get_defaults( 'container_padding' ),
@@ -374,7 +387,7 @@ function get_customizer_settings()
             ],
             [
                 'id'          => 'title_font_size',
-                'label'       => __( 'Choose your Title font size', 'mail-control' ),
+                'label'       => __( 'Choose your Title font size (px)', 'mail-control' ),
                 'section'     => 'title_style',
                 'type'        => 'range',
                 'input_attrs' => [
@@ -386,7 +399,7 @@ function get_customizer_settings()
             ],
             [
                 'id'      => 'title_margin_bottom',
-                'label'   => __( 'Title margin bottom', 'mail-control' ),
+                'label'   => __( 'Title margin bottom (px)', 'mail-control' ),
                 'section' => 'title_style',
                 'type'    => 'range',
                 'default' => get_defaults( 'title_margin_bottom' ),
@@ -432,7 +445,7 @@ function get_customizer_settings()
             ],
             [
                 'id'          => 'button_font_size',
-                'label'       => __( 'Button font size', 'mail-control' ),
+                'label'       => __( 'Button font size (px)', 'mail-control' ),
                 'section'     => 'button_style',
                 'type'        => 'range',
                 'input_attrs' => [
@@ -444,13 +457,13 @@ function get_customizer_settings()
             ],
             [
                 'id'      => 'button_padding_lr',
-                'label'   => __( 'Left & Right padding', 'mail-control' ),
+                'label'   => __( 'Left & Right padding (px)', 'mail-control' ),
                 'section' => 'button_style',
                 'type'    => 'range',
                 'default' => get_defaults( 'button_padding_lr' ),
             ],
             [
-                'id'      => 'button_padding_tb',
+                'id'      => 'button_padding_tb (px)',
                 'label'   => __( 'Top & Bottom padding', 'mail-control' ),
                 'section' => 'button_style',
                 'type'    => 'range',
@@ -458,7 +471,7 @@ function get_customizer_settings()
             ],
             [
                 'id'      => 'button_radius',
-                'label'   => __( 'Border Radius', 'mail-control' ),
+                'label'   => __( 'Border Radius (px)', 'mail-control' ),
                 'section' => 'button_style',
                 'type'    => 'range',
                 'default' => get_defaults( 'button_radius' ),
@@ -561,7 +574,7 @@ function beautify( $atts )
     $content = ( isset( $atts['message']['text/html'] ) ? $atts['message']['text/html'] : $atts['message'] );
     $subject = $atts['subject'];
     include MC_TEMPLATES . 'emails/' . $model . '.php';
-    $rendered = ob_get_clean();
+    $rendered = apply_filters( 'email_beautify', ob_get_clean(), $atts );
     // Now inline css
     $rendered = CssInliner::fromHtml( $rendered )->inlineCss()->render();
     
@@ -806,7 +819,7 @@ if ( is_admin() ) {
     } );
 }
 
-add_action( 'settings_ready', function () {
+add_action( 'settings_ready_mc', function () {
     define( 'MC_CUSTOMIZING_EMAIL', isset( $_GET['email-customizer'] ) );
     define( 'MC_PREVIEWING_EMAIL', isset( $_GET['email-customizer-preview'] ) );
     define( 'MC_TEST_EMAIL_CUSTOMIZATION', isset( $_POST['action'] ) && $_POST['action'] == 'send_preview_email' );
@@ -814,7 +827,7 @@ add_action( 'settings_ready', function () {
     // Setup customizer, settings need to be declared, so ajax saving (publish) would work
     // we need to remove all customizations, so we set you customizer as first
     // We use priority one so our customizer will kick right after widget customizer
-    add_action( 'customize_register', 'Mail_Control\\setup_customizer', 1 );
+    add_action( 'customize_register', __NAMESPACE__ . '\\setup_customizer', 1 );
     
     if ( MC_CUSTOMIZING_EMAIL || MC_PREVIEWING_EMAIL ) {
         // Ensure we can selectively refresh widgets
@@ -842,7 +855,7 @@ add_action( 'settings_ready', function () {
         // let's beautify the email using wp_mail filter, only the email is not in queue
         add_filter(
             'wp_mail',
-            'Mail_Control\\beautify',
+            __NAMESPACE__ . '\\beautify',
             100,
             1
         );

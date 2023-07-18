@@ -251,7 +251,7 @@ function init_phpmailer( PHPMailer $phpmailer )
     }
 }
 
-add_action( 'settings_ready', function () {
+add_action( 'settings_ready_mc', function () {
     
     if ( defined( 'SMTP_MAILER_HOST' ) && SMTP_MAILER_HOST ) {
         add_action( 'phpmailer_init', 'Mail_Control\\init_phpmailer' );

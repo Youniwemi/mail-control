@@ -180,7 +180,8 @@ class Emails_Table extends \WP_List_Table
     {
         
         if ( isset( $item[$column_name] ) ) {
-            return $item[$column_name];
+            // By default, escape html
+            return esc_html( $item[$column_name] );
         } else {
             return '';
         }
