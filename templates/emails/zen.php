@@ -52,10 +52,10 @@ if (! defined('ABSPATH')) {
       padding: 0;
     }
     h1,h2,h3,h4,h5{
-      color: <?= $title_color ?>;
-      font-size: <?= $title_font_size ?>px;
-      margin-bottom: <?= $title_margin_bottom ?>px;
-      text-transform: <?= $title_transform ?>;
+      color: <?= esc_attr($title_color); ?>;
+      font-size: <?= esc_attr($title_font_size) ?>px;
+      margin-bottom: <?= esc_attr($title_margin_bottom) ?>px;
+      text-transform: <?= esc_attr($title_transform) ?>;
     }
     body,
     p,

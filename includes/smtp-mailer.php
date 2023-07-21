@@ -75,8 +75,7 @@ if ( is_admin() ) {
         if ( empty($_POST["SMTP_MAILER_TEST_EMAIL"]) ) {
             send_json_result( __( "Please fill the email field", 'mail-control' ), false );
         }
-        $emails = explode( ',', $_POST["SMTP_MAILER_TEST_EMAIL"] );
-        $to = array_map( 'sanitize_email', $emails );
+        $to = array_map( 'sanitize_email', explode( ',', $_POST["SMTP_MAILER_TEST_EMAIL"] ) );
         if ( empty($to) ) {
             send_json_result( __( "Please fill a correct email field", 'mail-control' ), false );
         }
@@ -141,10 +140,10 @@ if ( is_admin() ) {
         echo  esc_html__( 'Test your setup', 'mail-control' ) ;
         ?></h2>
     <form class="test_smtp"  data-result="email_test" method='post' action="<?php 
-        echo  $admin ;
+        echo  esc_url( $admin ) ;
         ?>">
 	    <input type="hidden"  name="test_email_once" value="<?php 
-        echo  $nonce ;
+        echo  esc_attr( $nonce ) ;
         ?>" />
 	    <input type="hidden"  name="action" value="send_test_email" />
 	    <div style="padding-left: 10px">
@@ -165,10 +164,10 @@ if ( is_admin() ) {
         _e( 'Test your SPF, DKIM, and domain DMARC setup (experimental):', 'mail-control' );
         ?> </h2>
 	<form class="test_smtp" data-result="dns_test" method='post' action="<?php 
-        echo  $admin ;
+        echo  esc_url( $admin ) ;
         ?>">
 	    <input type="hidden"  name="test_domain_once" value="<?php 
-        echo  $nonce ;
+        echo  esc_attr( $nonce ) ;
         ?>" />
 	    <input type="hidden"  name="action" value="test_domain" />
 	    <div style="padding-left: 10px;margin-top:1em;">

@@ -799,8 +799,7 @@ if ( is_admin() ) {
         if ( empty($_POST["recipients"]) ) {
             send_json_result( __( "Please fill the email field", 'mail-control' ), false );
         }
-        $emails = explode( ',', $_POST["recipients"] );
-        $to = array_map( 'sanitize_email', $emails );
+        $to = array_map( 'sanitize_email', explode( ',', $_POST["recipients"] ) );
         if ( empty($to) ) {
             send_json_result( __( "Please fill a correct email field", 'mail-control' ), false );
         }

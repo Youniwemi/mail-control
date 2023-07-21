@@ -16,6 +16,7 @@ class ComposerStaticInit5a8a260452a2706b960bbb6952c3bd05
         array(
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Component\\CssSelector\\' => 30,
+            'StringTemplate\\' => 15,
             'Sabberworm\\CSS\\' => 15,
         ),
         'P' =>

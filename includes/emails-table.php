@@ -50,7 +50,7 @@ class Emails_Table extends \WP_List_Table
             // Make sure $_REQUEST['orderby'] is a valid sortable column
             
             if ( in_array( $_REQUEST['orderby'], $sortable_columns ) ) {
-                $order = $_REQUEST['orderby'];
+                $order = sanitize_text_field( $_REQUEST['orderby'] );
                 $direction = ( isset( $_REQUEST['order'] ) && $_REQUEST['order'] == 'desc' ? 'DESC' : 'ASC' );
             }
         
@@ -81,12 +81,12 @@ class Emails_Table extends \WP_List_Table
         ?>
         <div class="alignleft actions">
             <label><?php 
-        echo  _e( 'From', 'mail-control' ) ;
+        echo  esc_html_e( 'From', 'mail-control' ) ;
         ?><input type="date" name="from" value="<?php 
         echo  $this->from->format( 'Y-m-d' ) ;
         ?>"/></label>
             <label><?php 
-        echo  _e( 'To', 'mail-control' ) ;
+        echo  esc_html_e( 'To', 'mail-control' ) ;
         ?><input type="date" name="to" value="<?php 
         echo  $this->to->format( 'Y-m-d' ) ;
         ?>" /></label>

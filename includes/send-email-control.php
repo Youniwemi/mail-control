@@ -12,16 +12,16 @@ if (class_exists('\WP_Customize_Control')) {
         {
             $nonce = wp_create_nonce("secure-nonce");
             ?>
-            <input type="hidden"  name="preview_email_once" value="<?php echo $nonce ; ?>" />
+            <input type="hidden"  name="preview_email_once" value="<?php echo esc_attr($nonce) ; ?>" />
 			<span class="customize-control-title">
 				<?php echo esc_html($this->label); ?>
 			</span>
 			<?php if (! empty($this->description)) : ?>
-				<span class="description customize-control-description"><?php echo $this->description; ?></span>
+				<span class="description customize-control-description"><?php echo esc_html($this->description); ?></span>
 			<?php endif; ?>
 			<input type="email" multiple name="recipients" value="<?php echo esc_attr($this->value()); ?>" id="customize-input-<?php echo $this->id; ?>" <?php $this->input_attrs();
             $this->link(); ?>>
-			<div style="padding: 10px;"><?php _e('Settings must be saved to send preview email.', 'mail-control'); ?></div>
+			<div style="padding: 10px;"><?php esc_html_e('Settings must be saved to send preview email.', 'mail-control'); ?></div>
 			<input type="button" class="button button-primary mail-control-button" id="mail-control-send-email" value="<?php esc_attr_e('Send Email', 'mail-control'); ?>" />
 
 			<script>
@@ -33,7 +33,7 @@ if (class_exists('\WP_Customize_Control')) {
 						var data = {
 							action: 'send_preview_email',
 							recipients:     recipients,
-							preview_email_once : '<?php echo $nonce ; ?>'
+							preview_email_once : <?= wp_json_encode($nonce); ?>
 						};
 
 						me.prop('disabled', true);

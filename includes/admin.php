@@ -108,11 +108,10 @@ add_action( 'wp_ajax_resend_email', function () {
     if ( !current_user_can( MC_PERMISSION_VIEWER ) ) {
         wp_die( __( "You don't have permission to do this" ) );
     }
-    $email = $_GET["id"];
-    if ( empty($email) || !is_numeric( $email ) ) {
+    if ( empty($_GET["id"]) || !is_numeric( $_GET["id"] ) ) {
         wp_die( 'Wrong arguments' );
     }
-    $email_id = intval( $email );
+    $email_id = intval( $_GET["id"] );
     global  $wpdb ;
     $email = $wpdb->get_row( $wpdb->prepare( "SELECT email.* FROM {$wpdb->prefix}" . MC_EMAIL_TABLE . " as email where  email.id = %d ", $email_id ) );
     // disable queuing email
@@ -204,17 +203,15 @@ add_action( 'wp_ajax_detail_email', function () {
     if ( !current_user_can( MC_PERMISSION_VIEWER ) ) {
         wp_die( __( "You don't have permission to do this" ) );
     }
-    $email = $_GET["id"];
-    if ( empty($email) || !is_numeric( $email ) ) {
+    if ( empty($_GET["id"]) || !is_numeric( $_GET["id"] ) ) {
         wp_die( 'Wrong arguments' );
     }
-    $email_id = intval( $email );
+    $email_id = intval( $_GET["id"] );
     global  $wpdb ;
-    $email = $wpdb->get_row( $wpdb->prepare( "SELECT email.* FROM {$wpdb->prefix}" . MC_EMAIL_TABLE . " as email where  email.id = %d ", intval( $email ) ) );
+    $email = $wpdb->get_row( $wpdb->prepare( "SELECT email.* FROM {$wpdb->prefix}" . MC_EMAIL_TABLE . " as email where  email.id = %d ", $email_id ) );
     $events = $wpdb->get_results( $wpdb->prepare( "SELECT events.* FROM {$wpdb->prefix}" . MC_EVENT_TABLE . " as events where events.email_id = %d order by `when` ASC", $email_id ) );
     $headers = json_decode( $email->headers, ARRAY_A );
     $attachments = json_decode( $email->attachments, ARRAY_A );
-    $content_style = ( $email->fail ? ' style="display:none" ' : '' );
     ?>
     <div class="nav-tab-wrapper">
     	<?php 
@@ -235,7 +232,7 @@ add_action( 'wp_ajax_detail_email', function () {
     ?></a>
     	<?php 
     
-    if ( count( $headers ) ) {
+    if ( $headers && count( $headers ) ) {
         ?>
     		<a class="nav-tab" href="#email_headers"><?php 
         esc_html_e( 'Headers', 'mail-control' );
@@ -269,7 +266,7 @@ add_action( 'wp_ajax_detail_email', function () {
     </div>
     <div class="metabox-holder">
     	<div id="email_content" class='group' <?php 
-    echo  $content_style ;
+    echo  ( $email->fail ? ' style="display:none" ' : '' ) ;
     ?> >
    			<h3><?php 
     esc_html_e( 'HTML version', 'mail-control' );
