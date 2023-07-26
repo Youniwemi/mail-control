@@ -137,7 +137,7 @@ if ( is_admin() ) {
         $admin = admin_url( "admin-ajax.php" );
         ?>
     <h2><?php 
-        echo  esc_html__( 'Test your setup', 'mail-control' ) ;
+        esc_html_e( 'Test your setup', 'mail-control' );
         ?></h2>
     <form class="test_smtp"  data-result="email_test" method='post' action="<?php 
         echo  esc_url( $admin ) ;
@@ -161,7 +161,7 @@ if ( is_admin() ) {
 	</form>
 
 	<h2><?php 
-        _e( 'Test your SPF, DKIM, and domain DMARC setup (experimental):', 'mail-control' );
+        esc_html_e( 'Test your SPF, DKIM, and domain DMARC setup (experimental):', 'mail-control' );
         ?> </h2>
 	<form class="test_smtp" data-result="dns_test" method='post' action="<?php 
         echo  esc_url( $admin ) ;

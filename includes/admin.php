@@ -118,7 +118,7 @@ add_action( 'wp_ajax_resend_email', function () {
     add_filter( 'mc_disable_email_queue', '__return_true' );
     define( 'MC_RESENDING_EMAIL', true );
     add_action( 'wp_mail_failed', function ( $error ) {
-        echo  '<p>' . esc_html__( 'Failed to resend the email', 'mail-control' ) . ' : ' . $error->getMessage() . '</p>' ;
+        echo  '<p>' . esc_html__( 'Failed to resend the email', 'mail-control' ) . ' : ' . esc_html( $error->getMessage() ) . '</p>' ;
     } );
     $headers = ( $email->headers ? string_header( json_decode( $email->headers, ARRAY_A ) ) : [] );
     
@@ -283,7 +283,7 @@ add_action( 'wp_ajax_detail_email', function () {
     $content = sanitize_html_email_content( $content ) . "<script>\n   \t\t\t\twindow.onload = function(){ \n   \t\t\t\t\twindow.parent.postMessage(\n   \t\t\t\t\tJSON.stringify({\n   \t\t\t\t\t\tfrom:'email_content',\n   \t\t\t\t\t\theight: document.documentElement.scrollHeight  \n   \t\t\t\t\t}), '*');\n   \t\t\t\t};</script>";
     ?>
    			<iframe src="<?php 
-    echo  htmlspecialchars( 'data:text/html,' . rawurlencode( $content ) ) ;
+    echo  esc_attr( htmlspecialchars( 'data:text/html,' . rawurlencode( $content ) ) ) ;
     ?>" frameborder="0" scrolling="no" ></iframe>
    			<h3><?php 
     esc_html_e( 'Plain Text version', 'mail-control' );
@@ -338,13 +338,14 @@ add_action( 'wp_ajax_detail_email', function () {
             ?></h4>
    				<?php 
             // view it if an image
+            $encoded_file = base64_encode( file_get_contents( $attachment ) );
             
             if ( strpos( $mime, 'image/' ) === 0 ) {
                 ?> 
    					<img style="max-width: 100%;" src="data:<?php 
-                echo  $mime ;
+                echo  esc_attr( $mime ) ;
                 ?>;base64,<?php 
-                echo  base64_encode( file_get_contents( $attachment ) ) ;
+                echo  esc_attr( $encoded_file ) ;
                 ?>" alt='<?php 
                 echo  esc_attr( $filename ) ;
                 ?>'/>
@@ -353,12 +354,14 @@ add_action( 'wp_ajax_detail_email', function () {
                 // download it
                 ?>
    					<a href="data:<?php 
-                echo  $mime ;
+                echo  esc_attr( $mime ) ;
                 ?>;base64,<?php 
-                echo  base64_encode( file_get_contents( $attachment ) ) ;
+                echo  esc_attr( $encoded_file ) ;
                 ?>" download='<?php 
                 echo  esc_attr( $filename ) ;
-                ?>'>Download</a>
+                ?>'><?php 
+                echo  esc_html__( 'Download attachment' ) ;
+                ?> </a>
    				<?php 
             }
             
@@ -421,10 +424,10 @@ add_action( 'wp_ajax_detail_email', function () {
                 ?>
 	   					<tr>
 	   						<td><?php 
-                echo  $event->when ;
+                echo  esc_html( $event->when ) ;
                 ?></td>
 	   						<td><?php 
-                echo  ( $event->event == 0 ? __( 'Open', 'mail-control' ) : __( 'Click', 'mail-control' ) ) ;
+                echo  ( $event->event == 0 ? esc_html__( 'Open', 'mail-control' ) : esc_html__( 'Click', 'mail-control' ) ) ;
                 ?></td>
 	   						<td><?php 
                 echo  esc_html( $event->link ) ;

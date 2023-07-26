@@ -13,6 +13,59 @@
             "install-path": "../freemius/wordpress-sdk"
         },
         {
+            "name": "nicmart/string-template",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Youniwemi/StringTemplate",
+                "reference": "da6df5e94be797a30833ba1aefe0e1a93cfb073f"
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8 || ^9"
+            },
+            "time": "2023-03-10T15:02:28+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-4": {
+                    "StringTemplate\\": "src/StringTemplate/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "StringTemplate\\Test\\": "tests/StringTemplate/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "bench": [
+                    "php benchmarks/engine.php"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolò Martini",
+                    "email": "nicmartnic@gmail.com"
+                },
+                {
+                    "name": "Rahal Aboulfeth",
+                    "email": "rahal.aboulfeth@gmail.com"
+                }
+            ],
+            "description": "StringTemplate is a very simple string template engine for php. I've written it to have a thing like sprintf, but with named and nested substutions.",
+            "install-path": "../nicmart/string-template"
+        },
+        {
             "name": "pelago/emogrifier",
             "version": "v7.0.0",
             "version_normalized": "7.0.0.0",

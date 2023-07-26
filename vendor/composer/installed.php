@@ -1,6 +1,4 @@
-<?php
-
-return array(
+<?php return array(
     'root' => array(
         'name' => '__root__',
         'pretty_version' => 'dev-master',
@@ -24,10 +22,21 @@ return array(
         'freemius/wordpress-sdk' => array(
             'pretty_version' => '2.5.10',
             'version' => '2.5.10.0',
-            'reference' => null,
+            'reference' => NULL,
             'type' => 'library',
             'install_path' => __DIR__ . '/../freemius/wordpress-sdk',
             'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nicmart/string-template' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'da6df5e94be797a30833ba1aefe0e1a93cfb073f',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nicmart/string-template',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
             'dev_requirement' => false,
         ),
         'pelago/emogrifier' => array(

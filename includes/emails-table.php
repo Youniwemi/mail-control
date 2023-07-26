@@ -81,14 +81,14 @@ class Emails_Table extends \WP_List_Table
         ?>
         <div class="alignleft actions">
             <label><?php 
-        echo  esc_html_e( 'From', 'mail-control' ) ;
+        esc_html_e( 'From', 'mail-control' );
         ?><input type="date" name="from" value="<?php 
-        echo  $this->from->format( 'Y-m-d' ) ;
+        esc_attr_e( $this->from->format( 'Y-m-d' ) );
         ?>"/></label>
             <label><?php 
-        echo  esc_html_e( 'To', 'mail-control' ) ;
+        esc_html_e( 'To', 'mail-control' );
         ?><input type="date" name="to" value="<?php 
-        echo  $this->to->format( 'Y-m-d' ) ;
+        esc_attr_e( $this->to->format( 'Y-m-d' ) );
         ?>" /></label>
             <?php 
         submit_button(
@@ -138,7 +138,7 @@ class Emails_Table extends \WP_List_Table
             'width'  => 800,
             'height' => 700,
         ], admin_url( "admin-ajax.php" ) );
-        $detail = '<a href="' . esc_url( $url ) . '" title="' . esc_attr__( 'Email Details', 'mail-control' ) . '" class="thickbox button button-secondary" >' . __( 'Show details', 'mail-control' ) . '</a>';
+        $detail = '<a href="' . esc_url( $url ) . '" title="' . esc_attr__( 'Email Details', 'mail-control' ) . '" class="thickbox button button-secondary" >' . esc_html__( 'Show details', 'mail-control' ) . '</a>';
         $url = add_query_arg( [
             'id'     => $item['id'],
             'action' => 'resend_email',

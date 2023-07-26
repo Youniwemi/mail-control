@@ -104,7 +104,7 @@ function get_defaults( string $key = null )
  *
  * @return     array|string  The settings or setting value if keu is provided
  */
-function get_settings( string $key = null )
+function get_my_settings( string $key = null )
 {
     static  $settings ;
     if ( $settings == null ) {
@@ -120,7 +120,7 @@ function get_settings( string $key = null )
  */
 function get_preview_email()
 {
-    extract( get_settings() );
+    extract( get_my_settings() );
     $preview = apply_filters( 'mc_customizer_preview', null, $email_type );
     
     if ( $preview === null ) {
@@ -152,7 +152,8 @@ function preview_email()
     
     if ( isset( $_REQUEST['email-customizer-preview'] ) && $_REQUEST['email-customizer-preview'] == 1 ) {
         [ $content, $subject ] = get_preview_email();
-        echo  wrap_message( $content, $subject ) ;
+        $preview_safe = wrap_message( $content, $subject );
+        echo  $preview_safe ;
         exit;
     }
 
@@ -553,7 +554,7 @@ function beautify( $atts )
     if ( email_header_has( $atts['headers'], 'X-Template' ) ) {
         return $atts;
     }
-    extract( get_settings() );
+    extract( get_my_settings() );
     if ( !isset( $model ) ) {
         $model = MC_MODEL;
     }
@@ -597,7 +598,7 @@ function beautify( $atts )
  */
 function wrap_message( $content, $subject = null )
 {
-    extract( get_settings() );
+    extract( get_my_settings() );
     if ( !isset( $model ) ) {
         $model = MC_MODEL;
     }
