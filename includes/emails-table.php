@@ -37,8 +37,11 @@ class Emails_Table extends \WP_List_Table
         $sortable = $this->get_sortable_columns();
         $this->_column_headers = array( $columns, $hidden, $sortable );
         $current_page = $this->get_pagenum();
-        $this->from = ( isset( $_GET['from'] ) ? new \DateTime( $_GET['from'] ) : new \DateTime( '-1 month' ) );
-        $this->to = ( isset( $_GET['to'] ) ? new \DateTime( $_GET['to'] ) : new \DateTime( 'now' ) );
+        $from = ( isset( $_GET['from'] ) ? sanitize_text_field( wp_unslash( $_GET['from'] ) ) : '-1 month' );
+        $to = ( isset( $_GET['to'] ) ? sanitize_text_field( wp_unslash( $_GET['to'] ) ) : 'now' );
+        // We validate the date format with strtotime
+        $this->from = ( strtotime( $from ) ? new \DateTime( $from ) : new \DateTime( '-1 month' ) );
+        $this->to = ( strtotime( $to ) ? new \DateTime( $to ) : new \DateTime() );
         global  $wpdb ;
         $order = 'date_time';
         $direction = 'DESC';
@@ -50,7 +53,7 @@ class Emails_Table extends \WP_List_Table
             // Make sure $_REQUEST['orderby'] is a valid sortable column
             
             if ( in_array( $_REQUEST['orderby'], $sortable_columns ) ) {
-                $order = sanitize_text_field( $_REQUEST['orderby'] );
+                $order = sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) );
                 $direction = ( isset( $_REQUEST['order'] ) && $_REQUEST['order'] == 'desc' ? 'DESC' : 'ASC' );
             }
         

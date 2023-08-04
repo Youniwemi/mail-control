@@ -75,7 +75,7 @@ if ( is_admin() ) {
         if ( empty($_POST["SMTP_MAILER_TEST_EMAIL"]) ) {
             send_json_result( __( "Please fill the email field", 'mail-control' ), false );
         }
-        $to = array_map( 'sanitize_email', explode( ',', $_POST["SMTP_MAILER_TEST_EMAIL"] ) );
+        $to = array_map( 'sanitize_email', explode( ',', sanitize_text_field( wp_unslash( $_POST["SMTP_MAILER_TEST_EMAIL"] ) ) ) );
         if ( empty($to) ) {
             send_json_result( __( "Please fill a correct email field", 'mail-control' ), false );
         }
@@ -109,7 +109,7 @@ if ( is_admin() ) {
         [ $spf_ok, $report ] = test_spf_record( $domain, $host, $report );
         // DKIM
         if ( !empty($_POST["SMTP_MAILER_TEST_DKIM"]) ) {
-            $selector = sanitize_text_field( $_POST["SMTP_MAILER_TEST_DKIM"] );
+            $selector = sanitize_text_field( wp_unslash( $_POST["SMTP_MAILER_TEST_DKIM"] ) );
         }
         $dkim_host = ( isset( $selector ) ? $selector . '._domainkey.' . $domain : '' );
         [ $dkim_ok, $report ] = test_dkim_record( $dkim_host, $report );

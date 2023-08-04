@@ -28,6 +28,7 @@ function show_email_table()
 {
     $emails = new Emails_Table();
     $emails->prepare_items();
+    $page = ( isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '' );
     ?>
     <div class="wrap">
 	    <h1><?php 
@@ -36,7 +37,7 @@ function show_email_table()
 
 	    <form id="emails-table" method="get">        
 	        <input type="hidden" name="page" value="<?php 
-    echo  esc_attr( $_REQUEST['page'] ) ;
+    echo  esc_attr( $page ) ;
     ?>" />
 	        <?php 
     $emails->display();
@@ -106,7 +107,7 @@ function send_json_result( $result, $success = true )
  */
 add_action( 'wp_ajax_resend_email', function () {
     if ( !current_user_can( MC_PERMISSION_VIEWER ) ) {
-        wp_die( __( "You don't have permission to do this" ) );
+        wp_die( esc_html__( "You don't have permission to do this" ) );
     }
     if ( empty($_GET["id"]) || !is_numeric( $_GET["id"] ) ) {
         wp_die( 'Wrong arguments' );
@@ -201,7 +202,7 @@ function get_email_header( $headers, $header )
  */
 add_action( 'wp_ajax_detail_email', function () {
     if ( !current_user_can( MC_PERMISSION_VIEWER ) ) {
-        wp_die( __( "You don't have permission to do this" ) );
+        wp_die( esc_html__( "You don't have permission to do this" ) );
     }
     if ( empty($_GET["id"]) || !is_numeric( $_GET["id"] ) ) {
         wp_die( 'Wrong arguments' );
@@ -427,8 +428,15 @@ add_action( 'wp_ajax_detail_email', function () {
                 echo  esc_html( $event->when ) ;
                 ?></td>
 	   						<td><?php 
-                echo  ( $event->event == 0 ? esc_html__( 'Open', 'mail-control' ) : esc_html__( 'Click', 'mail-control' ) ) ;
-                ?></td>
+                
+                if ( $event->event == 0 ) {
+                    esc_html_e( 'Open', 'mail-control' );
+                } else {
+                    esc_html_e( 'Click', 'mail-control' );
+                }
+                
+                ?>
+	   						</td>
 	   						<td><?php 
                 echo  esc_html( $event->link ) ;
                 ?></td>

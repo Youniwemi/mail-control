@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Mail Control - Email Customizer, SMTP Deliverability, logging, open and click Tracking
  * Plugin URI: https://www.wpmailcontrol.com
- * Version: 0.3.2
+ * Version: 0.3.3
  * Author: Instareza
  * Author URI: https://www.instareza.com
  * Description: Design and customize emails, send using smtp, log and track emails clicks and opening, and allow sending the emails in the background to speed up responses
@@ -11,7 +11,7 @@
  * Text Domain: mail-control
  * Domain Path: /languages
  * Requires PHP: 7.4
- * Stable tag: 0.3.2
+ * Stable tag: 0.3.3
  * @package Mail_Control
  */
 namespace Mail_Control;
@@ -29,7 +29,7 @@ define( 'MC_VENDOR', __DIR__ . '/vendor/' );
 require MC_INCLUDES . 'init_freemius.php';
 require __DIR__ . '/vendor/autoload.php';
 // Main tracking action.
-if ( isset( $_SERVER['REQUEST_URI'] ) && strtok( $_SERVER['REQUEST_URI'], '?' ) === MC_TRACK_URL ) {
+if ( isset( $_SERVER['REQUEST_URI'] ) && strtok( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '?' ) === MC_TRACK_URL ) {
     include MC_INCLUDES . 'track.php';
 }
 

@@ -152,8 +152,8 @@ function preview_email()
     
     if ( isset( $_REQUEST['email-customizer-preview'] ) && $_REQUEST['email-customizer-preview'] == 1 ) {
         [ $content, $subject ] = get_preview_email();
-        $preview_safe = wrap_message( $content, $subject );
-        echo  $preview_safe ;
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPressDotOrg.sniffs.OutputEscaping.UnescapedOutputParameter -- safe html generated using zen.php template
+        echo  wrap_message( $content, $subject ) ;
         exit;
     }
 
@@ -800,7 +800,7 @@ if ( is_admin() ) {
         if ( empty($_POST["recipients"]) ) {
             send_json_result( __( "Please fill the email field", 'mail-control' ), false );
         }
-        $to = array_map( 'sanitize_email', explode( ',', $_POST["recipients"] ) );
+        $to = array_map( 'sanitize_email', explode( ',', sanitize_text_field( wp_unslash( $_POST["recipients"] ) ) ) );
         if ( empty($to) ) {
             send_json_result( __( "Please fill a correct email field", 'mail-control' ), false );
         }

@@ -5,7 +5,7 @@ Requires at least: 5.0
 Tested up to: 6.2.2
 Requires PHP: 7.4
 License: GPL
-Stable tag: 0.3.2
+Stable tag: 0.3.3
 
 Design and customize email templates, control your SMTP email deliverability, track your emails clicks and openings, and allow defering the emails as a background process to speed up your pages.
 
