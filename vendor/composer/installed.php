@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '90725a4932ea67bfcf4fda5e80323c9802430646',
+        'reference' => '94e35833d7e0feacfea11c3c6f97e5d21cfbb177',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '90725a4932ea67bfcf4fda5e80323c9802430646',
+            'reference' => '94e35833d7e0feacfea11c3c6f97e5d21cfbb177',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'freemius/wordpress-sdk' => array(
             'pretty_version' => '2.5.10',
             'version' => '2.5.10.0',
-            'reference' => NULL,
+            'reference' => '05bac841008b705bff9636f782c96fb0a73e615b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../freemius/wordpress-sdk',
             'aliases' => array(),

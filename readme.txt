@@ -2,10 +2,10 @@
 Contributors: rahal.aboulfeth
 Tags: email customizer, smtp, email, email log, email deliverability, email tracking
 Requires at least: 5.0
-Tested up to: 6.2.2
+Tested up to: 6.3
 Requires PHP: 7.4
 License: GPL
-Stable tag: 0.3.3
+Stable tag: 0.3.5
 
 Design and customize email templates, control your SMTP email deliverability, track your emails clicks and openings, and allow defering the emails as a background process to speed up your pages.
 
@@ -97,7 +97,9 @@ If you get stuck, you can ask for help in the [Mail Control Plugin Forum](https:
 4. Test your smtp confirugation, "Send a test email" and "Test your SPF, DKIM, and domain DMARC setup"
 
 == Changelog ==
-= 0.3.2 =
+= 0.3.5 =
+* Improve Email Customizer compatibility with Astra Theme
+= 0.3.2, 0.3.3 , 0.3.4  =
 * More Review : Sanitize early, Escape Late, Always Validate 
 = 0.3.1 =
 * Review : Sanitize early, Escape Late, Always Validate

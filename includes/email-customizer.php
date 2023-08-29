@@ -664,19 +664,24 @@ function remove_hooks_except( $action, array $except )
     global  $wp_filter ;
     foreach ( $wp_filter[$action]->callbacks as $priority => $callbacks ) {
         foreach ( $callbacks as $order => $callback ) {
+            if ( $except ) {
+                
+                if ( $callback['function'] instanceof \Closure ) {
+                    // anyway to compare closures?
+                    // we just let it remove for now
+                } elseif ( is_object( $callback['function'][0] ) ) {
+                    $object = get_class( $callback['function'][0] );
+                    $method = $callback['function'][1];
+                    if ( in_array( [ $object, $method ], $except ) ) {
+                        continue;
+                    }
+                } elseif ( is_callable( $callback['function'] ) ) {
+                    if ( in_array( $callback['function'], $except ) ) {
+                        continue;
+                    }
+                }
             
-            if ( is_object( $callback['function'][0] ) ) {
-                $object = get_class( $callback['function'][0] );
-                $method = $callback['function'][1];
-                if ( in_array( [ $object, $method ], $except ) ) {
-                    continue;
-                }
-            } elseif ( is_callable( $callback['function'] ) ) {
-                if ( in_array( $callback['function'], $except ) ) {
-                    continue;
-                }
             }
-            
             unset( $wp_filter[$action]->callbacks[$priority][$order] );
         }
     }
@@ -715,6 +720,8 @@ function setup_customizer( $wp_customize )
             MC_VERSION,
             true
         );
+        // disable any scripts from other theme plugins
+        remove_hooks_except( 'customize_controls_enqueue_scripts', [] );
     } );
     require_once __DIR__ . '/send-email-control.php';
     remove_hooks_except( 'customize_register', [ [ 'WP_Customize_Manager', 'register_dynamic_settings' ], [ 'WP_Customize_Nav_Menus', 'customize_register' ] ] );
@@ -835,10 +842,10 @@ add_action( 'settings_ready_mc', function () {
         // Blocks load all
         add_filter( 'should_load_separate_core_block_assets', '__return_false', 1000 );
         wp_enqueue_global_styles();
-        add_action( 'customize_preview_init', 'Mail_Control\\customize_preview_init', 0 );
+        add_action( 'customize_preview_init', __NAMESPACE__ . '\\customize_preview_init', 0 );
         if ( MC_PREVIEWING_EMAIL ) {
             // we need to wait until template redirect
-            add_action( 'template_redirect', 'Mail_Control\\preview_email', 1000 );
+            add_action( 'template_redirect', __NAMESPACE__ . '\\preview_email', 1000 );
         }
     } elseif ( defined( 'EMAIL_CUSTOMIZER_ACTIVE' ) && EMAIL_CUSTOMIZER_ACTIVE == 'on' || MC_TEST_EMAIL_CUSTOMIZATION ) {
         add_action( 'mc_header', function () {
