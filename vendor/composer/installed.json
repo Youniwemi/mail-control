@@ -2,27 +2,32 @@
     "packages": [
         {
             "name": "freemius/wordpress-sdk",
-            "version": "2.5.10",
-            "version_normalized": "2.5.10.0",
+            "version": "2.5.12",
+            "version_normalized": "2.5.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Freemius/wordpress-sdk.git",
-                "reference": "05bac841008b705bff9636f782c96fb0a73e615b"
+                "reference": "47aaeb6611c8f4c7a0a88793c0d79eafdebfbf4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Freemius/wordpress-sdk/zipball/05bac841008b705bff9636f782c96fb0a73e615b",
-                "reference": "05bac841008b705bff9636f782c96fb0a73e615b",
+                "url": "https://api.github.com/repos/Freemius/wordpress-sdk/zipball/47aaeb6611c8f4c7a0a88793c0d79eafdebfbf4f",
+                "reference": "47aaeb6611c8f4c7a0a88793c0d79eafdebfbf4f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2"
+                "php": ">=5.6"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+                "phpcompatibility/php-compatibility": "^9.3",
+                "phpcompatibility/phpcompatibility-wp": "^2.1",
+                "phpstan/extension-installer": "^1.3",
+                "squizlabs/php_codesniffer": "^3.7",
+                "szepeviktor/phpstan-wordpress": "^1.3",
                 "wp-coding-standards/wpcs": "^2.3"
             },
-            "time": "2023-07-18T06:35:08+00:00",
+            "time": "2023-09-03T10:46:25+00:00",
             "type": "library",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -42,62 +47,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Freemius/wordpress-sdk/issues",
-                "source": "https://github.com/Freemius/wordpress-sdk/tree/2.5.10"
+                "source": "https://github.com/Freemius/wordpress-sdk/tree/2.5.12"
             },
             "install-path": "../freemius/wordpress-sdk"
-        },
-        {
-            "name": "nicmart/string-template",
-            "version": "dev-master",
-            "version_normalized": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Youniwemi/StringTemplate",
-                "reference": "da6df5e94be797a30833ba1aefe0e1a93cfb073f"
-            },
-            "require": {
-                "php": ">=7.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8 || ^9"
-            },
-            "time": "2023-03-10T15:02:28+00:00",
-            "default-branch": true,
-            "type": "library",
-            "installation-source": "source",
-            "autoload": {
-                "psr-4": {
-                    "StringTemplate\\": "src/StringTemplate/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "StringTemplate\\Test\\": "tests/StringTemplate/"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "bench": [
-                    "php benchmarks/engine.php"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolò Martini",
-                    "email": "nicmartnic@gmail.com"
-                },
-                {
-                    "name": "Rahal Aboulfeth",
-                    "email": "rahal.aboulfeth@gmail.com"
-                }
-            ],
-            "description": "StringTemplate is a very simple string template engine for php. I've written it to have a thing like sprintf, but with named and nested substutions.",
-            "install-path": "../nicmart/string-template"
         },
         {
             "name": "pelago/emogrifier",
@@ -307,27 +259,27 @@
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "v1.27.0",
-            "version_normalized": "1.27.0.0",
+            "version": "v1.28.0",
+            "version_normalized": "1.28.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "7a6ff3f1959bb01aefccb463a0f2cd3d3d2fd936"
+                "reference": "6caa57379c4aec19c0a12a38b59b26487dcfe4b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/7a6ff3f1959bb01aefccb463a0f2cd3d3d2fd936",
-                "reference": "7a6ff3f1959bb01aefccb463a0f2cd3d3d2fd936",
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/6caa57379c4aec19c0a12a38b59b26487dcfe4b5",
+                "reference": "6caa57379c4aec19c0a12a38b59b26487dcfe4b5",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
             },
-            "time": "2022-11-03T14:55:06+00:00",
+            "time": "2023-01-26T09:26:14+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.27-dev"
+                    "dev-main": "1.28-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -373,7 +325,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.27.0"
+                "source": "https://github.com/symfony/polyfill-php80/tree/v1.28.0"
             },
             "funding": [
                 {
@@ -390,6 +342,55 @@
                 }
             ],
             "install-path": "../symfony/polyfill-php80"
+        },
+        {
+            "name": "youniwemi/string-template",
+            "version": "v0.2.1",
+            "version_normalized": "0.2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Youniwemi/StringTemplate.git",
+                "reference": "61b586b3dc5e457d5b1bdb2cf87d96e111800de0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Youniwemi/StringTemplate/zipball/61b586b3dc5e457d5b1bdb2cf87d96e111800de0",
+                "reference": "61b586b3dc5e457d5b1bdb2cf87d96e111800de0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8 || ^9"
+            },
+            "time": "2023-09-14T20:57:07+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Youniwemi\\StringTemplate\\": "src/StringTemplate/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolò Martini",
+                    "email": "nicmartnic@gmail.com"
+                },
+                {
+                    "name": "Rahal Aboulfeth",
+                    "email": "rahal.aboulfeth@gmail.com"
+                }
+            ],
+            "description": "StringTemplate is a very simple but powefull string template engine for php. It allows named and nested substutions as well as conditionnals et custom filters (originaly a fork of nicmart/StringTemplate)",
+            "support": {
+                "source": "https://github.com/Youniwemi/StringTemplate/tree/v0.2.1"
+            },
+            "install-path": "../youniwemi/string-template"
         },
         {
             "name": "youniwemi/wp-settings-kit",

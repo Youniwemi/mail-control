@@ -40,9 +40,9 @@ add_filter( 'mail_control_settings', function ( $settings ) {
  */
 function get_customizer_url( string $return = null )
 {
-    $preview = add_query_arg( [
+    $preview = wp_nonce_url( add_query_arg( [
         'email-customizer-preview' => '1',
-    ], home_url( "/" ) );
+    ], home_url( "/" ) ), 'preview-mail' );
     return add_query_arg( [
         'email-customizer' => 1,
         'url'              => urlencode( $preview ),
@@ -149,14 +149,10 @@ function get_preview_email()
  */
 function preview_email()
 {
-    
-    if ( isset( $_REQUEST['email-customizer-preview'] ) && $_REQUEST['email-customizer-preview'] == 1 ) {
-        [ $content, $subject ] = get_preview_email();
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPressDotOrg.sniffs.OutputEscaping.UnescapedOutputParameter -- safe html generated using zen.php template
-        echo  wrap_message( $content, $subject ) ;
-        exit;
-    }
-
+    [ $content, $subject ] = get_preview_email();
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPressDotOrg.sniffs.OutputEscaping.UnescapedOutputParameter -- safe html generated using zen.php template
+    echo  wrap_message( $content, $subject ) ;
+    exit;
 }
 
 /**
@@ -828,15 +824,18 @@ if ( is_admin() ) {
 
 add_action( 'settings_ready_mc', function () {
     define( 'MC_CUSTOMIZING_EMAIL', isset( $_GET['email-customizer'] ) );
-    define( 'MC_PREVIEWING_EMAIL', isset( $_GET['email-customizer-preview'] ) );
+    // phpcs:ignore WordPress.CSRF.NonceVerification
+    define( 'MC_PREVIEWING_EMAIL', isset( $_REQUEST['email-customizer-preview'] ) && $_REQUEST['email-customizer-preview'] == 1 );
+    // phpcs:ignore WordPress.CSRF.NonceVerification
     define( 'MC_TEST_EMAIL_CUSTOMIZATION', isset( $_POST['action'] ) && $_POST['action'] == 'send_preview_email' );
+    // phpcs:ignore WordPress.CSRF.NonceVerification
     add_action( 'widgets_init', 'Mail_Control\\email_widget' );
     // Setup customizer, settings need to be declared, so ajax saving (publish) would work
     // we need to remove all customizations, so we set you customizer as first
     // We use priority one so our customizer will kick right after widget customizer
     add_action( 'customize_register', __NAMESPACE__ . '\\setup_customizer', 1 );
     
-    if ( MC_CUSTOMIZING_EMAIL || MC_PREVIEWING_EMAIL ) {
+    if ( (MC_CUSTOMIZING_EMAIL || MC_PREVIEWING_EMAIL) && current_user_can( MC_PERMISSION_MANAGER ) ) {
         // Ensure we can selectively refresh widgets
         add_theme_support( 'customize-selective-refresh-widgets' );
         // Blocks load all

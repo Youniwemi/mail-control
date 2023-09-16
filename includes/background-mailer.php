@@ -155,6 +155,7 @@ function process_email_queue($time = null)
 
 add_action('wp_ajax_process_mail_queue', function () {
     if (defined('BACKGROUND_MAILER_ACTIVE') && BACKGROUND_MAILER_ACTIVE == 'on') {
+        check_ajax_referer('email-table', 'nonce');
         process_email_queue();
         die('Processed mail queue');
     } else {

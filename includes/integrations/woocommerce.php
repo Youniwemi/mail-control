@@ -100,7 +100,8 @@ function customize_woocommerce_emails()
     remove_all_actions( 'woocommerce_email_header' );
     remove_all_actions( 'woocommerce_email_footer' );
     add_filter( 'woocommerce_email_styles', '__return_empty_string', 1000 );
-    if ( isset( $_GET['preview_woocommerce_mail'] ) ) {
+    if ( isset( $_GET['preview_woocommerce_mail'] ) && isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'preview-mail' ) ) {
+        // phpcs:ignore input var ok, sanitization ok.
         add_filter( 'woocommerce_mail_content', 'Mail_Control\\wrap_message', 1000 );
     }
     add_action(

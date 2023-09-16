@@ -3,6 +3,7 @@
 namespace Mail_Control;
 
 require MC_INCLUDES . 'emails-table.php';
+define( 'MC_ADMIN_EMAIL_TABLE', 'mail-control' );
 /**
  * Setup admin menu
  */
@@ -12,7 +13,7 @@ function admin_menu()
         'Mail Control',
         __( 'Mail Control', 'mail-control' ),
         MC_PERMISSION_VIEWER,
-        'mail-control',
+        MC_ADMIN_EMAIL_TABLE,
         __NAMESPACE__ . '\\show_email_table',
         'data:image/svg+xml;base64,' . base64_encode( file_get_contents( MC_ASSETS_DIR . 'img/icon.svg' ) )
     );
@@ -28,7 +29,6 @@ function show_email_table()
 {
     $emails = new Emails_Table();
     $emails->prepare_items();
-    $page = ( isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '' );
     ?>
     <div class="wrap">
 	    <h1><?php 
@@ -36,12 +36,12 @@ function show_email_table()
     ?></h1>
 
 	    <form id="emails-table" method="get">        
-	        <input type="hidden" name="page" value="<?php 
-    echo  esc_attr( $page ) ;
-    ?>" />
 	        <?php 
     $emails->display();
     ?>
+	        <input type="hidden" name="page" value="<?php 
+    esc_attr_e( MC_ADMIN_EMAIL_TABLE );
+    ?>" />
 	    </form>
     </div>
     <style>
@@ -106,6 +106,7 @@ function send_json_result( $result, $success = true )
  * Resend the email
  */
 add_action( 'wp_ajax_resend_email', function () {
+    check_ajax_referer( 'email-table', 'nonce' );
     if ( !current_user_can( MC_PERMISSION_VIEWER ) ) {
         wp_die( esc_html__( "You don't have permission to do this" ) );
     }
@@ -201,6 +202,7 @@ function get_email_header( $headers, $header )
  * Detail Email
  */
 add_action( 'wp_ajax_detail_email', function () {
+    check_ajax_referer( 'email-table', 'nonce' );
     if ( !current_user_can( MC_PERMISSION_VIEWER ) ) {
         wp_die( esc_html__( "You don't have permission to do this" ) );
     }

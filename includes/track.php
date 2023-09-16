@@ -1,6 +1,7 @@
 <?php
 
 if ( !defined( 'ABSPATH' ) || !isset( $_GET['email'] ) ) {
+    // phpcs:ignore WordPress.CSRF.NonceVerification
     exit;
 }
 /**
@@ -60,4 +61,6 @@ function track_email( int $email, string $url = null )
 }
 
 $email = intval( $_GET['email'] );
+// phpcs:ignore WordPress.CSRF.NonceVerification
 track_email( $email, ( isset( $_GET['url'] ) ? esc_url_raw( wp_unslash( $_GET['url'] ) ) : null ) );
+// phpcs:ignore WordPress.CSRF.NonceVerification

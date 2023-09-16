@@ -7,8 +7,10 @@ class Emails_Table extends \WP_List_Table
 {
     public  $from ;
     public  $to ;
+    private  $nonce ;
     public function __construct()
     {
+        $this->nonce = wp_create_nonce( "email-table" );
         //Set parent defaults
         parent::__construct( array(
             'singular' => 'email',
@@ -37,8 +39,9 @@ class Emails_Table extends \WP_List_Table
         $sortable = $this->get_sortable_columns();
         $this->_column_headers = array( $columns, $hidden, $sortable );
         $current_page = $this->get_pagenum();
-        $from = ( isset( $_GET['from'] ) ? sanitize_text_field( wp_unslash( $_GET['from'] ) ) : '-1 month' );
-        $to = ( isset( $_GET['to'] ) ? sanitize_text_field( wp_unslash( $_GET['to'] ) ) : 'now' );
+        $verified_once = isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'bulk-emails' );
+        $from = ( isset( $_GET['from'] ) && $verified_once ? sanitize_text_field( wp_unslash( $_GET['from'] ) ) : '-1 month' );
+        $to = ( isset( $_GET['to'] ) && $verified_once ? sanitize_text_field( wp_unslash( $_GET['to'] ) ) : 'now' );
         // We validate the date format with strtotime
         $this->from = ( strtotime( $from ) ? new \DateTime( $from ) : new \DateTime( '-1 month' ) );
         $this->to = ( strtotime( $to ) ? new \DateTime( $to ) : new \DateTime() );
@@ -47,14 +50,18 @@ class Emails_Table extends \WP_List_Table
         $direction = 'DESC';
         
         if ( isset( $_REQUEST['orderby'] ) ) {
+            // phpcs:ignore WordPress.CSRF.NonceVerification
             $sortable_columns = array_map( function ( $column ) {
                 return $column[0];
             }, $sortable );
             // Make sure $_REQUEST['orderby'] is a valid sortable column
             
             if ( in_array( $_REQUEST['orderby'], $sortable_columns ) ) {
+                // phpcs:ignore WordPress.CSRF.NonceVerification
                 $order = sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) );
+                // phpcs:ignore WordPress.CSRF.NonceVerification
                 $direction = ( isset( $_REQUEST['order'] ) && $_REQUEST['order'] == 'desc' ? 'DESC' : 'ASC' );
+                // phpcs:ignore WordPress.CSRF.NonceVerification
             }
         
         }
@@ -81,28 +88,55 @@ class Emails_Table extends \WP_List_Table
     
     public function extra_tablenav( $which )
     {
-        ?>
-        <div class="alignleft actions">
-            <label><?php 
-        esc_html_e( 'From', 'mail-control' );
-        ?><input type="date" name="from" value="<?php 
-        esc_attr_e( $this->from->format( 'Y-m-d' ) );
-        ?>"/></label>
-            <label><?php 
-        esc_html_e( 'To', 'mail-control' );
-        ?><input type="date" name="to" value="<?php 
-        esc_attr_e( $this->to->format( 'Y-m-d' ) );
-        ?>" /></label>
-            <?php 
-        submit_button(
-            __( 'Filter' ),
-            '',
-            'filter_action',
-            false
-        );
-        ?>
-        </div>
+        
+        if ( $which == 'top' ) {
+            ?>
+	        <div class="alignleft actions">
+	        	
+	            <label><?php 
+            esc_html_e( 'From', 'mail-control' );
+            ?><input type="date" name="from"  value="<?php 
+            echo  esc_attr( $this->from->format( 'Y-m-d' ) ) ;
+            ?>" /></label>
+	            <label><?php 
+            esc_html_e( 'To', 'mail-control' );
+            ?><input type="date" name="to" value="<?php 
+            echo  esc_attr( $this->to->format( 'Y-m-d' ) ) ;
+            ?>"   /></label>
+	            <?php 
+            submit_button(
+                __( 'Filter' ),
+                '',
+                'filter_action',
+                false
+            );
+            ?>
+	            <?php 
+            
+            if ( defined( 'BACKGROUND_MAILER_ACTIVE' ) && BACKGROUND_MAILER_ACTIVE == 'on' ) {
+                $url = add_query_arg( [
+                    'action' => 'process_mail_queue',
+                    'nonce'  => $this->nonce,
+                    'width'  => 200,
+                    'height' => 150,
+                ], admin_url( "admin-ajax.php" ) );
+                ?>
+	                <a href="<?php 
+                echo  esc_url( $url ) ;
+                ?>" title="<?php 
+                esc_attr_e( 'Processing mail queue', 'mail-control' );
+                ?>" class="thickbox button button-primary" ><?php 
+                esc_html_e( 'Process mail queue', 'mail-control' );
+                ?></a>
+	            <?php 
+            }
+            
+            ?>
+	        </div>
+
         <?php 
+        }
+    
     }
     
     public function prepare_data( $row )
@@ -140,6 +174,7 @@ class Emails_Table extends \WP_List_Table
             'action' => 'detail_email',
             'width'  => 800,
             'height' => 700,
+            'nonce'  => $this->nonce,
         ], admin_url( "admin-ajax.php" ) );
         $detail = '<a href="' . esc_url( $url ) . '" title="' . esc_attr__( 'Email Details', 'mail-control' ) . '" class="thickbox button button-secondary" >' . esc_html__( 'Show details', 'mail-control' ) . '</a>';
         $url = add_query_arg( [
@@ -147,6 +182,7 @@ class Emails_Table extends \WP_List_Table
             'action' => 'resend_email',
             'width'  => 300,
             'height' => 200,
+            'nonce'  => $this->nonce,
         ], admin_url( "admin-ajax.php" ) );
         $actions = [
             'resend' => '<a class="thickbox" title="' . esc_attr__( 'Resend Email', 'mail-control' ) . '"  href="' . esc_url( $url ) . '">' . esc_html__( 'Resend', 'mail-control' ) . '</a>',

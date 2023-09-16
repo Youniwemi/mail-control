@@ -12,11 +12,14 @@ class ComposerStaticInit5a8a260452a2706b960bbb6952c3bd05
     );
 
     public static $prefixLengthsPsr4 = array (
+        'Y' => 
+        array (
+            'Youniwemi\\StringTemplate\\' => 25,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Component\\CssSelector\\' => 30,
-            'StringTemplate\\' => 15,
             'Sabberworm\\CSS\\' => 15,
         ),
         'P' => 
@@ -26,6 +29,10 @@ class ComposerStaticInit5a8a260452a2706b960bbb6952c3bd05
     );
 
     public static $prefixDirsPsr4 = array (
+        'Youniwemi\\StringTemplate\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/youniwemi/string-template/src/StringTemplate',
+        ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
@@ -33,10 +40,6 @@ class ComposerStaticInit5a8a260452a2706b960bbb6952c3bd05
         'Symfony\\Component\\CssSelector\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
-        ),
-        'StringTemplate\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nicmart/string-template/src/StringTemplate',
         ),
         'Sabberworm\\CSS\\' => 
         array (
