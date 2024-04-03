@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Mail Control - Email Customizer, SMTP Deliverability, logging, open and click Tracking
  * Plugin URI: https://www.wpmailcontrol.com
- * Version: 0.3.6
+ * Version: 0.3.7
  * Author: Instareza
  * Author URI: https://www.instareza.com
  * Description: Design and customize emails, send using smtp, log and track emails clicks and opening, and allow sending the emails in the background to speed up responses
@@ -11,12 +11,13 @@
  * Text Domain: mail-control
  * Domain Path: /languages
  * Requires PHP: 7.4
- * Stable tag: 0.3.6
+ * Stable tag: 0.3.7
+ *
  * @package Mail_Control
  */
 namespace Mail_Control;
 
-define( 'MC_VERSION', '0.3.0' );
+define( 'MC_VERSION', '0.3.7' );
 define( 'MC_URL', plugin_dir_url( __FILE__ ) );
 define( 'MC_ASSETS_DIR', __DIR__ . '/assets/' );
 define( 'MC_EMAIL_TABLE', 'email' );
@@ -25,6 +26,8 @@ define( 'MC_TRACK_URL', '/trackmail/' );
 define( 'MC_INCLUDES', __DIR__ . '/includes/' );
 define( 'MC_TEMPLATES', __DIR__ . '/templates/' );
 define( 'MC_VENDOR', __DIR__ . '/vendor/' );
+define( 'MC_PLUGIN_ASSETS', untrailingslashit( plugins_url( '/', __FILE__ ) ) . '/assets/' );
+define( 'MC_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 // Init freemius integration.
 require MC_INCLUDES . 'init_freemius.php';
 require __DIR__ . '/vendor/autoload.php';

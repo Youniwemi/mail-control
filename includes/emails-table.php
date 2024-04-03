@@ -10,8 +10,8 @@ class Emails_Table extends \WP_List_Table
     private  $nonce ;
     public function __construct()
     {
-        $this->nonce = wp_create_nonce( "email-table" );
-        //Set parent defaults
+        $this->nonce = wp_create_nonce( 'email-table' );
+        // Set parent defaults
         parent::__construct( array(
             'singular' => 'email',
             'plural'   => 'emails',
@@ -77,7 +77,7 @@ class Emails_Table extends \WP_List_Table
             $per_page * ($current_page - 1)
         );
         $results = $wpdb->get_results( $sql );
-        $this->items = array_map( [ $this, 'prepare_data' ], $results );
+        $this->items = array_map( array( $this, 'prepare_data' ), $results );
         $total_items = $wpdb->get_var( 'SELECT FOUND_ROWS()' );
         $this->set_pagination_args( array(
             'total_items' => $total_items,
@@ -91,19 +91,19 @@ class Emails_Table extends \WP_List_Table
         
         if ( $which == 'top' ) {
             ?>
-	        <div class="alignleft actions">
-	        	
-	            <label><?php 
+			<div class="alignleft actions">
+				
+				<label><?php 
             esc_html_e( 'From', 'mail-control' );
             ?><input type="date" name="from"  value="<?php 
             echo  esc_attr( $this->from->format( 'Y-m-d' ) ) ;
             ?>" /></label>
-	            <label><?php 
+				<label><?php 
             esc_html_e( 'To', 'mail-control' );
             ?><input type="date" name="to" value="<?php 
             echo  esc_attr( $this->to->format( 'Y-m-d' ) ) ;
             ?>"   /></label>
-	            <?php 
+				<?php 
             submit_button(
                 __( 'Filter' ),
                 '',
@@ -111,37 +111,37 @@ class Emails_Table extends \WP_List_Table
                 false
             );
             ?>
-	            <?php 
+				<?php 
             
             if ( defined( 'BACKGROUND_MAILER_ACTIVE' ) && BACKGROUND_MAILER_ACTIVE == 'on' ) {
-                $url = add_query_arg( [
+                $url = add_query_arg( array(
                     'action' => 'process_mail_queue',
                     'nonce'  => $this->nonce,
                     'width'  => 200,
                     'height' => 150,
-                ], admin_url( "admin-ajax.php" ) );
+                ), admin_url( 'admin-ajax.php' ) );
                 ?>
-	                <a href="<?php 
+					<a href="<?php 
                 echo  esc_url( $url ) ;
                 ?>" title="<?php 
                 esc_attr_e( 'Processing mail queue', 'mail-control' );
                 ?>" class="thickbox button button-primary" ><?php 
                 esc_html_e( 'Process mail queue', 'mail-control' );
                 ?></a>
-	            <?php 
+				<?php 
             }
             
             ?>
-	        </div>
+			</div>
 
-        <?php 
+			<?php 
         }
     
     }
     
     public function prepare_data( $row )
     {
-        return apply_filters( 'emails_table_columns_data', [
+        return apply_filters( 'emails_table_columns_data', array(
             'id'        => $row->id,
             'date_time' => $row->date_time,
             'to'        => $row->to,
@@ -150,12 +150,12 @@ class Emails_Table extends \WP_List_Table
             'status'    => $row->status,
             'open'      => $row->lu,
             'click'     => $row->clicks,
-        ], $row );
+        ), $row );
     }
     
     public function get_columns()
     {
-        return apply_filters( 'emails_table_columns_headers', [
+        return apply_filters( 'emails_table_columns_headers', array(
             'date_time' => __( 'Date', 'mail-control' ),
             'to'        => __( 'Recepient', 'mail-control' ),
             'subject'   => __( 'Subject', 'mail-control' ),
@@ -164,29 +164,29 @@ class Emails_Table extends \WP_List_Table
             'open'      => __( 'Reads', 'mail-control' ),
             'click'     => __( 'Clicks', 'mail-control' ),
             'detail'    => __( 'Detail', 'mail-control' ),
-        ] );
+        ) );
     }
     
     public function column_detail( $item )
     {
-        $url = add_query_arg( [
+        $url = add_query_arg( array(
             'id'     => $item['id'],
             'action' => 'detail_email',
             'width'  => 800,
             'height' => 700,
             'nonce'  => $this->nonce,
-        ], admin_url( "admin-ajax.php" ) );
+        ), admin_url( 'admin-ajax.php' ) );
         $detail = '<a href="' . esc_url( $url ) . '" title="' . esc_attr__( 'Email Details', 'mail-control' ) . '" class="thickbox button button-secondary" >' . esc_html__( 'Show details', 'mail-control' ) . '</a>';
-        $url = add_query_arg( [
+        $url = add_query_arg( array(
             'id'     => $item['id'],
             'action' => 'resend_email',
             'width'  => 300,
             'height' => 200,
             'nonce'  => $this->nonce,
-        ], admin_url( "admin-ajax.php" ) );
-        $actions = [
+        ), admin_url( 'admin-ajax.php' ) );
+        $actions = array(
             'resend' => '<a class="thickbox" title="' . esc_attr__( 'Resend Email', 'mail-control' ) . '"  href="' . esc_url( $url ) . '">' . esc_html__( 'Resend', 'mail-control' ) . '</a>',
-        ];
+        );
         return sprintf( '%1$s %2$s', $detail, $this->row_actions( $actions ) );
     }
     
@@ -204,7 +204,7 @@ class Emails_Table extends \WP_List_Table
     
     public function get_sortable_columns()
     {
-        return apply_filters( 'emails_table_columns_sortable_headers', [
+        return apply_filters( 'emails_table_columns_sortable_headers', array(
             'date_time' => array( 'date_time', false ),
             'to'        => array( 'to', false ),
             'subject'   => array( 'subject', false ),
@@ -212,7 +212,7 @@ class Emails_Table extends \WP_List_Table
             'status'    => array( 'status', false ),
             'open'      => array( 'lu', false ),
             'click'     => array( 'clicks', false ),
-        ] );
+        ) );
     }
     
     public function column_default( $item, $column_name )
@@ -229,7 +229,7 @@ class Emails_Table extends \WP_List_Table
     
     public static function normalize_headers( $headers )
     {
-        $arrayHeaders = [];
+        $arrayHeaders = array();
         foreach ( $headers as $line ) {
             
             if ( is_string( $line ) ) {
@@ -240,7 +240,7 @@ class Emails_Table extends \WP_List_Table
                 }
             
             } else {
-                [ $header, $value ] = $line;
+                list( $header, $value ) = $line;
                 $arrayHeaders[$header] = $value;
             }
         

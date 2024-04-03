@@ -2,9 +2,21 @@
 
 namespace Mail_Control;
 
+/**
+ * Get the plugin setting url.
+ *
+ * @return     string  The section url.
+ */
+function settings_url( $hash = null )
+{
+    return admin_url( 'admin.php?page=mail-control-settings' );
+}
+
 
 if ( !function_exists( 'mc_fs' ) ) {
-    // Create a helper function for easy SDK access.
+    /**
+     * Create a helper function for easy SDK access
+     */
     function mc_fs()
     {
         global  $mc_fs ;
@@ -65,7 +77,7 @@ if ( !function_exists( 'mc_fs' ) ) {
     // customize opt-in message
     $mc_fs->add_filter(
         'connect_message_on_update',
-        'Mail_Control\\mc_fs_custom_connect_message_on_update',
+        __NAMESPACE__ . '\\mc_fs_custom_connect_message_on_update',
         10,
         6
     );
