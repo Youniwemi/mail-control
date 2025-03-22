@@ -2,7 +2,7 @@
 
 namespace Mail_Control;
 
-use  PHPMailer\PHPMailer\PHPMailer ;
+use PHPMailer\PHPMailer\PHPMailer;
 /**
  * Email tracker settings
  */
@@ -12,35 +12,57 @@ add_filter( 'mail_control_settings', function ( $settings ) {
         'title'       => __( 'Email Logging and Tracking', 'mail-control' ),
         'description' => __( 'Insightful Analytics: Activate to track your email delivery status and engagement metrics.', 'mail-control' ),
         'side_panel'  => function () {
-        ?>
+            ?>
 			<h3><?php 
-        esc_html_e( 'How does email logging works?', 'mail-control' );
-        ?></h3>
+            esc_html_e( 'How does email logging works?', 'mail-control' );
+            ?></h3>
 			<p><?php 
-        esc_html_e( 'Mail control basically hooks into the wp_mail function and records the information about emails before sending them, then records any error that arises while sending to allow you to resend the email if necessary.', 'mail-control' );
-        ?></p>
+            esc_html_e( 'Mail control basically hooks into the wp_mail function and records the information about emails before sending them, then records any error that arises while sending to allow you to resend the email if necessary.', 'mail-control' );
+            ?></p>
 			<h3><?php 
-        esc_html_e( 'How does email tracking works?', 'mail-control' );
-        ?></h3>
+            esc_html_e( 'How does email tracking works?', 'mail-control' );
+            ?></h3>
 			<p><?php 
-        esc_html_e( 'After saving the email for logging purposes, Mail Control injects a tracker in the email content, a read tracker as an invisible image, and modifies all the links inside the email to pass through our click tracker that will record the clicked link then redirects to the final destination.', 'mail-control' );
-        ?></p>
+            esc_html_e( 'After saving the email for logging purposes, Mail Control injects a tracker in the email content, a read tracker as an invisible image, and modifies all the links inside the email to pass through our click tracker that will record the clicked link then redirects to the final destination.', 'mail-control' );
+            ?></p>
+			<h3><?php 
+            esc_html_e( 'How does log retention work?', 'mail-control' );
+            ?></h3>
+			<p><?php 
+            esc_html_e( 'Our system automatically manages your email logs based on your selected retention period. A scheduled task runs nightly to remove only logs that exceed your chosen timeframe, ensuring your database remains optimized while preserving all the valuable tracking data you need for your email analytics.', 'mail-control' );
+            ?></p>
 				<?php 
-    },
-        'fields'      => array( array(
-        'id'      => 'ACTIVE_LOGGING',
-        'type'    => 'checkbox',
-        'title'   => __( 'Log Emails (Mandatory if we want to track emails)', 'mail-control' ),
-        'default' => 'on',
-    ), array(
-        'id'      => 'ACTIVE_TRACKING',
-        'type'    => 'checkbox',
-        'title'   => __( 'Enable opens and clicks tracking', 'mail-control' ),
-        'default' => 'off',
-        'show_if' => function () {
-        return EMAIL_TRACKING_ACTIVE_LOGGING === 'on';
-    },
-    ) ),
+        },
+        'fields'      => array(array(
+            'id'      => 'ACTIVE_LOGGING',
+            'type'    => 'checkbox',
+            'title'   => __( 'Log Emails (Mandatory if we want to track emails)', 'mail-control' ),
+            'default' => 'on',
+        ), array(
+            'id'      => 'ACTIVE_TRACKING',
+            'type'    => 'checkbox',
+            'title'   => __( 'Enable opens and clicks tracking', 'mail-control' ),
+            'default' => 'off',
+            'show_if' => function () {
+                return EMAIL_TRACKING_ACTIVE_LOGGING === 'on';
+            },
+        ), array(
+            'id'          => 'LOG_RETENTION',
+            'type'        => 'select',
+            'options'     => array(
+                'ALWAYS'   => __( 'Keep Always', 'mail-control' ),
+                '1 year'   => __( 'One Year', 'mail-control' ),
+                '3 months' => __( 'Three Month', 'mail-control' ),
+                '1 month'  => __( 'One Month', 'mail-control' ),
+                '1 week'   => __( 'One Week', 'mail-control' ),
+            ),
+            'title'       => __( 'How long would like to keep the logs?', 'mail-control' ),
+            'description' => __( 'A cronjob will run every night to delete the old logs depending on your settings', 'mail-control' ),
+            'default'     => 'ALWAYS',
+            'show_if'     => function () {
+                return EMAIL_TRACKING_ACTIVE_LOGGING === 'on';
+            },
+        )),
     );
     $settings['EMAIL_TRACKING'] = $tracking_config;
     return $settings;
@@ -52,8 +74,7 @@ add_filter( 'mail_control_settings', function ( $settings ) {
  *
  * @return     string  The html version.
  */
-function htmlize( $content )
-{
+function htmlize(  $content  ) {
     return nl2br( make_clickable( $content ) );
 }
 
@@ -66,14 +87,11 @@ function htmlize( $content )
  *
  * @return     bool    True if email header has, false otherwise.
  */
-function email_header_has( array $headers, $key, $value = null )
-{
+function email_header_has(  array $headers, $key, $value = null  ) {
     if ( count( $headers ) ) {
         foreach ( $headers as $header ) {
-            
             if ( $header ) {
                 list( $h, $v ) = array_map( 'trim', explode( ':', $header ) );
-                
                 if ( strtolower( $h ) === strtolower( $key ) ) {
                     if ( $value === null ) {
                         return true;
@@ -83,9 +101,7 @@ function email_header_has( array $headers, $key, $value = null )
                     $v = explode( ';', $v );
                     return $value === $v[0];
                 }
-            
             }
-        
         }
     }
     return false;
@@ -100,40 +116,31 @@ function email_header_has( array $headers, $key, $value = null )
  *
  * @return     array    updated headers.
  */
-function email_header_set( array $headers, $key, $value )
-{
-    
+function email_header_set(  array $headers, $key, $value  ) {
     if ( count( $headers ) ) {
         $found = false;
         foreach ( $headers as $i => $header ) {
-            
             if ( $header ) {
                 list( $h, $v ) = array_map( 'trim', explode( ':', $header ) );
-                
                 if ( strtolower( $h ) === strtolower( $key ) ) {
                     $found = true;
                     // Content-type is special, Content-Type: text/html; charset=...
                     // in this case, we compare with the first part
                     $v = explode( ';', $v );
                     array_shift( $v );
-                    
                     if ( count( $v ) == 0 ) {
                         $headers[$i] = "{$key}: {$value}";
                     } else {
                         $headers[$i] = "{$key}: {$value}; " . implode( '; ', $v );
                     }
-                    
                     break;
                 }
-            
             }
-        
         }
         if ( !$found ) {
             $headers[] = "{$key}: {$value}";
         }
     }
-    
     return $headers;
 }
 
@@ -144,8 +151,7 @@ function email_header_set( array $headers, $key, $value )
  *
  * @return     string  Sanitized html
  */
-function sanitize_html_email_content( $content )
-{
+function sanitize_html_email_content(  $content  ) {
     // wWe basically use allowed tags in posts as a base.
     $allowed_html = wp_kses_allowed_html( 'post' );
     // And allow essential tags.
@@ -179,23 +185,19 @@ function sanitize_html_email_content( $content )
  *
  * @return int                          EMail's id
  */
-function update_email( PHPMailer $phpmailer )
-{
+function update_email(  PHPMailer $phpmailer  ) {
     // look for queue id.
     $headers = get_all_headers( $phpmailer );
     $update = null;
     foreach ( $headers as $header ) {
         list( $key, $id ) = $header;
-        
         if ( $key === 'X-Queue-id' ) {
             $update = $id;
             break;
         }
-    
     }
-    
     if ( $update ) {
-        global  $wpdb ;
+        global $wpdb;
         // We save the email as it was sent, so we can resend it as is.
         // IMPORTANT : we have to watch out if we need to print in log view.
         $wpdb->update( $wpdb->prefix . MC_EMAIL_TABLE, array(
@@ -204,14 +206,13 @@ function update_email( PHPMailer $phpmailer )
             'message_plain' => ( $phpmailer->AltBody ? $phpmailer->AltBody : $phpmailer->html2text( $phpmailer->Body ) ),
             'headers'       => json_encode( $headers ),
             'attachments'   => json_encode( array_map( function ( $a ) {
-            return $a[0];
-        }, $phpmailer->getAttachments() ) ),
+                return $a[0];
+            }, $phpmailer->getAttachments() ) ),
             'in_queue'      => 0,
         ), array(
             'id' => $update,
         ) );
     }
-    
     return $update;
 }
 
@@ -222,8 +223,7 @@ function update_email( PHPMailer $phpmailer )
  *
  * @return     \PHPMailer\PHPMailer\PHPMailer  All headers.
  */
-function get_all_headers( PHPMailer $phpmailer )
-{
+function get_all_headers(  PHPMailer $phpmailer  ) {
     $headers = $phpmailer->getCustomHeaders();
     foreach ( array(
         'To'       => 'getToAddresses',
@@ -231,31 +231,27 @@ function get_all_headers( PHPMailer $phpmailer )
         'Bcc'      => 'getBccAddresses',
         'Reply-to' => 'getReplyToAddresses',
     ) as $header => $getter ) {
-        
         if ( $emails = $phpmailer->{$getter}() ) {
             $recipients = array();
             foreach ( $emails as $email ) {
                 list( $address, $name ) = $email;
-                
                 if ( $name ) {
                     $recipients[] = "{$name} <{$address}>";
                 } else {
                     $recipients[] = $address;
                 }
-            
             }
             if ( $recipients ) {
-                $headers[] = array( $header, implode( ', ', $recipients ) );
+                $headers[] = array($header, implode( ', ', $recipients ));
             }
         }
-    
     }
     // Add content type.
     $content_type = $phpmailer->ContentType;
     if ( $phpmailer->CharSet ) {
         $content_type .= '; charset=' . $phpmailer->CharSet;
     }
-    $headers[] = array( 'Content-Type', $content_type );
+    $headers[] = array('Content-Type', $content_type);
     return $headers;
 }
 
@@ -266,8 +262,7 @@ function get_all_headers( PHPMailer $phpmailer )
  *
  * @return     string  Comma separated list of recipients.
  */
-function get_email_recipients( PHPMailer $phpmailer )
-{
+function get_email_recipients(  PHPMailer $phpmailer  ) {
     $recipients = array_map( function ( $recipient ) {
         return $recipient[0];
     }, $phpmailer->getToAddresses() );
@@ -281,9 +276,8 @@ function get_email_recipients( PHPMailer $phpmailer )
  *
  * @return int EMail's id
  */
-function insert_email( PHPMailer $phpmailer )
-{
-    global  $wpdb ;
+function insert_email(  PHPMailer $phpmailer  ) {
+    global $wpdb;
     $wpdb->insert( $wpdb->prefix . MC_EMAIL_TABLE, array(
         'date_time'     => current_time( 'mysql' ),
         'to'            => get_email_recipients( $phpmailer ),
@@ -292,8 +286,8 @@ function insert_email( PHPMailer $phpmailer )
         'message_plain' => ( $phpmailer->AltBody ? $phpmailer->AltBody : $phpmailer->html2text( $phpmailer->Body ) ),
         'headers'       => json_encode( get_all_headers( $phpmailer ) ),
         'attachments'   => json_encode( array_map( function ( $a ) {
-        return $a[0];
-    }, $phpmailer->getAttachments() ) ),
+            return $a[0];
+        }, $phpmailer->getAttachments() ) ),
     ) );
     return $wpdb->insert_id;
 }
@@ -305,8 +299,7 @@ function insert_email( PHPMailer $phpmailer )
  *
  * @return string  the tracking url for the email
  */
-function tracker_url( int $email_id )
-{
+function tracker_url(  int $email_id  ) {
     return add_query_arg( 'email', $email_id, home_url() . MC_TRACK_URL );
 }
 
@@ -318,8 +311,7 @@ function tracker_url( int $email_id )
  *
  * @return string  The tracking link
  */
-function track_link( string $url, string $tracking )
-{
+function track_link(  string $url, string $tracking  ) {
     // nothing to track here.
     if ( substr( $url, 0, 1 ) == '#' ) {
         return $url;
@@ -335,10 +327,9 @@ function track_link( string $url, string $tracking )
  *
  * @return string                          The new mail body
  */
-function track_email( PHPMailer $phpmailer, string $tracker_url )
-{
+function track_email(  PHPMailer $phpmailer, string $tracker_url  ) {
     // track clicks.
-    $content = preg_replace_callback( '/<a(.*?)href="(.*?)"/', function ( $matches ) use( $tracker_url ) {
+    $content = preg_replace_callback( '/<a(.*?)href="(.*?)"/', function ( $matches ) use($tracker_url) {
         return '<a' . $matches[1] . 'href="' . esc_url( track_link( $matches[2], $tracker_url ) ) . '"';
     }, $phpmailer->Body );
     // track read.
@@ -346,23 +337,71 @@ function track_email( PHPMailer $phpmailer, string $tracker_url )
     return $content;
 }
 
+/**
+ * Cleanup old email logs based on retention settings.
+ * Only runs if triggered by admin or WP-CLI
+ */
+function cleanup_logs() {
+    // Only allow execution if:
+    // 1. Admin action
+    // 2. Running from WP-CLI
+    // 3. Running from the WordPress cron system
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    if ( !isset( $_GET['empty_logs'] ) && !defined( 'WP_CLI' ) && !defined( 'DOING_CRON' ) ) {
+        return;
+    }
+    // If set to always keep logs, exit early
+    if ( !defined( 'EMAIL_TRACKING_LOG_RETENTION' ) || EMAIL_TRACKING_LOG_RETENTION === 'ALWAYS' || EMAIL_TRACKING_LOG_RETENTION === '' ) {
+        return;
+    }
+    $cutoff_date = date( 'Y-m-d H:i:s', strtotime( '-' . EMAIL_TRACKING_LOG_RETENTION ) );
+    // If we have a valid cutoff date, delete logs older than that date.
+    if ( $cutoff_date ) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . MC_EMAIL_TABLE;
+        $wpdb->query( $wpdb->prepare( "DELETE FROM {$table_name} WHERE date_time < %s", $cutoff_date ) );
+    }
+}
+
+add_action( 'mail_control_cleanup_logs', __NAMESPACE__ . '\\cleanup_logs' );
+/**
+ * Sets up the log clean up schedule.
+ */
+function add_cleanup_schedule() {
+    // Schedule the email log cleanup (only happens once per version change).
+    if ( !wp_next_scheduled( 'mail_control_cleanup_logs' ) ) {
+        wp_schedule_event( time(), 'daily', 'mail_control_cleanup_logs' );
+    }
+}
+
+/**
+ * Cleanup the log clean up schedule.
+ */
+function cleanup_schedule_on_deactivation() {
+    wp_clear_scheduled_hook( 'mail_control_cleanup_logs' );
+}
+
+// Setup clean logs, this event is triggered if the plugin get's updated to ensure the cronjob is in place.
+add_action( 'mail_control_upgrade', __NAMESPACE__ . '\\add_cleanup_schedule' );
+// Schedule on activation.
+register_activation_hook( MC_PLUGIN_FILE, __NAMESPACE__ . '\\add_cleanup_schedule' );
+// Remove the schedule on desactivation.
+register_deactivation_hook( MC_PLUGIN_FILE, __NAMESPACE__ . '\\cleanup_schedule_on_deactivation' );
 // Update fail message.
 add_action(
     'wp_mail_failed',
     function ( $error ) {
-    
-    if ( EMAIL_TRACKING_ACTIVE_LOGGING == 'on' || EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
-        global  $wpdb ;
-        $headers = $error->error_data['wp_mail_failed']['headers'];
-        $id = ( isset( $headers['X-Queue-id'] ) ? (int) $headers['X-Queue-id'] : $wpdb->insert_id );
-        $wpdb->update( $wpdb->prefix . MC_EMAIL_TABLE, array(
-            'fail' => $error->get_error_messages()[0],
-        ), array(
-            'id' => $id,
-        ) );
-    }
-
-},
+        if ( EMAIL_TRACKING_ACTIVE_LOGGING == 'on' || EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
+            global $wpdb;
+            $headers = $error->error_data['wp_mail_failed']['headers'];
+            $id = ( isset( $headers['X-Queue-id'] ) ? (int) $headers['X-Queue-id'] : $wpdb->insert_id );
+            $wpdb->update( $wpdb->prefix . MC_EMAIL_TABLE, array(
+                'fail' => $error->get_error_messages()[0],
+            ), array(
+                'id' => $id,
+            ) );
+        }
+    },
     100,
     1
 );
@@ -370,45 +409,37 @@ add_action(
 add_action(
     'phpmailer_init',
     function ( $phpmailer ) {
-    // if processed by the customizer, Body Would be an array.
-    // if $message is array as well ( resend ).
-    
-    if ( is_array( $phpmailer->Body ) ) {
-        $phpmailer->AltBody = $phpmailer->Body['text/plain'];
-        $phpmailer->Body = $phpmailer->Body['text/html'];
-    }
-    
-    if ( defined( 'EMAIL_TRACKING_ACTIVE_TRACKING' ) && EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
-        // if not html, convert to html.
-        
-        if ( $phpmailer->ContentType == PHPMailer::CONTENT_TYPE_PLAINTEXT ) {
-            $phpmailer->AltBody = $phpmailer->Body;
-            $phpmailer->Body = htmlize( $phpmailer->Body );
-            $phpmailer->isHTML( true );
+        // if processed by the customizer, Body Would be an array.
+        // if $message is array as well ( resend ).
+        if ( is_array( $phpmailer->Body ) ) {
+            $phpmailer->AltBody = $phpmailer->Body['text/plain'];
+            $phpmailer->Body = $phpmailer->Body['text/html'];
         }
-    
-    }
-    
-    if ( defined( 'EMAIL_TRACKING_ACTIVE_LOGGING' ) && EMAIL_TRACKING_ACTIVE_LOGGING == 'on' || defined( 'EMAIL_TRACKING_ACTIVE_TRACKING' ) && EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
-        // insert email in log or remove from queue.
-        $email_id = null;
-        if ( defined( 'BACKGROUND_MAILER_ACTIVE' ) && BACKGROUND_MAILER_ACTIVE == 'on' ) {
-            $email_id = update_email( $phpmailer );
+        if ( defined( 'EMAIL_TRACKING_ACTIVE_TRACKING' ) && EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
+            // if not html, convert to html.
+            if ( $phpmailer->ContentType == PHPMailer::CONTENT_TYPE_PLAINTEXT ) {
+                $phpmailer->AltBody = $phpmailer->Body;
+                $phpmailer->Body = htmlize( $phpmailer->Body );
+                $phpmailer->isHTML( true );
+            }
         }
-        // maybe the mail is not found.
-        if ( $email_id === null ) {
-            $email_id = insert_email( $phpmailer );
+        if ( defined( 'EMAIL_TRACKING_ACTIVE_LOGGING' ) && EMAIL_TRACKING_ACTIVE_LOGGING == 'on' || defined( 'EMAIL_TRACKING_ACTIVE_TRACKING' ) && EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
+            // insert email in log or remove from queue.
+            $email_id = null;
+            if ( defined( 'BACKGROUND_MAILER_ACTIVE' ) && BACKGROUND_MAILER_ACTIVE == 'on' ) {
+                $email_id = update_email( $phpmailer );
+            }
+            // maybe the mail is not found.
+            if ( $email_id === null ) {
+                $email_id = insert_email( $phpmailer );
+            }
         }
-    }
-    
-    
-    if ( defined( 'EMAIL_TRACKING_ACTIVE_TRACKING' ) && EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
-        // tracking code.
-        $tracker = tracker_url( $email_id );
-        $phpmailer->Body = track_email( $phpmailer, $tracker );
-    }
-
-},
+        if ( defined( 'EMAIL_TRACKING_ACTIVE_TRACKING' ) && EMAIL_TRACKING_ACTIVE_TRACKING == 'on' ) {
+            // tracking code.
+            $tracker = tracker_url( $email_id );
+            $phpmailer->Body = track_email( $phpmailer, $tracker );
+        }
+    },
     100,
     1
 );

@@ -1,0 +1,13 @@
+{
+    "require": {
+        "youniwemi/wp-settings-kit": "^1.1",
+        "freemius/wordpress-sdk": "^2.11",
+        "symfony/css-selector": "5.4.17",
+        "pelago/emogrifier": "^7.0",
+        "youniwemi/string-template": "^0.2.2"
+    } ,
+   "scripts": {
+		"cs": "phpcs --standard=phpcs.xml .",
+		"cbf": "phpcbf --standard=phpcs.xml ."
+	}
+}

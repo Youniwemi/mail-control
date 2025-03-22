@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'a4a119a56e50fbb293281d9a48007e0e' => $vendorDir . '/symfony/polyfill-php80/bootstrap.php',
+    '8d50dc88e56bace65e1e72f6017983ed' => $vendorDir . '/freemius/wordpress-sdk/start.php',
     '0d4507a35308200d41425eaae4b516fa' => $vendorDir . '/youniwemi/wp-settings-kit/class-wp-settings-kit.php',
 );

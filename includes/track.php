@@ -11,8 +11,7 @@ if ( !defined( 'ABSPATH' ) || !isset( $_GET['email'] ) ) {
  *
  * @return     string  sanitized IP address
  */
-function sanitize_ip( $ip )
-{
+function sanitize_ip(  $ip  ) {
     return filter_var( $ip, FILTER_VALIDATE_IP );
 }
 
@@ -24,9 +23,8 @@ function sanitize_ip( $ip )
  * @param      int    $email  The email Id.
  * @param      string $url    The url ( if we have an url, it's a click event, else, it is a read/open ).
  */
-function track_email( int $email, string $url = null )
-{
-    global  $wpdb ;
+function track_email(  int $email, string $url = null  ) {
+    global $wpdb;
     $wpdb->insert( $wpdb->prefix . MC_EVENT_TABLE, array(
         'email_id'   => $email,
         'ip'         => ( isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_ip( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'localhost' ),
@@ -42,7 +40,6 @@ function track_email( int $email, string $url = null )
         '%d',
         '%s'
     ) );
-    
     if ( $url ) {
         $link = html_entity_decode( $url );
         // Redirect to main link.
@@ -57,7 +54,6 @@ function track_email( int $email, string $url = null )
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPressDotOrg.sniffs.OutputEscaping.UnescapedOutputParameter -- Safe it's a transparent gif.
         die( $gif_safe );
     }
-
 }
 
 $email = intval( $_GET['email'] );

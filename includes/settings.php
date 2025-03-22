@@ -26,6 +26,7 @@ class Settings extends \WP_Settings_Kit {
 
 		echo '<div class="wrap">';
 		echo '<h1>' . esc_html__( 'Mail Control Settings', 'mail-control' ) . '</h1>';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 		onboarding_notice( isset( $_GET['welcome-message'] ) );
 		$this->show_navigation();
 		$this->show_forms();
@@ -88,11 +89,18 @@ function is_woocommerce_active() {
 add_action(
 	'plugins_loaded',
 	function () {
-		load_plugin_textdomain( 'mail-control', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 		if ( is_woocommerce_active() ) {
 			include MC_INCLUDES . 'integrations/woocommerce.php';
 		}
 		$settings = apply_filters( 'mail_control_settings', array() );
 		new Settings( array_merge( $settings, permissions_settings() ) );
+	}
+);
+
+add_action(
+	'init',
+	function () {
+		load_plugin_textdomain( 'mail-control', false, dirname( MC_PLUGIN_BASENAME ) . '/languages' );
+		
 	}
 );

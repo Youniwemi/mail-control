@@ -8,6 +8,7 @@ class ComposerStaticInit5a8a260452a2706b960bbb6952c3bd05
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        '8d50dc88e56bace65e1e72f6017983ed' => __DIR__ . '/..' . '/freemius/wordpress-sdk/start.php',
         '0d4507a35308200d41425eaae4b516fa' => __DIR__ . '/..' . '/youniwemi/wp-settings-kit/class-wp-settings-kit.php',
     );
 

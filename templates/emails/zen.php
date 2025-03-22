@@ -6,8 +6,8 @@ namespace Mail_Control;
  * This template originated from github.com:sendwithus/templates.git projet
  */
 // Exit if accessed directly.
-if (! defined('ABSPATH')) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -16,8 +16,8 @@ if (! defined('ABSPATH')) {
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title><?php echo esc_html($subject); ?></title>
-  <?php do_action('mc_header'); ?>
+  <title><?php echo esc_html( $subject ); ?></title>
+  <?php do_action( 'mc_header' ); ?>
   <style type="text/css" media="screen">
 
 	/* Force Hotmail to display emails at full width */
@@ -52,30 +52,30 @@ if (! defined('ABSPATH')) {
 	  padding: 0;
 	}
 	h1,h2,h3,h4,h5{
-	  color: <?php echo esc_attr($title_color); ?>;
-	  font-size: <?php echo esc_attr($title_font_size); ?>px;
-	  margin-bottom: <?php echo esc_attr($title_margin_bottom); ?>px;
-	  text-transform: <?php echo esc_attr($title_transform); ?>;
+	  color: <?php echo esc_attr( $title_color ); ?>;
+	  font-size: <?php echo esc_attr( $title_font_size ); ?>px;
+	  margin-bottom: <?php echo esc_attr( $title_margin_bottom ); ?>px;
+	  text-transform: <?php echo esc_attr( $title_transform ); ?>;
 	}
 	body,
 	p,
 	td {
-	  font-family: <?php echo $main_font_family ? esc_attr(get_font_family($main_font_family)) : 'inherit'; ?> !important;
-	  font-size: <?php echo esc_attr($main_font_size); ?>px;
+	  font-family: <?php echo $main_font_family ? esc_attr( get_font_family( $main_font_family ) ) : 'inherit'; ?> !important;
+	  font-size: <?php echo esc_attr( $main_font_size ); ?>px;
 	  line-height: 1.5em;
 	}
 
 	h1 {
-	  font-size: <?php echo esc_attr(round(intval($title_font_size) * 1.4)); ?>px;
+	  font-size: <?php echo esc_attr( round( intval( $title_font_size ) * 1.4 ) ); ?>px;
 	  font-weight: normal;
 	  line-height: 1.5em;
 	}
 	h2 {
-	  font-size: <?php echo esc_attr(round(intval($title_font_size) * 1.3)); ?>px;
+	  font-size: <?php echo esc_attr( round( intval( $title_font_size ) * 1.3 ) ); ?>px;
 	  line-height: 1.4em;
 	}
 	h3 {
-	  font-size: <?php echo esc_attr(round(intval($title_font_size) * 1.2)); ?>px;
+	  font-size: <?php echo esc_attr( round( intval( $title_font_size ) * 1.2 ) ); ?>px;
 	  line-height: 1.3em;
 	}
 
@@ -102,7 +102,7 @@ if (! defined('ABSPATH')) {
 	}
 
 	td.background {
-	  background-color: <?php echo esc_attr($main_bg_color); ?>;
+	  background-color: <?php echo esc_attr( $main_bg_color ); ?>;
 	}
 
 	table.background {
@@ -113,7 +113,7 @@ if (! defined('ABSPATH')) {
 	
 	.body-cell p {
 	  margin-bottom: 10px;
-	  color: <?php echo esc_attr($txt_color); ?>;
+	  color: <?php echo esc_attr( $txt_color ); ?>;
 	}
 
 	ul {
@@ -121,7 +121,7 @@ if (! defined('ABSPATH')) {
 	}
 	
 	.body-cell li{
-	  color: <?php echo esc_attr($txt_color); ?>;
+	  color: <?php echo esc_attr( $txt_color ); ?>;
 	}
 
 	.block-img {
@@ -131,12 +131,12 @@ if (! defined('ABSPATH')) {
 
 	.body-cell a,
 	.body-cell a:link {
-	  color: <?php echo esc_attr($link_color); ?>;
+	  color: <?php echo esc_attr( $link_color ); ?>;
 	  text-decoration: underline;
 	}
 
 	.wrap {
-	  width: <?php echo intval($container_width); ?>px;
+	  width: <?php echo intval( $container_width ); ?>px;
 	}
 
 	.wrap-cell {
@@ -152,26 +152,26 @@ if (! defined('ABSPATH')) {
 	}
 
 	td.header-cell {
-	  background-color: <?php echo esc_attr($header_color); ?>;
+	  background-color: <?php echo esc_attr( $header_color ); ?>;
 	  font-size: 24px;
 	  color: #ffffff;
 	  padding-top: 20px;
 	  padding-bottom: 20px;
-	  text-align: <?php echo esc_attr($logo_position); ?>;
+	  text-align: <?php echo esc_attr( $logo_position ); ?>;
 	}
 	td.header-cell img{
-	  width: <?php echo intval($logo_width); ?>px;
+	  width: <?php echo intval( $logo_width ); ?>px;
 	}
 
 	.body-cell {
 	  background-color: #ffffff;
-	  color:  <?php echo esc_attr($txt_color); ?>;
-	  padding: <?php echo intval($container_padding); ?>px;
+	  color:  <?php echo esc_attr( $txt_color ); ?>;
+	  padding: <?php echo intval( $container_padding ); ?>px;
 	}
 
 	td.footer-cell {
-	  background-color: <?php echo esc_attr($footer_bg_color); ?>;
-	  color: <?php echo esc_attr($footer_txt_color); ?>;;
+	  background-color: <?php echo esc_attr( $footer_bg_color ); ?>;
+	  color: <?php echo esc_attr( $footer_txt_color ); ?>;;
 	  text-align: center;
 	  padding-top: 30px;
 	  padding-bottom: 30px;
@@ -184,11 +184,11 @@ if (! defined('ABSPATH')) {
 	/** BUTTON STYLE **/
 
 	.body-cell a.btn, .body-cell a.button {
-	  background:<?php echo esc_attr($button_bg_color); ?>;
-	  color: <?php echo esc_attr($button_txt_color); ?>;
-	  font-size: <?php echo intval($button_font_size); ?>px;
-	  padding: <?php echo intval($button_padding_tb); ?>px <?php echo intval($button_padding_lr); ?>px;
-	  border-radius: <?php echo intval($button_radius); ?>px;
+	  background:<?php echo esc_attr( $button_bg_color ); ?>;
+	  color: <?php echo esc_attr( $button_txt_color ); ?>;
+	  font-size: <?php echo intval( $button_font_size ); ?>px;
+	  padding: <?php echo intval( $button_padding_tb ); ?>px <?php echo intval( $button_padding_lr ); ?>px;
+	  border-radius: <?php echo intval( $button_radius ); ?>px;
 	  width: auto;
 	  display: inline-flex;
 	  border: none;
@@ -198,15 +198,15 @@ if (! defined('ABSPATH')) {
 	}
 
 	.body-cell a.btn:hover, .body-cell a.button:hover {
-	  background:<?php echo esc_attr($button_bg_color_hv); ?>;
-	  color: <?php echo esc_attr($button_txt_color_hv); ?>;
+	  background:<?php echo esc_attr( $button_bg_color_hv ); ?>;
+	  color: <?php echo esc_attr( $button_txt_color_hv ); ?>;
 	}
 
-	<?php if (is_woocommerce_active()) : ?>
+	<?php if ( is_woocommerce_active() ) : ?>
 	/* Woocommerce */
 	td.td, th.td , table.td{
-		font-size: <?php echo intval($table_font_size); ?>px;
-		border: <?php echo floatval($table_border_size); ?>px solid <?php echo esc_attr($table_border_color); ?>  !important;
+		font-size: <?php echo intval( $table_font_size ); ?>px;
+		border: <?php echo floatval( $table_border_size ); ?>px solid <?php echo esc_attr( $table_border_color ); ?>  !important;
 	}
 	<?php endif; ?>
 
@@ -216,7 +216,7 @@ if (! defined('ABSPATH')) {
 	  body[class*="background"],
 	  table[class*="background"],
 	  td[class*="background"] {
-		background: <?php echo esc_attr($main_bg_color); ?> !important;
+		background: <?php echo esc_attr( $main_bg_color ); ?> !important;
 	  }
 
 
@@ -231,10 +231,10 @@ if (! defined('ABSPATH')) {
 	}
   </style>
   <?php
-    if ($additional_css) {
-        echo '<style type="text/css" >' . wp_kses_post($additional_css) . '</style>';
-    }
-?>
+	if ( $additional_css ) {
+		echo '<style type="text/css" >' . wp_kses_post( $additional_css ) . '</style>';
+	}
+	?>
 </head>
 
 <body id="email_body" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="" class="background">
@@ -246,32 +246,32 @@ if (! defined('ABSPATH')) {
 			<tr>
 			  <td valign="top" class="wrap-cell" >
 				<table cellpadding="0" cellspacing="0" class="force-full-width">
-				  <?php if ($logo) : ?>
+				  <?php if ( $logo ) : ?>
 				  <tr>
 					  <td id="email_logo" valign="top" class="header-cell">
-						<img  src="<?php echo esc_url($logo); ?>" alt="logo" />
+						<img  src="<?php echo esc_url( ensure_absolute_url( $logo ) ); ?>" alt="logo" />
 					  </td>
 				  </tr>
 				  <?php endif; ?>
 				  <tr>
 					<td valign="top" class="body-cell">
-						<?php echo wp_kses_post($content); ?>
+						<?php echo wp_kses_post( $content ); ?>
 					</td>
 				  </tr>
-				  <?php if ($footer) : ?>
+				  <?php if ( $footer ) : ?>
 				  <tr>
 					<td id="footer_text" valign="top" class="footer-cell" >
-						<?php echo wp_kses_post($footer); ?>
+						<?php echo wp_kses_post( $footer ); ?>
 					</td>
 				  </tr>
 				  <?php endif; ?>
 				  <tr>
 				   <td id="footer_widget" valign="top" class="footer-cell" >
 					<?php
-                if (is_active_sidebar('mc_email_footer')) {
-                    dynamic_sidebar('mc_email_footer');
-                }
-?>
+					if ( is_active_sidebar( 'mc_email_footer' ) ) {
+						dynamic_sidebar( 'mc_email_footer' );
+					}
+					?>
 					</td>
 				   </tr>
 				</table>
@@ -283,7 +283,7 @@ if (! defined('ABSPATH')) {
 	</tr>
   </table>
 <?php
-do_action('mc_footer');
+do_action( 'mc_footer' );
 ?>
 </body>
 </html>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mail-control\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-09 22:27+0100\n"
+"POT-Creation-Date: 2025-03-19 20:22+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rahal <rahal.aboulfeth@gmail.com>\n"
 "Language-Team: \n"
@@ -11,416 +11,838 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;esc_attr_e;esc_attr__;esc_html__;esc_html_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
-#: includes/admin.php:12
-msgid "Mail Control"
-msgstr "Mail Control"
+#: includes/addresses-table.php:96 includes/emails-table.php:127
+msgid "From"
+msgstr "De"
 
-#: includes/admin.php:97 includes/admin.php:189
+#: includes/addresses-table.php:97 includes/emails-table.php:128
+msgid "To"
+msgstr "A"
+
+#: includes/addresses-table.php:99 includes/emails-table.php:129
+msgid "Filter"
+msgstr "Filtrer"
+
+#: includes/addresses-table.php:125
+msgid "Create Time"
+msgstr "Date de création"
+
+#: includes/addresses-table.php:126 includes/newsletter.php:570
+msgid "Email"
+msgstr "Email"
+
+#: includes/addresses-table.php:127 includes/emails-table.php:178
+msgid "Status"
+msgstr "Etat"
+
+#: includes/addresses-table.php:128
+msgid "Metas"
+msgstr "Métadonnées"
+
+#: includes/admin.php:17
+msgid "Email logs and tracking"
+msgstr "Journalisation et suivi des emails"
+
+#: includes/admin.php:60
+msgid "Cleanup Emails"
+msgstr "Nettoyer les emails"
+
+#: includes/admin.php:126
+msgid "Import Emails"
+msgstr "Importer des emails"
+
+#: includes/admin.php:163 includes/admin.php:266
 msgid "You don't have permission to do this"
-msgstr "Vous n’avez pas le droit de faire ça"
+msgstr "Vous n'avez pas le droit de faire ça"
 
-#: includes/admin.php:113
+#: includes/admin.php:181
 msgid "Failed to resend the email"
-msgstr "N’a pas réussi à renvoyer le mail"
+msgstr "N'a pas réussi à renvoyer le mail"
 
-#: includes/admin.php:136
+#: includes/admin.php:208
 msgid "Email resent succesfully"
 msgstr "Email réenvoyé avec succès"
 
-#: includes/admin.php:207 includes/admin.php:285
+#: includes/admin.php:283 includes/admin.php:365
 msgid "Email errors"
-msgstr "Erreur d’envoi de l’email"
+msgstr "Erreur d'envoi de l'email"
 
-#: includes/admin.php:209
+#: includes/admin.php:285
 msgid "Email Content"
 msgstr "Contenu du e-mail"
 
-#: includes/admin.php:211 includes/admin.php:246
+#: includes/admin.php:287 includes/admin.php:321
 msgid "Headers"
 msgstr "Entêtes"
 
-#: includes/admin.php:214 includes/admin.php:262
+#: includes/admin.php:290 includes/admin.php:338
 msgid "Attachements"
 msgstr "Pièces jointes"
 
-#: includes/admin.php:217 includes/admin.php:290
+#: includes/admin.php:293 includes/admin.php:370
 msgid "Events"
 msgstr "Évènements"
 
-#: includes/admin.php:222
+#: includes/admin.php:298
 msgid "HTML version"
 msgstr "Version HTML"
 
-#: includes/admin.php:242
+#: includes/admin.php:317
 msgid "Plain Text version"
 msgstr "Version Texte"
 
-#: includes/admin.php:296 includes/emails-table.php:138
+#: includes/admin.php:357
+msgid "Download attachment"
+msgstr "Télécharger la pièce jointe"
+
+#: includes/admin.php:377 includes/emails-table.php:174
 msgid "Date"
 msgstr "Date"
 
-#: includes/admin.php:297
+#: includes/admin.php:378
 msgid "Event"
 msgstr "Évènement"
 
-#: includes/admin.php:298
+#: includes/admin.php:379
 msgid "URL"
 msgstr "URL"
 
-#: includes/admin.php:299
+#: includes/admin.php:380
 msgid "IP"
 msgstr "IP"
 
-#: includes/admin.php:300
+#: includes/admin.php:381
 msgid "User Agent"
 msgstr "Navigateur"
 
-#: includes/admin.php:307
+#: includes/admin.php:391
 msgid "Open"
 msgstr "Ouverture"
 
-#: includes/admin.php:307
+#: includes/admin.php:393
 msgid "Click"
 msgstr "Clic"
 
-#: includes/admin.php:316
+#: includes/admin.php:405
 msgid "Sorry, no events so far"
 msgstr "Désolé, aucun événement pour le moment"
 
-#: includes/background-mailer.php:11
+#: includes/admin.php:443
+msgid "Welcome to Mail Control: Let's Get Started!"
+msgstr "Bienvenue sur Mail Control : Commençons !"
+
+#: includes/admin.php:444
+msgid "Set up your essential email tools in just a few easy steps:"
+msgstr "Configurez vos outils email essentiels en quelques étapes simples :"
+
+#: includes/admin.php:447
+msgid "SMTP Settings and Delivrability"
+msgstr "Paramètres SMTP et Délivrabilité"
+
+#: includes/admin.php:448
+msgid ""
+"Ensure reliable delivery. Configure SMTP to improve email deliverability. "
+msgstr ""
+"Assurez une livraison fiable. Configurez SMTP pour améliorer la "
+"délivrabilité des emails."
+
+#: includes/admin.php:450 includes/email-tracker.php:15
+msgid "Email Logging and Tracking"
+msgstr "Suivi d'ouvertures et clics des emails"
+
+#: includes/admin.php:451
+msgid ""
+"Gain valuable insights. Activate logging and tracking to monitor email "
+"performance."
+msgstr ""
+"Obtenez des informations précieuses. Activez la journalisation et le suivi "
+"pour surveiller la performance des emails."
+
+#: includes/admin.php:453
+msgid "Background Email Queue"
+msgstr "File d'attente d'emails en arrière-plan"
+
+#: includes/admin.php:454
+msgid ""
+"Enhanced Speed: Keep your pages loading quickly by processing emails in the "
+"background. "
+msgstr ""
+"Vitesse améliorée : Gardez vos pages rapides en traitant les emails en "
+"arrière-plan."
+
+#: includes/admin.php:456
+msgid "Customize Templates"
+msgstr "Personnaliser les modèles"
+
+#: includes/admin.php:457
+msgid ""
+"Branded Communication: Design email templates that reflect your brand’s "
+"unique style."
+msgstr ""
+"Communication personnalisée : Concevez des modèles d'emails qui reflètent le "
+"style unique de votre marque."
+
+#: includes/admin.php:461
+msgid "Congratulations, it looks like you are all set!"
+msgstr "Félicitations, tout semble prêt !"
+
+#: includes/admin.php:463
+msgid ""
+"By completing these steps, you’ll ensure smooth email operations and faster "
+"website performance. Let’s get your system ready for prime time."
+msgstr ""
+"En complétant ces étapes, vous assurerez des opérations email fluides et de "
+"meilleures performances pour votre site. Préparons votre système pour le "
+"grand jour."
+
+#: includes/admin.php:468 includes/admin.php:549
+msgid "Configure Mail Control"
+msgstr "Configurer Mail Control"
+
+#: includes/admin.php:472 includes/admin.php:555
+msgid "Customize your emails"
+msgstr "Personnaliser vos emails"
+
+#: includes/admin.php:474
+msgid "Question? Contact the developper"
+msgstr "Une question ? Contactez le développeur"
+
+#: includes/admin.php:477
+msgid "Dismiss this notice."
+msgstr "Ignorer cette notification."
+
+#: includes/admin.php:507
+msgid "Mail Control Setup"
+msgstr "Configuration de Mail Control"
+
+#: includes/admin.php:528
+msgid "View Mail Control Documentation"
+msgstr "Voir la documentation de Mail Control"
+
+#: includes/admin.php:528
+msgid "Mail Control Docs"
+msgstr "Documentation Mail Control"
+
+#: includes/background-mailer.php:19
 msgid "Background Mailer"
 msgstr "Envoie en tache de fond"
 
-#: includes/background-mailer.php:16
+#: includes/background-mailer.php:20
+msgid ""
+"Ensure your pages maintain fast loading times by handling email processes in "
+"the background."
+msgstr ""
+"Assurez à vos pages des temps de chargement rapides en traitant les "
+"processus d'email en arrière-plan."
+
+#: includes/background-mailer.php:22
+msgid "How does background mailing works?"
+msgstr "Comment fonctionne l'envoi d'emails en arrière-plan ?"
+
+#: includes/background-mailer.php:23
+msgid ""
+"Background mailing acts during the pre_wp_mail phase by placing the emails "
+"in a queue and then canceling the sending process. The queue is usually "
+"processed by a cron job, typically triggered when the page rendering is done "
+"(during the shutdown phase)."
+msgstr ""
+"L'envoi en arrière-plan intervient pendant la phase pre_wp_mail en plaçant "
+"les emails dans une file d'attente puis en annulant le processus d'envoi. La "
+"file d'attente est généralement traitée par une tâche cron, typiquement "
+"déclenchée lorsque le rendu de la page est terminé (pendant la phase "
+"d'arrêt)."
+
+#: includes/background-mailer.php:24
+msgid "Why should I activate backgound mailing?"
+msgstr "Pourquoi activer l'envoi en arrière-plan ?"
+
+#: includes/background-mailer.php:25
+msgid ""
+"The sending process usually takes time; SMTP servers are efficient in "
+"sending emails, but the protocol involves several phases, which makes the "
+"operation slow. To avoid having your user wait for the email sending to "
+"complete, it is good practice to use a queue for all outgoing emails and "
+"ensure the sending process is not user-blocking."
+msgstr ""
+"Le processus d'envoi prend généralement du temps ; les serveurs SMTP sont "
+"efficaces pour envoyer des emails, mais le protocole implique plusieurs "
+"phases, ce qui rend l'opération lente. Pour éviter que vos utilisateurs "
+"n'attendent la fin de l'envoi d'email, il est recommandé d'utiliser une file "
+"d'attente pour tous les emails sortants et de s'assurer que le processus "
+"d'envoi ne bloque pas l'utilisateur."
+
+#: includes/background-mailer.php:32
 msgid "Send emails in background"
 msgstr "Envoyer les emails en tache de fond"
 
-#: includes/background-mailer.php:21
-msgid "Sleep between emails in seconds ( in case of SMTP limitations)"
+#: includes/background-mailer.php:37
+msgid "Wait time between emails in seconds (in case of SMTP limitations)"
 msgstr ""
-"Temps de pause entre les emails (A utiliser dans le cas de limitations du "
-"serveur SMTP)"
+"Temps d'attente entre les emails en secondes (en cas de limitations SMTP)"
 
-#: includes/email-customizer.php:14 includes/email-customizer.php:749
-#: includes/email-customizer.php:824 includes/email-customizer.php:825
+#: includes/background-mailer.php:38
+#, php-format
+msgid ""
+"Limiting the sending rate can prevent server overloads. Ideally, this "
+"interval shouldn't exceed %1$d seconds. Therefore, the maximum value allowed "
+"here is %2$d."
+msgstr ""
+"Limiter le taux d'envoi peut prévenir les surcharges du serveur. Idéalement, "
+"cet intervalle ne devrait pas dépasser %1$d secondes. Par conséquent, la "
+"valeur maximale autorisée ici est %2$d."
+
+#: includes/background-mailer.php:45
+msgid "Maximum number of emails sent by run"
+msgstr "Nombre maximum d'emails envoyés par exécution"
+
+#: includes/background-mailer.php:46
+msgid ""
+"A setting of 0 removes any cap, enabling an ongoing dispatch cycle. To avoid "
+"overextended processing times, if the queue count exceeds this setting, an "
+"additional dispatch cycle will begin immediately."
+msgstr ""
+"Une valeur de 0 supprime toute limite, permettant un cycle d'envoi continu. "
+"Pour éviter des temps de traitement trop longs, si le nombre d'emails dans "
+"la file d'attente dépasse ce paramètre, un cycle d'envoi supplémentaire "
+"commencera immédiatement."
+
+#: includes/email-customizer.php:16 includes/email-customizer.php:787
+#: includes/email-customizer.php:906 includes/email-customizer.php:907
 msgid "Email Customizer"
 msgstr "Personnaliseur des emails"
 
+#: includes/email-customizer.php:17
+msgid "Customize the look and feel of the emails sent by Wordpress."
+msgstr ""
+"Personnalisez l'apparence et la sensation des emails envoyés par WordPress."
+
 #: includes/email-customizer.php:19
+msgid "How does the email customizer work?"
+msgstr "Comment fonctionne le personnaliseur d'emails ?"
+
+#: includes/email-customizer.php:20
+msgid ""
+"The Mail Control email customizer acts as a template overlay that is applied "
+"to the emails sent through WordPress, allowing for a consistent design "
+"across all communications."
+msgstr ""
+"Le personnaliseur d'emails de Mail Control agit comme un modèle qui est "
+"appliqué aux emails envoyés via WordPress, permettant un design cohérent "
+"pour toutes les communications."
+
+#: includes/email-customizer.php:21
+msgid "Can I try the customizer before activating it?"
+msgstr "Puis-je essayer le personnaliseur avant de l'activer?"
+
+#: includes/email-customizer.php:22
+msgid ""
+"Yes, you can test and customize the template before activating the feature"
+msgstr ""
+"Oui, vous pouvez tester et personnaliser le modèle avant d’activer la "
+"fonctionnalité"
+
+#: includes/email-customizer.php:29
 msgid "Activate Email customizations"
 msgstr "Activez les personnalisations des emails"
 
-#: includes/email-customizer.php:24
+#: includes/email-customizer.php:34
 msgid "Customize Your Emails"
 msgstr "Personnalisez vos emails"
 
-#: includes/email-customizer.php:34
+#: includes/email-customizer.php:44
 msgid "Customize Woocommerce emails"
 msgstr "Personnalisez vos e-mails Woocommerce"
 
-#: includes/email-customizer.php:35
+#: includes/email-customizer.php:45
 msgid ""
-"If you don't check this option, woocommerce emails won't be customized, "
-"check this to allow mail-control to customize woocommerce emails."
+"(If unchecked, WooCommerce emails will remain default. Select this to enable "
+"Mail Control customization for WooCommerce emails.)"
 msgstr ""
+"(Si non coché, les emails WooCommerce resteront par défaut. Sélectionnez "
+"ceci pour activer la personnalisation Mail Control pour les emails "
+"WooCommerce.)"
+
+#: includes/email-customizer.php:227
+msgid "Uppercase"
+msgstr "Majuscules"
+
+#: includes/email-customizer.php:228
+msgid "Capitalize"
+msgstr "Première lettre majuscule"
+
+#: includes/email-customizer.php:229
+msgid "Lowercase"
+msgstr "Minuscules"
+
+#: includes/email-customizer.php:230
+msgid "None"
+msgstr "Aucun"
+
+#: includes/email-customizer.php:246
+msgid "Left"
+msgstr "Gauche"
+
+#: includes/email-customizer.php:247
+msgid "Center"
+msgstr "Centre"
 
 #: includes/email-customizer.php:248
+msgid "Right"
+msgstr "Droite"
+
+#: includes/email-customizer.php:260
 msgid "Simple Wordpress Email"
-msgstr ""
+msgstr "Email WordPress simple"
 
-#: includes/email-customizer.php:261
+#: includes/email-customizer.php:274
 msgid "Email Type"
-msgstr "Type d’e-mail"
+msgstr "Type d'e-mail"
 
-#: includes/email-customizer.php:263
+#: includes/email-customizer.php:276
 msgid "General Style"
 msgstr "Style général"
 
-#: includes/email-customizer.php:265
+#: includes/email-customizer.php:278
 msgid "Header"
 msgstr "Entête"
 
-#: includes/email-customizer.php:267
+#: includes/email-customizer.php:280
 msgid "Title style"
 msgstr "Style de titre"
 
-#: includes/email-customizer.php:269
+#: includes/email-customizer.php:282
 msgid "Content Syle"
 msgstr "Style de contenu"
 
-#: includes/email-customizer.php:271
+#: includes/email-customizer.php:284
 msgid "Button"
 msgstr "Bouton"
 
-#: includes/email-customizer.php:273
+#: includes/email-customizer.php:286
 msgid "Footer"
 msgstr "Pied de page"
 
-#: includes/email-customizer.php:275
+#: includes/email-customizer.php:288
 msgid "Send Preview"
-msgstr ""
+msgstr "Envoyer un aperçu"
 
-#: includes/email-customizer.php:294
+#: includes/email-customizer.php:296
 msgid "Choose the email Type"
-msgstr ""
+msgstr "Choisissez le type d'email"
 
-#: includes/email-customizer.php:304
+#: includes/email-customizer.php:306
 msgid "Choose your logo"
 msgstr "Choisissez votre logo"
 
-#: includes/email-customizer.php:312
+#: includes/email-customizer.php:314
 msgid "Choose your main Header color"
-msgstr "Choisissez votre couleur d’en-tête principale"
+msgstr "Choisissez votre couleur d'en-tête principale"
 
-#: includes/email-customizer.php:319
+#: includes/email-customizer.php:321
 msgid "Logo Position"
-msgstr ""
+msgstr "Position du logo"
 
 #: includes/email-customizer.php:329
+msgid "Logo Width (px)"
+msgstr "Largeur du logo (px)"
+
+#: includes/email-customizer.php:342
 msgid "Choose main background color"
 msgstr "Choisissez la couleur de fond principale"
 
-#: includes/email-customizer.php:338
-msgid "Choose your main font size"
-msgstr "Choisissez votre taille de police principale"
+#: includes/email-customizer.php:351
+msgid "Choose your main font size (px)"
+msgstr "Choisissez votre taille de police principale (px)"
 
-#: includes/email-customizer.php:350
+#: includes/email-customizer.php:363
 msgid "Choose your main font family"
 msgstr "Choisissez votre famille de police principale"
 
-#: includes/email-customizer.php:358
-msgid "Container Width"
-msgstr "Largeur du conteneur"
-
-#: includes/email-customizer.php:369
-msgid "Additional CSS"
-msgstr ""
+#: includes/email-customizer.php:371
+msgid "Container Width (px)"
+msgstr "Largeur du conteneur (px)"
 
 #: includes/email-customizer.php:382
+msgid "Additional CSS"
+msgstr "CSS supplémentaire"
+
+#: includes/email-customizer.php:395
 msgid "Choose your text color"
 msgstr "Choisissez la couleur de votre texte"
 
-#: includes/email-customizer.php:391
+#: includes/email-customizer.php:404
 msgid "Choose your link color"
 msgstr "Choisir la couleur des liens"
 
-#: includes/email-customizer.php:398
-msgid "Content padding"
-msgstr "Espace autour du contenu"
+#: includes/email-customizer.php:411
+msgid "Content padding (px)"
+msgstr "Marge interne du contenu (px)"
 
-#: includes/email-customizer.php:407
+#: includes/email-customizer.php:420
 msgid "Choose Title color"
 msgstr "Choisissez la couleur du titre"
 
-#: includes/email-customizer.php:416
-msgid "Choose your Title font size"
-msgstr "Choisissez la taille de la police de votre titre"
+#: includes/email-customizer.php:429
+msgid "Choose your Title font size (px)"
+msgstr "Choisissez la taille de police de votre titre (px)"
 
-#: includes/email-customizer.php:428
-msgid "Title margin bottom"
-msgstr "Marge du titre en bas"
+#: includes/email-customizer.php:441
+msgid "Title margin bottom (px)"
+msgstr "Marge inférieure du titre (px)"
 
-#: includes/email-customizer.php:435
+#: includes/email-customizer.php:448
 msgid "Title Transform"
-msgstr ""
+msgstr "Transformation du titre"
 
-#: includes/email-customizer.php:445 includes/email-customizer.php:517
+#: includes/email-customizer.php:458 includes/email-customizer.php:530
 msgid "Text color"
 msgstr "Couleur du texte"
 
-#: includes/email-customizer.php:454
+#: includes/email-customizer.php:467
 msgid "Background color"
-msgstr "Couleur de l’arrière plan"
+msgstr "Couleur de l'arrière plan"
 
-#: includes/email-customizer.php:461
+#: includes/email-customizer.php:474
 msgid "Text hover color"
 msgstr "Couleur de survol du texte"
 
-#: includes/email-customizer.php:468
+#: includes/email-customizer.php:481
 msgid "Background hover color"
-msgstr "Couleur de survol d’arrière-plan"
+msgstr "Couleur de survol d'arrière-plan"
 
-#: includes/email-customizer.php:475
-msgid "Button font size"
-msgstr "Taille de la police des boutons"
+#: includes/email-customizer.php:488
+msgid "Button font size (px)"
+msgstr "Taille de police du bouton (px)"
 
-#: includes/email-customizer.php:487
-msgid "Left & Right padding"
-msgstr "Padding gauche et droit"
+#: includes/email-customizer.php:500
+msgid "Left & Right padding (px)"
+msgstr "Marge interne gauche et droite (px)"
 
-#: includes/email-customizer.php:494
+#: includes/email-customizer.php:507
 msgid "Top & Bottom padding"
 msgstr "Padding haut et bas"
 
-#: includes/email-customizer.php:501
-msgid "Border Radius"
-msgstr "Rayon de bordure"
+#: includes/email-customizer.php:514
+msgid "Border Radius (px)"
+msgstr "Rayon de bordure (px)"
 
-#: includes/email-customizer.php:510
+#: includes/email-customizer.php:523
 msgid "Choose your Background Footer color"
 msgstr "Choisissez votre couleur de fond de pied de page"
 
-#: includes/email-customizer.php:526
+#: includes/email-customizer.php:539
 msgid "Type your footer content"
 msgstr "Saisissez le contenu de votre pied de page"
 
-#: includes/email-customizer.php:534
+#: includes/email-customizer.php:547
 msgid "Choose a recepient"
-msgstr ""
+msgstr "Choisissez un destinataire"
 
-#: includes/email-customizer.php:809
+#: includes/email-customizer.php:872
 msgid "Email Footer"
-msgstr "Pied de page de l’e-mail"
+msgstr "Pied de page de l'e-mail"
 
-#: includes/email-customizer.php:837 includes/smtp-mailer.php:78
+#: includes/email-customizer.php:922 includes/email-register.php:27
+#: includes/smtp-mailer.php:117
 msgid "Please fill the email field"
 msgstr "Veuillez saisir un email"
 
-#: includes/email-customizer.php:843 includes/smtp-mailer.php:84
+#: includes/email-customizer.php:927 includes/smtp-mailer.php:122
 msgid "Please fill a correct email field"
 msgstr "Veuillez saisir un email valide"
 
-#: includes/email-customizer.php:859
+#: includes/email-customizer.php:942
 msgid "Mail Control, test preview customizer"
 msgstr "Mail Control, test prévisualisation personnaliseur"
 
-#: includes/email-tracker.php:15
-msgid "Email Logging and Tracking"
-msgstr "Suivi d’ouvertures et clics des emails"
+#: includes/email-register.php:31
+msgid "Please fill a valid email field"
+msgstr "Veuillez saisir un email valide"
+
+#: includes/email-register.php:35
+msgid "Please fill the name field"
+msgstr "Veuillez saisir un nom"
+
+#: includes/email-register.php:50
+msgid "Your subscription is already confirmed"
+msgstr "Votre abonnement est déjà confirmé"
+
+#: includes/email-register.php:58 includes/newsletter.php:930
+msgid "Confirm"
+msgstr "Confirmer"
+
+#: includes/email-register.php:62
+#, php-format
+msgid ""
+"Thank you %1$s for your subscription, we've just sent you an email to %2$s . "
+"Please confirm your subscription by following the link"
+msgstr ""
+"Merci %1$s pour votre abonnement, nous venons de vous envoyer un email à "
+"%2$s. Veuillez confirmer votre abonnement en suivant le lien"
+
+#: includes/email-register.php:64
+msgid "Sorry, we couldn't send you your confirmation subscription"
+msgstr ""
+"Désolé, nous n'avons pas pu vous envoyer votre confirmation d'abonnement"
+
+#: includes/email-register.php:68
+msgid "Sorry, we could't register you! please call us"
+msgstr "Désolé, nous n'avons pas pu vous inscrire ! Veuillez nous appeler"
+
+#: includes/email-register.php:164
+msgid "Stay in touch with us"
+msgstr "Restez en contact avec nous"
+
+#: includes/email-register.php:168
+msgid "Your email"
+msgstr "Votre email"
+
+#: includes/email-register.php:172
+msgid "How should we call you?"
+msgstr "Comment devrions-nous vous appeler ?"
+
+#: includes/email-register.php:176
+msgid "Let me in!"
+msgstr "Inscrivez-moi !"
+
+#: includes/email-register.php:230
+msgid ""
+"Invalid configuration. Site owner: Please configure your newsletter provider "
+"settings."
+msgstr ""
+"Configuration invalide. Propriétaire du site : Veuillez configurer les "
+"paramètres de votre fournisseur de newsletter."
+
+#: includes/email-register.php:232
+msgid "The submission is being processed."
+msgstr "La soumission est en cours de traitement."
+
+#: includes/email-register.php:233
+msgid "The submission successfully succeeded."
+msgstr "La soumission a réussi avec succès."
+
+#: includes/email-register.php:234
+msgid "The submission failed."
+msgstr "La soumission a échoué."
+
+#: includes/email-tracker.php:16
+msgid ""
+"Insightful Analytics: Activate to track your email delivery status and "
+"engagement metrics."
+msgstr ""
+"Analyses perspicaces : Activez pour suivre l'état de livraison de vos emails "
+"et les métriques d'engagement."
+
+#: includes/email-tracker.php:18
+msgid "How does email logging works?"
+msgstr "Comment fonctionne la journalisation des emails ?"
+
+#: includes/email-tracker.php:19
+msgid ""
+"Mail control basically hooks into the wp_mail function and records the "
+"information about emails before sending them, then records any error that "
+"arises while sending to allow you to resend the email if necessary."
+msgstr ""
+"Mail Control s'accroche essentiellement à la fonction wp_mail et enregistre "
+"les informations sur les emails avant de les envoyer, puis enregistre toute "
+"erreur qui survient lors de l'envoi pour vous permettre de renvoyer l'email "
+"si nécessaire."
 
 #: includes/email-tracker.php:20
+msgid "How does email tracking works?"
+msgstr "Comment fonctionne le suivi des emails ?"
+
+#: includes/email-tracker.php:21
+msgid ""
+"After saving the email for logging purposes, Mail Control injects a tracker "
+"in the email content, a read tracker as an invisible image, and modifies all "
+"the links inside the email to pass through our click tracker that will "
+"record the clicked link then redirects to the final destination."
+msgstr ""
+"Après avoir sauvegardé l'email à des fins de journalisation, Mail Control "
+"injecte un traceur dans le contenu de l'email, un traceur de lecture sous "
+"forme d'image invisible, et modifie tous les liens à l'intérieur de l'email "
+"pour passer par notre traceur de clics qui enregistrera le lien cliqué puis "
+"redirige vers la destination finale."
+
+#: includes/email-tracker.php:22
+msgid "How does log retention work?"
+msgstr "Comment fonctionne la conservation des journaux ?"
+
+#: includes/email-tracker.php:23
+msgid ""
+"Our system automatically manages your email logs based on your selected "
+"retention period. A scheduled task runs nightly to remove only logs that "
+"exceed your chosen timeframe, ensuring your database remains optimized while "
+"preserving all the valuable tracking data you need for your email analytics."
+msgstr ""
+"Notre système gère automatiquement vos journaux d'emails en fonction de la "
+"période de conservation que vous avez sélectionnée. Une tâche planifiée "
+"s'exécute chaque nuit pour supprimer uniquement les journaux qui dépassent "
+"votre période choisie, assurant que votre base de données reste optimisée "
+"tout en préservant toutes les données de suivi précieuses dont vous avez "
+"besoin pour vos analyses d'emails."
+
+#: includes/email-tracker.php:30
 msgid "Log Emails (Mandatory if we want to track emails)"
 msgstr ""
 "Journaliser les emails (Obligatoire si on souhaite faire le suivi des "
 "ouvertures et clics)"
 
-#: includes/email-tracker.php:26
+#: includes/email-tracker.php:36
 msgid "Enable opens and clicks tracking"
-msgstr "Activer le suivi d’ouvertures et clics des emails"
+msgstr "Activer le suivi d'ouvertures et clics des emails"
 
-#: includes/email-tracker__premium_only.php:8
+#: includes/email-tracker.php:46
+msgid "Keep Always"
+msgstr "Conserver indéfiniment"
+
+#: includes/email-tracker.php:47
+msgid "One Year"
+msgstr "Un an"
+
+#: includes/email-tracker.php:48
+msgid "Three Month"
+msgstr "Trois mois"
+
+#: includes/email-tracker.php:49
+msgid "One Month"
+msgstr "Un mois"
+
+#: includes/email-tracker.php:50
+msgid "One Week"
+msgstr "Une semaine"
+
+#: includes/email-tracker.php:52
+msgid "How long would like to keep the logs?"
+msgstr "Combien de temps souhaitez-vous conserver les journaux ?"
+
+#: includes/email-tracker.php:53
+msgid ""
+"A cronjob will run every night to delete the old logs depending on your "
+"settings"
+msgstr ""
+"Une tâche cron s'exécutera chaque nuit pour supprimer les anciens journaux "
+"en fonction de vos paramètres"
+
+#: includes/email-tracker__premium_only.php:10
 msgid ""
 "Source and campain will be read from X-Source and X-Campaign email headers\n"
 "a helper Mail_Control\\get_headers($source,$campaign) is provided to prepare "
 "headers for your wp_mail call"
 msgstr ""
-"Le nom de la “source” et “campagne” seront lus à partir des entêtes de "
-"l’email X-Source et X-Campaign respectivement<br/>\n"
-"Une fonction d’aide Mail_Control\\get_headers($source,$campaign) est fournie "
-"par ce plugin pour préparer ces entêtes avant utilisation avant l’appel de "
-"wp_mail"
+"Le nom de la \"source\" et \"campagne\" seront lus à partir des entêtes de "
+"l'email X-Source et X-Campaign respectivement\n"
+"Une fonction d'aide Mail_Control\\get_headers($source,$campaign) est fournie "
+"par ce plugin pour préparer ces entêtes avant l'appel de wp_mail"
 
-#: includes/email-tracker__premium_only.php:11
+#: includes/email-tracker__premium_only.php:13
 msgid ""
 "If you are using Contact Form 7, you can setup those headers as Additionnal "
 "headers in Mail Panel, we suggest :\n"
 "X-Source: ContactForm7\n"
 "X-Campaign: My Contact Form Name"
 msgstr ""
+"Si vous utilisez Contact Form 7, vous pouvez configurer ces entêtes comme "
+"entêtes supplémentaires dans le panneau Mail, nous suggérons :\n"
+"X-Source: ContactForm7\n"
+"X-Campaign: Nom de mon formulaire de contact"
 
-#: includes/email-tracker__premium_only.php:18
+#: includes/email-tracker__premium_only.php:19
 msgid "Add utm_* to tracked links (Own domain only)"
 msgstr ""
 "Ajouter les tags utm_* sur les liens marqués (Sur notre propre nom de "
 "domaine uniquement)"
 
-#: includes/email-tracker__premium_only.php:30
-msgid "Google analytics read (experimental)"
-msgstr "Suivi d’ouverture avec Google Analytics"
-
 #: includes/email-tracker__premium_only.php:31
+msgid "Google analytics read (experimental)"
+msgstr "Suivi d'ouverture avec Google Analytics"
+
+#: includes/email-tracker__premium_only.php:32
 msgid "Track reads with google analytics as well"
 msgstr "Faire le suivi des ouvertures avec google analytics"
 
-#: includes/emails-table.php:112
-msgid "From"
-msgstr "De"
+#: includes/emails-table.php:143
+msgid "Processing mail queue"
+msgstr "Traitement de la file d'attente d'emails"
 
-#: includes/emails-table.php:113
-msgid "To"
-msgstr "A"
+#: includes/emails-table.php:143
+msgid "Process mail queue"
+msgstr "Traiter la file d'attente d'emails"
 
-#: includes/emails-table.php:115
-msgid "Filter"
-msgstr "Filtrer"
-
-#: includes/emails-table.php:139
+#: includes/emails-table.php:175
 msgid "Recepient"
 msgstr "Destinataire"
 
-#: includes/emails-table.php:140
+#: includes/emails-table.php:176
 msgid "Subject"
 msgstr "Objet"
 
-#: includes/emails-table.php:141
+#: includes/emails-table.php:177
 msgid "Excerpt"
 msgstr "Extrait"
 
-#: includes/emails-table.php:142
-msgid "Status"
-msgstr "Etat"
-
-#: includes/emails-table.php:143
+#: includes/emails-table.php:179
 msgid "Reads"
 msgstr "Ouvertures"
 
-#: includes/emails-table.php:144
+#: includes/emails-table.php:180
 msgid "Clicks"
 msgstr "Clics"
 
-#: includes/emails-table.php:145
+#: includes/emails-table.php:181
 msgid "Detail"
 msgstr "Détail"
 
-#: includes/emails-table.php:157
+#: includes/emails-table.php:197
 msgid "Email Details"
-msgstr "Détails de l’email"
+msgstr "Détails de l'email"
 
-#: includes/emails-table.php:157
+#: includes/emails-table.php:197
 msgid "Show details"
 msgstr "Afficher les détails"
 
-#: includes/emails-table.php:167
+#: includes/emails-table.php:210
 msgid "Resend Email"
 msgstr "Renvoyer le mail"
 
-#: includes/emails-table.php:167
+#: includes/emails-table.php:210
 msgid "Resend"
 msgstr "Renvoyer"
 
-#: includes/emails-table.php:175
+#: includes/emails-table.php:218
 msgid "Queued"
-msgstr "File d’attente"
+msgstr "File d'attente"
 
-#: includes/emails-table.php:176
+#: includes/emails-table.php:220
 msgid "Failed"
 msgstr "Echec"
 
-#: includes/emails-table.php:177
+#: includes/emails-table.php:222
 msgid "Sent"
 msgstr "Envoyé"
 
-#: includes/emails-table.php:240
+#: includes/emails-table.php:288
 msgid "Source"
 msgstr "Source"
 
-#: includes/emails-table.php:241
+#: includes/emails-table.php:289
 msgid "Campaign"
 msgstr "Campagne"
 
-#: includes/init_freemius.php:58
+#: includes/init_freemius.php:70
 #, php-format
 msgid "Hey %1$s"
 msgstr "Salut %s"
 
-#: includes/init_freemius.php:59
+#: includes/init_freemius.php:71
 #, php-format
 msgid ""
 "Please help us improve %2$s! If you opt-in, some data about your usage of "
@@ -428,407 +850,908 @@ msgid ""
 "work just fine."
 msgstr ""
 "Aide nous stp à améliorer %2$s! Si tu acceptes, certaines données de ton "
-"utilisations de %2$s seront envoyées à %5$s. Si tu n’en as pas envie, pas de "
+"utilisations de %2$s seront envoyées à %5$s. Si tu n'en as pas envie, pas de "
 "problème! %2$s fonctionnera tout aussi bien."
 
-#: includes/integrations/woocommerce.php:47
+#: includes/integrations/woocommerce.php:50
 msgid "WooCommerce Table Style"
 msgstr "Style des tableaux WooCommerce"
 
-#: includes/integrations/woocommerce.php:56
+#: includes/integrations/woocommerce.php:64
 msgid "Choose your Table font size"
 msgstr "Choisissez la taille de la police des tableaux"
 
-#: includes/integrations/woocommerce.php:70
+#: includes/integrations/woocommerce.php:78
 msgid "Choose your Table border color"
 msgstr "Choisissez la couleur de la bordure du tableau"
 
-#: includes/integrations/woocommerce.php:79
+#: includes/integrations/woocommerce.php:87
 msgid "Choose your Table border size"
-msgstr "Choisissez la taille de la bordure  des tableaux"
+msgstr "Choisissez la taille de la bordure des tableaux"
 
-#: includes/integrations/woocommerce.php:127
+#: includes/integrations/woocommerce.php:149
 msgid "Use Mail Control to customize your emails "
 msgstr "Utilise Mail Control pour personnaliser vos e-mails "
 
-#: includes/integrations/woocommerce.php:130
+#: includes/integrations/woocommerce.php:152
 msgid "Email template"
-msgstr "Model d’email"
+msgstr "Modèle d'email"
 
-#: includes/integrations/woocommerce.php:133
+#: includes/integrations/woocommerce.php:155
 #, php-format
 msgid ""
-"This section lets you customize the WooCommerce emails. <a href=\"%s\" "
+"This section lets you customize the WooCommerce emails. <a href=\"%1$s\" "
 "target=\"_blank\">Click here to preview your email template</a> or <a "
-"href=\"%s\" target=\"_blank\">Click here to customize your email template</"
+"href=\"%2$s\" target=\"_blank\">Click here to customize your email template</"
 "a> "
 msgstr ""
+"Cette section vous permet de personnaliser les emails WooCommerce. <a "
+"href=\"%1$s\" target=\"_blank\">Cliquez ici pour prévisualiser votre modèle "
+"d'email</a> ou <a href=\"%2$s\" target=\"_blank\">Cliquez ici pour "
+"personnaliser votre modèle d'email</a> "
 
-#: includes/integrations/woocommerce.php:163
+#: includes/integrations/woocommerce.php:193
 msgid "Woocommerce : New Order"
 msgstr "Woocommerce : Nouvelle Commande"
 
-#: includes/integrations/woocommerce.php:164
+#: includes/integrations/woocommerce.php:194
 msgid "Woocommerce : Cancelled Order"
-msgstr ""
+msgstr "Woocommerce : Commande annulée"
 
-#: includes/integrations/woocommerce.php:165
+#: includes/integrations/woocommerce.php:195
 msgid "Woocommerce : Customer Processing Order"
-msgstr ""
+msgstr "Woocommerce : Commande en cours de traitement"
 
-#: includes/integrations/woocommerce.php:166
+#: includes/integrations/woocommerce.php:196
 msgid "Woocommerce : Customer Completed Order"
-msgstr ""
+msgstr "Woocommerce : Commande terminée"
 
-#: includes/integrations/woocommerce.php:167
+#: includes/integrations/woocommerce.php:197
 msgid "Woocommerce : Customer Refunded Order"
-msgstr ""
+msgstr "Woocommerce : Commande remboursée"
 
-#: includes/integrations/woocommerce.php:168
+#: includes/integrations/woocommerce.php:198
 msgid "Woocommerce : Customer On Hold Order"
-msgstr ""
+msgstr "Woocommerce : Commande en attente"
 
-#: includes/integrations/woocommerce.php:169
+#: includes/integrations/woocommerce.php:199
 msgid "Woocommerce : Customer Invoice"
 msgstr "Woocommerce : Facture Client"
 
-#: includes/integrations/woocommerce.php:170
+#: includes/integrations/woocommerce.php:200
 msgid "Woocommerce : Failed Order"
-msgstr ""
+msgstr "Woocommerce : Commande échouée"
 
-#: includes/integrations/woocommerce.php:171
+#: includes/integrations/woocommerce.php:201
 msgid "Woocommerce : Customer New Account"
-msgstr ""
+msgstr "Woocommerce : Nouveau compte client"
 
-#: includes/integrations/woocommerce.php:172
+#: includes/integrations/woocommerce.php:202
 msgid "Woocommerce : Customer Note"
 msgstr "Woocommerce : Note Client"
 
-#: includes/integrations/woocommerce.php:173
+#: includes/integrations/woocommerce.php:203
 msgid "Woocommerce : Customer Reset Password"
-msgstr ""
+msgstr "Woocommerce : Réinitialisation du mot de passe client"
 
-#: includes/integrations/woocommerce.php:185
+#: includes/integrations/woocommerce.php:218
 msgid ""
 "You'll have to create some orders to be able to customize woocommerce emails"
 msgstr ""
+"Vous devrez créer quelques commandes pour pouvoir personnaliser les emails "
+"Woocommerce"
 
-#: includes/integrations/woocommerce.php:186
+#: includes/integrations/woocommerce.php:219
 msgid "Create orders first"
-msgstr ""
+msgstr "Créez d'abord des commandes"
 
-#: includes/integrations/woocommerce__premium_only.php:8
+#: includes/integrations/woocommerce__premium_only.php:10
 msgid "Woocommerce Integration"
 msgstr "Intégration Woocommerce"
 
-#: includes/integrations/woocommerce__premium_only.php:12
+#: includes/integrations/woocommerce__premium_only.php:11
+msgid ""
+"Make sure Mail Control and WooCommerce are playing nice for the best email "
+"experience."
+msgstr ""
+"Assurez-vous que Mail Control et WooCommerce fonctionnent bien ensemble pour "
+"la meilleure expérience email."
+
+#: includes/integrations/woocommerce__premium_only.php:15
 msgid "Woocommerce Compatibility"
 msgstr "Compatibilité Woocommerce"
 
-#: includes/integrations/woocommerce__premium_only.php:14
+#: includes/integrations/woocommerce__premium_only.php:17
 msgid ""
 "Woocommerce is already capable of sending emails in the backgroud via "
 "\"woocommerce_defer_transactional_emails\" filter, with mail control, it is "
 "possible to use this capability to transactionnal emails in the background"
 msgstr ""
+"Woocommerce est déjà capable d'envoyer des emails en arrière-plan via le "
+"filtre \"woocommerce_defer_transactional_emails\". Avec Mail Control, il est "
+"possible d'utiliser cette capacité pour les emails transactionnels en "
+"arrière-plan"
 
-#: includes/integrations/woocommerce__premium_only.php:19
+#: includes/integrations/woocommerce__premium_only.php:22
 msgid "Use Woocommerce defer feature to send woocommerce transactional emails"
 msgstr ""
+"Utiliser la fonction de report de Woocommerce pour envoyer les emails "
+"transactionnels Woocommerce"
 
-#: includes/integrations/woocommerce__premium_only.php:20
+#: includes/integrations/woocommerce__premium_only.php:23
 msgid ""
 "You can still use Mail Control to send your emails in the background by "
 "setting the Background mailer panel. If you leave this checkbox unchecked, "
 "woocommerce defer feature will be disabled"
 msgstr ""
+"Vous pouvez toujours utiliser Mail Control pour envoyer vos emails en "
+"arrière-plan en configurant le panneau d'envoi en arrière-plan. Si vous "
+"laissez cette case non cochée, la fonction de report de Woocommerce sera "
+"désactivée"
 
-#: includes/send-email-control.php:24
-msgid "Settings must be saved to send preview email."
+#: includes/newsletter.php:120
+msgid "Newsletter Defaults"
+msgstr "Paramètres par défaut de la newsletter"
+
+#: includes/newsletter.php:121
+msgid "Configure your newsletter defaults and subscription process."
 msgstr ""
+"Configurez les paramètres par défaut de votre newsletter et le processus "
+"d'abonnement."
 
-#: includes/send-email-control.php:25
-msgid "Send Email"
-msgstr "Envoyer l’e-mail"
+#: includes/newsletter.php:126
+msgid "Time between two emails"
+msgstr "Temps entre deux emails"
 
-#: includes/settings.php:23
-#, php-format
+#: includes/newsletter.php:132
+msgid "Email reply-to"
+msgstr "Email de réponse"
+
+#: includes/newsletter.php:137
+msgid "Email title : Subscribe to newsletter title"
+msgstr "Titre de l'email : Abonnement à la newsletter"
+
+#: includes/newsletter.php:138
+msgid "{name}, please confirm your subscription to our newsletter"
+msgstr "{name}, veuillez confirmer votre abonnement à notre newsletter"
+
+#: includes/newsletter.php:143
+msgid "Email content : Unsubscribe from newsletter content"
+msgstr "Contenu de l'email : Désinscription de la newsletter"
+
+#: includes/newsletter.php:144
 msgid ""
-"Welcome to Mail Contol, your one stop plugin to take control over your "
-"wordpress emails, feel to <a href=\"%s\" >contact us</a> if you have any "
-"question."
+"Hello {name}, you are about to subscribe your email {email} to your mailing "
+"list, please confirm."
 msgstr ""
-"Bienvenue sur Mail Control, votre plugin pour maitriser vos emails "
-"wordpress, n’hésitez pas a nous <a href=\"%s\" >contacter</a> si vous avez "
-"la moindre question."
+"Bonjour {name}, vous êtes sur le point d'abonner votre email {email} à notre "
+"liste de diffusion, veuillez confirmer."
 
-#: includes/settings.php:27
-msgid "Mail Control Settings"
-msgstr "Paramètrages Mail Control"
+#: includes/newsletter.php:150
+msgid "Subscription to newsletter confirmation title"
+msgstr "Titre de confirmation d'abonnement à la newsletter"
 
-#: includes/settings.php:35
+#: includes/newsletter.php:151
+msgid "Congratulation, your email is now subscribed"
+msgstr "Félicitations, votre email est maintenant abonné"
+
+#: includes/newsletter.php:156
+msgid "Subscription to newsletter confirmation content"
+msgstr "Contenu de confirmation d'abonnement à la newsletter"
+
+#: includes/newsletter.php:157
+msgid ""
+"Hello again {name}, your email {email} is now subscribed to your mailing list"
+msgstr ""
+"Bonjour {name}, votre email {email} est maintenant abonné à notre liste de "
+"diffusion"
+
+#: includes/newsletter.php:164
+msgid "Unsubscribe from newsletter title"
+msgstr "Titre de désinscription de la newsletter"
+
+#: includes/newsletter.php:165
+msgid "Unsubscribe from this mailing list"
+msgstr "Se désinscrire de cette liste de diffusion"
+
+#: includes/newsletter.php:170
+msgid "Unsubscribe from newsletter content"
+msgstr "Contenu de désinscription de la newsletter"
+
+#: includes/newsletter.php:171
+msgid ""
+"Hello {name}, you are about to unsubscribe your email {email} from your "
+"mailing list, are you sure?"
+msgstr ""
+"Bonjour {name}, vous êtes sur le point de désabonner votre email {email} de "
+"notre liste de diffusion, êtes-vous sûr ?"
+
+#: includes/newsletter.php:176
+msgid "Unsubscribe from newsletter confirmation title"
+msgstr "Titre de confirmation de désinscription de la newsletter"
+
+#: includes/newsletter.php:177
+msgid "Unsubscription confirmed from this mailing list"
+msgstr "Désinscription confirmée de cette liste de diffusion"
+
+#: includes/newsletter.php:182
+msgid "Unsubscribe confirmation from newsletter content"
+msgstr "Contenu de confirmation de désinscription de la newsletter"
+
+#: includes/newsletter.php:183
+msgid "Ok {name}, your email {email} has been retrieved from your mailing list"
+msgstr ""
+"D'accord {name}, votre email {email} a été retiré de notre liste de diffusion"
+
+#: includes/newsletter.php:190
+msgid "DO NOT MARKET TO"
+msgstr "NE PAS COMMERCIALISER À"
+
+#: includes/newsletter.php:191
+msgid "Lead"
+msgstr "Prospect potentiel"
+
+#: includes/newsletter.php:192
+msgid "Prospect"
+msgstr "Prospect"
+
+#: includes/newsletter.php:193
+msgid "Customer"
+msgstr "Client"
+
+#: includes/newsletter.php:204 includes/settings.php:37
 #, php-format
 msgid "Please insert a valid %s"
 msgstr "Veuillez saisir un %s valide"
 
-#: includes/settings.php:49
+#: includes/newsletter.php:216 includes/newsletter.php:217
+#: includes/newsletter.php:233
+msgid "Email Campaign"
+msgstr "Campagne d'email"
+
+#: includes/newsletter.php:218 includes/newsletter.php:219
+#: includes/newsletter.php:231
+msgid "Email Campaigns"
+msgstr "Campagnes d'email"
+
+#: includes/newsletter.php:220 includes/newsletter.php:222
+msgid "New Email Campaign"
+msgstr "Nouvelle campagne d'email"
+
+#: includes/newsletter.php:221
+msgid "Add a new Email Campaign"
+msgstr "Ajouter une nouvelle campagne d'email"
+
+#: includes/newsletter.php:223
+msgid "Edit a Email Campaign"
+msgstr "Modifier une campagne d'email"
+
+#: includes/newsletter.php:224
+msgid "Show a Email Campaign"
+msgstr "Afficher une campagne d'email"
+
+#: includes/newsletter.php:225
+msgid "All the Email Campaigns"
+msgstr "Toutes les campagnes d'email"
+
+#: includes/newsletter.php:226
+msgid "Email Campaign search"
+msgstr "Recherche de campagne d'email"
+
+#: includes/newsletter.php:227
+msgid "No Email Campaign was found"
+msgstr "Aucune campagne d'email n'a été trouvée"
+
+#: includes/newsletter.php:228
+msgid "No Email Campaign was found in trash."
+msgstr "Aucune campagne d'email n'a été trouvée dans la corbeille."
+
+#: includes/newsletter.php:284
+msgid "Campaign Settings"
+msgstr "Paramètres de campagne"
+
+#: includes/newsletter.php:295
+msgid "Category"
+msgstr "Catégorie"
+
+#: includes/newsletter.php:300
+msgid "Email template type"
+msgstr "Type de modèle d'email"
+
+#: includes/newsletter.php:302
+msgid "Email Newsletter"
+msgstr "Newsletter par email"
+
+#: includes/newsletter.php:304
+msgid "Marketing automation"
+msgstr "Automatisation marketing"
+
+#: includes/newsletter.php:311
+msgid "Use customisation template"
+msgstr "Utiliser le modèle de personnalisation"
+
+#: includes/newsletter.php:312
+msgid "If checked the content will be injected in the main customizer template"
+msgstr ""
+"Si coché, le contenu sera injecté dans le modèle principal du personnaliseur"
+
+#: includes/newsletter.php:319
+msgid "Newsletter Settings"
+msgstr "Paramètres de la newsletter"
+
+#: includes/newsletter.php:326
+msgid "Day to send the newsletter"
+msgstr "Jour d'envoi de la newsletter"
+
+#: includes/newsletter.php:331
+msgid "Select time to send the newsletter"
+msgstr "Sélectionnez l'heure d'envoi de la newsletter"
+
+#: includes/newsletter.php:347
+msgid "Automation Settings"
+msgstr "Paramètres d'automatisation"
+
+#: includes/newsletter.php:354
+msgid "When Mail Control subscription is confirmed"
+msgstr "Lorsque l'abonnement à Mail Control est confirmé"
+
+#: includes/newsletter.php:356
+msgid "What triggers the email"
+msgstr "Ce qui déclenche l'email"
+
+#: includes/newsletter.php:361
+msgid "Send after (duration)"
+msgstr "Envoyer après (durée)"
+
+#: includes/newsletter.php:362
+msgid "Please select a valid time duration"
+msgstr "Veuillez saisir une durée valide"
+
+#: includes/newsletter.php:367
+msgid "Send after (duration unit)"
+msgstr "Envoyer après (unité de durée)"
+
+#: includes/newsletter.php:379
+msgid "This automation is active"
+msgstr "Cette automatisation est active"
+
+#: includes/newsletter.php:386 includes/newsletter.php:411
+msgid "Recipients"
+msgstr "Destinataires"
+
+#: includes/newsletter.php:391
+msgid "Who are the recipients?"
+msgstr "Qui sont les destinataires ?"
+
+#: includes/newsletter.php:393
+msgid "Tous les emails"
+msgstr "Tous les emails"
+
+#: includes/newsletter.php:394
+msgid "Tous les leads (sans tentative d'achat)"
+msgstr "Tous les leads (sans tentative d'achat)"
+
+#: includes/newsletter.php:395
+msgid "Tous les prospects"
+msgstr "Tous les prospects"
+
+#: includes/newsletter.php:396
+msgid "Tous les clients"
+msgstr "Tous les clients"
+
+#: includes/newsletter.php:402
+msgid "Subscribed after"
+msgstr "Abonné après"
+
+#: includes/newsletter.php:407
+msgid "Subscribed before"
+msgstr "Abonné avant"
+
+#: includes/newsletter.php:429
+msgid "Send Preview to"
+msgstr "Envoyer un aperçu à"
+
+#: includes/newsletter.php:434
+msgid "Preview "
+msgstr "Aperçu "
+
+#: includes/newsletter.php:444
+msgid "Newsletter statistics"
+msgstr "Statistiques de la newsletter"
+
+#: includes/newsletter.php:450
+msgid "Emails sent"
+msgstr "E-mail envoyé"
+
+#: includes/newsletter.php:458
+msgid "Emails fails"
+msgstr "Emails échoués"
+
+#: includes/newsletter.php:475
+msgid "Missing email_preview parameter"
+msgstr "Paramètre email_preview manquant"
+
+#: includes/newsletter.php:478
+msgid "Missing campaign_id parameter"
+msgstr "Paramètre campaign_id manquant"
+
+#: includes/newsletter.php:489
+msgid "Error sending preview"
+msgstr "Erreur lors de l'envoi de l'aperçu"
+
+#: includes/newsletter.php:492
+#, php-format
+msgid "Email %s is not subscribed, you must register it first"
+msgstr "L'email %s n'est pas abonné, vous devez d'abord l'enregistrer"
+
+#: includes/newsletter.php:551
+msgid "You must first save the newletter to preview it"
+msgstr "Vous devez d'abord sauvegarder la newsletter pour la prévisualiser"
+
+#: includes/newsletter.php:571
+msgid "Date Added"
+msgstr "Date d'ajout"
+
+#: includes/newsletter.php:572
+msgid "Email Status"
+msgstr "Statut de l'email"
+
+#: includes/newsletter.php:617
+msgid "Here is the recipients count according your criteria"
+msgstr "Voici le nombre de destinataires selon vos critères"
+
+#: includes/newsletter.php:933
+msgid "Missed us?"
+msgstr "Nous avez-vous manqué ?"
+
+#: includes/send-email-control.php:27
+msgid "Settings must be saved to send preview email."
+msgstr ""
+"Les paramètres doivent être sauvegardés pour envoyer un email de "
+"prévisualisation."
+
+#: includes/send-email-control.php:28
+msgid "Send Email"
+msgstr "Envoyer l'e-mail"
+
+#: includes/settings.php:28
+msgid "Mail Control Settings"
+msgstr "Paramètrages Mail Control"
+
+#: includes/settings.php:53
 msgid "Permission Settings"
 msgstr "Réglage des permissions"
 
 #: includes/settings.php:54
+msgid "Review and adjust permission settings for your team."
+msgstr "Examinez et ajustez les paramètres de permission pour votre équipe."
+
+#: includes/settings.php:59
 msgid "Minimal permissions to acces settings"
 msgstr "Permissions minimales pour pouvoir accéder aux réglages"
 
-#: includes/settings.php:61
+#: includes/settings.php:66
 msgid "Minimal permissions to view email logs"
-msgstr "Permissions minimales pour pouvoir accéder à l’historique des emails"
+msgstr "Permissions minimales pour pouvoir accéder à l'historique des emails"
 
-#: includes/smtp-checks.php:61
+#: includes/smtp-checks.php:67
 #, php-format
 msgid "The smtp server %s doesn't seem to be a valid domain name or IP adress"
 msgstr ""
+"Le serveur SMTP %s ne semble pas être un nom de domaine ou une adresse IP "
+"valide"
 
-#: includes/smtp-checks.php:65
+#: includes/smtp-checks.php:71
 msgid "SPF record verification"
 msgstr "Vérification de l'entrée SPF"
 
-#: includes/smtp-checks.php:66
+#: includes/smtp-checks.php:72
 #, php-format
 msgid ""
 "The main idea behind the SPF concept is to make sure all applications that "
 "send emails for your domain %s are included in your SPF record (their domain "
 "name or IP to be precise)."
 msgstr ""
+"L'idée principale derrière le concept SPF est de s'assurer que toutes les "
+"applications qui envoient des emails pour votre domaine %s sont incluses "
+"dans votre enregistrement SPF (leur nom de domaine ou IP pour être précis)."
 
-#: includes/smtp-checks.php:72
+#: includes/smtp-checks.php:78
 #, php-format
 msgid ""
 "There is no SPF record for you domain %s, some mail providers won't allow "
 "emails without an SPF record, you should add an spf record to you DNS"
 msgstr ""
+"Il n'y a pas d'enregistrement SPF pour votre domaine %s, certains "
+"fournisseurs de messagerie n'autoriseront pas les emails sans un "
+"enregistrement SPF, vous devriez ajouter un enregistrement SPF à votre DNS"
 
-#: includes/smtp-checks.php:75
+#: includes/smtp-checks.php:81
 #, php-format
 msgid "We suggest you add this line : %s"
-msgstr ""
+msgstr "Nous vous suggérons d'ajouter cette ligne : %s"
 
-#: includes/smtp-checks.php:76
+#: includes/smtp-checks.php:82
 #, php-format
 msgid ""
 "This line will tell receiving mail servers to allow emails coming from your "
 "MX servers as well as your smtp host %s"
 msgstr ""
+"Cette ligne indiquera aux serveurs de messagerie récepteurs d'autoriser les "
+"emails provenant de vos serveurs MX ainsi que de votre hôte SMTP %s"
 
-#: includes/smtp-checks.php:80
+#: includes/smtp-checks.php:86
 msgid "There seems to be more than one spf record!!"
-msgstr "Il semble qu’il y ait plus qu’une entrée SPF!!"
+msgstr "Il semble qu'il y ait plus qu'une entrée SPF!!"
 
-#: includes/smtp-checks.php:81
+#: includes/smtp-checks.php:87
 msgid "This can cause your emails to get blocked, you should merge them"
 msgstr ""
+"Cela peut entraîner le blocage de vos emails, vous devriez les fusionner"
 
-#: includes/smtp-checks.php:88
+#: includes/smtp-checks.php:94
 #, php-format
 msgid "Your SPF record : %s"
 msgstr "Votre entrée SPF : %s"
 
-#: includes/smtp-checks.php:92
-#, php-format
-msgid ""
-"Good! Your SMTP host %s seems to be allowed to send emails for your domain %s"
-msgstr ""
-"Bien! Votre hôte SMTP %s semble être autorisé a envoyer des emails pour "
-"votre domaine %s"
-
-#: includes/smtp-checks.php:97
-#, php-format
-msgid ""
-"Aie Aie! Your SMTP host %s doesn't seem to be allowed to send emails for "
-"your domain %s"
-msgstr ""
-
 #: includes/smtp-checks.php:98
 #, php-format
-msgid "Make sure you add \"%s\" after v=spf1 to your record"
+msgid ""
+"Good! Your SMTP host %1$s seems to be allowed to send emails for your domain "
+"%2$s"
 msgstr ""
+"Bien! Votre hôte SMTP %1$s semble être autorisé à envoyer des emails pour "
+"votre domaine %2$s"
+
+#: includes/smtp-checks.php:103
+#, php-format
+msgid ""
+"Aie Aie! Your SMTP host %1$s doesn't seem to be allowed to send emails for "
+"your domain %2$s"
+msgstr ""
+"Aïe Aïe ! Votre hôte SMTP %1$s ne semble pas être autorisé à envoyer des "
+"emails pour votre domaine %2$s"
 
 #: includes/smtp-checks.php:104
 #, php-format
+msgid "Make sure you add \"%s\" after v=spf1 to your record"
+msgstr "Assurez-vous d'ajouter \"%s\" après v=spf1 à votre enregistrement"
+
+#: includes/smtp-checks.php:110
+#, php-format
 msgid ""
 "Please keep in mind that this feature is experimental, you can find more "
-"information on SPF here %s, and use this wizard here %s to compose your "
+"information on SPF here %1$s, and use this wizard here %2$s to compose your "
 "record"
 msgstr ""
+"Veuillez garder à l'esprit que cette fonctionnalité est expérimentale, vous "
+"pouvez trouver plus d'informations sur SPF ici %1$s, et utiliser cet "
+"assistant ici %2$s pour composer votre enregistrement"
 
-#: includes/smtp-checks.php:133
+#: includes/smtp-checks.php:138
 msgid "DKIM record verification"
 msgstr "Vérification entrée DKIM"
 
-#: includes/smtp-checks.php:134
+#: includes/smtp-checks.php:139
 msgid ""
 "DKIM - DomainKeys Identified Mail, is an authentication method that allows "
 "the receiver to check that an email claimed to have come from a specific "
 "domain was indeed signed by the key advertised in that domain DKIM record"
 msgstr ""
+"DKIM - DomainKeys Identified Mail, est une méthode d'authentification qui "
+"permet au destinataire de vérifier qu'un email prétendant provenir d'un "
+"domaine spécifique a bien été signé par la clé annoncée dans "
+"l'enregistrement DKIM de ce domaine"
 
-#: includes/smtp-checks.php:137
+#: includes/smtp-checks.php:142
 msgid ""
 "You did not provide a dkim selector so we could not test your dkim record"
 msgstr ""
+"Vous n'avez pas fourni de sélecteur DKIM, nous n'avons donc pas pu tester "
+"votre enregistrement DKIM"
 
-#: includes/smtp-checks.php:150
+#: includes/smtp-checks.php:160
 #, php-format
 msgid ""
 "There is no DKIM record for you domain %s, email providers won't be able to "
 "authenticate your emails"
 msgstr ""
+"Il n'y a pas d'enregistrement DKIM pour votre domaine %s, les fournisseurs "
+"de messagerie ne pourront pas authentifier vos emails"
 
-#: includes/smtp-checks.php:153
+#: includes/smtp-checks.php:163
 msgid "There seems to be more tham one dkim record for "
-msgstr "Il semble qu’il y ait plus qu’une entrée DKIM "
+msgstr "Il semble y avoir plus d'un enregistrement DKIM pour "
 
-#: includes/smtp-checks.php:154 includes/smtp-checks.php:198
+#: includes/smtp-checks.php:164 includes/smtp-checks.php:211
 msgid ""
 "This can cause your emails to get blocked, you should remove the incorrect "
 "one :"
 msgstr ""
+"Cela peut entraîner le blocage de vos emails, vous devriez supprimer celui "
+"qui est incorrect :"
 
-#: includes/smtp-checks.php:161
+#: includes/smtp-checks.php:171
 #, php-format
 msgid "Your DKIM record : %s"
 msgstr "Votre entrée DKIM : %s"
 
-#: includes/smtp-checks.php:162 includes/smtp-checks.php:206
+#: includes/smtp-checks.php:172 includes/smtp-checks.php:219
 msgid ""
 "Please be aware that we only tested the presence of the record, not that its "
 "content is correct"
 msgstr ""
+"Veuillez noter que nous avons seulement testé la présence de "
+"l'enregistrement, pas que son contenu soit correct"
 
-#: includes/smtp-checks.php:180
+#: includes/smtp-checks.php:189
 msgid "DMARC record verification"
 msgstr "Vérification entrée DMARC"
 
-#: includes/smtp-checks.php:181
+#: includes/smtp-checks.php:190
 msgid ""
 "Domain-based Message Authentication, Reporting and Conformance (DMARC) is an "
 "email authentication protocol. It gives email domain owners the ability to "
 "protect their domain from unauthorized use"
 msgstr ""
+"Domain-based Message Authentication, Reporting and Conformance (DMARC) est "
+"un protocole d'authentification d'email. Il donne aux propriétaires de "
+"domaines email la possibilité de protéger leur domaine contre une "
+"utilisation non autorisée"
 
-#: includes/smtp-checks.php:182
+#: includes/smtp-checks.php:191
 msgid ""
 "Dmarc's role is to tell the receiving servers what to do when the sent "
 "emails doesn't pass SPF and DKIM tests and where to send reports (so you "
 "could eventually fix your SPF records or ensure DKIM is well implemented)"
 msgstr ""
+"Le rôle de DMARC est d'indiquer aux serveurs de réception ce qu'il faut "
+"faire lorsque les emails envoyés ne passent pas les tests SPF et DKIM et où "
+"envoyer les rapports (pour que vous puissiez éventuellement corriger vos "
+"enregistrements SPF ou vous assurer que DKIM est bien implémenté)"
 
-#: includes/smtp-checks.php:194
+#: includes/smtp-checks.php:207
 #, php-format
 msgid "There is no DMARK record for you domain %s"
-msgstr ""
+msgstr "Il n'y a pas d'enregistrement DMARC pour votre domaine %s"
 
-#: includes/smtp-checks.php:197
+#: includes/smtp-checks.php:210
 msgid "There seems to be more tham one DMARK record for"
-msgstr "Il semble qu’il y ait plus qu’une entrée DMAC"
+msgstr "Il semble y avoir plus d'un enregistrement DMARC pour"
 
-#: includes/smtp-checks.php:205
+#: includes/smtp-checks.php:218
 #, php-format
 msgid "Your DMARK record : %s"
 msgstr "Votre entrée DMARC : %s"
 
-#: includes/smtp-mailer.php:13
-msgid "SMTP Mailer"
-msgstr "Envoi par SMTP"
+#: includes/smtp-mailer.php:15
+msgid "SMTP Mailer and Deliverability"
+msgstr "Envoi SMTP et Délivrabilité"
 
-#: includes/smtp-mailer.php:18
-msgid "Smtp Host"
-msgstr "Nom de l’hote SMTP"
+#: includes/smtp-mailer.php:16
+msgid ""
+"Ensure reliable delivery. Configure SMTP to improve email deliverability."
+msgstr ""
+"Assurez une livraison fiable. Configurez SMTP pour améliorer la "
+"délivrabilité des emails."
 
 #: includes/smtp-mailer.php:19
-msgid "Your smtp mail server hostname (or IP)"
-msgstr "Nom de domaine de votre serveur SMTP ( Ou IP )"
+msgid "Why should I setup SMTP"
+msgstr "Pourquoi configurer SMTP"
+
+#: includes/smtp-mailer.php:20
+msgid ""
+"SMTP stands for Simple Mail Transfer Protocol, and it's like the postal "
+"service for your emails. By setting up SMTP, you can send emails through a "
+"professional email provider, which helps make sure your messages land in the "
+"inbox, not the spam folder."
+msgstr ""
+"SMTP signifie Simple Mail Transfer Protocol, et c'est comme le service "
+"postal pour vos emails. En configurant SMTP, vous pouvez envoyer des emails "
+"via un fournisseur d'email professionnel, ce qui permet de s'assurer que vos "
+"messages arrivent dans la boîte de réception, et non dans le dossier spam."
 
 #: includes/smtp-mailer.php:21
-msgid "Please insert a valid hostname or IP"
-msgstr "Veuillez saisir un nom de hôte valide ou une adresse IP"
+msgid "What are my SMTP options?"
+msgstr "Quelles sont mes options SMTP ?"
 
-#: includes/smtp-mailer.php:26
+#: includes/smtp-mailer.php:23
+msgid "Your Hosting Provider: Check if they offer SMTP services."
+msgstr "Votre hébergeur : Vérifiez s'ils offrent des services SMTP."
+
+#: includes/smtp-mailer.php:24
+msgid ""
+"Transactional Email Services: Like SendGrid, Brevo, MailJet, Mailgun, etc "
+"for high volume sending, most of those options have a free tier. (just "
+"google transactional email service)"
+msgstr ""
+"Services d'email transactionnel : Comme SendGrid, Brevo, MailJet, Mailgun, "
+"etc. pour l'envoi de volumes élevés, la plupart de ces options ont un niveau "
+"gratuit. (recherchez simplement 'service d'email transactionnel')"
+
+#: includes/smtp-mailer.php:25
+msgid ""
+"Office Email Services: Microsoft 365, Yahoo Mail, Zoho Mail, etc., if you "
+"prefer using existing services."
+msgstr ""
+"Services d'email bureautique : Microsoft 365, Yahoo Mail, Zoho Mail, etc., "
+"si vous préférez utiliser des services existants."
+
+#: includes/smtp-mailer.php:27
+msgid "How can I use Gmail for SMTP?"
+msgstr "Comment utiliser Gmail pour SMTP ?"
+
+#: includes/smtp-mailer.php:29
+#, php-format
+msgid ""
+"Gmail Settings: First, you should <a href='%s'>create a password "
+"application</a> for your wordpress site, this will allow Mail Control to "
+"send emails using your Gmail account."
+msgstr ""
+"Paramètres Gmail : D'abord, vous devriez <a href='%s'>créer un mot de passe "
+"d'application</a> pour votre site WordPress, cela permettra à Mail Control "
+"d'envoyer des emails en utilisant votre compte Gmail."
+
+#: includes/smtp-mailer.php:30
+msgid "SMTP Details: Enter the following details:"
+msgstr "Détails SMTP : Entrez les informations suivantes :"
+
+#: includes/smtp-mailer.php:32 includes/smtp-mailer.php:54
+msgid "Smtp Host"
+msgstr "Nom de l'hote SMTP"
+
+#: includes/smtp-mailer.php:33 includes/smtp-mailer.php:62
 msgid "Smtp PORT"
 msgstr "Numéro de port SMTP"
 
-#: includes/smtp-mailer.php:27
-msgid "You smtp mail server PORT"
-msgstr "Numéro de port de votre serveur SMTP"
-
-#: includes/smtp-mailer.php:37
+#: includes/smtp-mailer.php:34 includes/smtp-mailer.php:73
 msgid "Smtp Encryption"
 msgstr "Cryptage SMTP"
 
-#: includes/smtp-mailer.php:38
-msgid "What type of encryption your server is using"
-msgstr "Quel type de cryptage votre serveur utilise"
-
-#: includes/smtp-mailer.php:43
+#: includes/smtp-mailer.php:35 includes/smtp-mailer.php:79
 msgid "Smtp User"
-msgstr "Nom d’utilisateur SMTP"
+msgstr "Nom d'utilisateur SMTP"
 
-#: includes/smtp-mailer.php:44
-msgid "You smtp account's username"
-msgstr "Le nom de votre utilisateur SMTP"
-
-#: includes/smtp-mailer.php:49
+#: includes/smtp-mailer.php:36 includes/smtp-mailer.php:85
 msgid "Smtp Password"
 msgstr "Mot de passe du compte SMTP"
 
-#: includes/smtp-mailer.php:50
+#: includes/smtp-mailer.php:36
+msgid "The password your created earlier"
+msgstr "Le mot de passe que vous avez créé précédemment"
+
+#: includes/smtp-mailer.php:37 includes/smtp-mailer.php:97
+msgid "From Name"
+msgstr "Nom de l'envoyeur"
+
+#: includes/smtp-mailer.php:40
+msgid ""
+"Monitor Email Sending Limits: Remember that Gmail has a sending limit of 500 "
+"emails per day for regular accounts and 2,000 for G Suite users."
+msgstr ""
+"Surveillez les limites d'envoi d'emails : Rappelez-vous que Gmail a une "
+"limite d'envoi de 500 emails par jour pour les comptes réguliers et 2 000 "
+"pour les utilisateurs G Suite."
+
+#: includes/smtp-mailer.php:41
+msgid "What Are SPF, DKIM, and DMARC?"
+msgstr "Que sont SPF, DKIM et DMARC ?"
+
+#: includes/smtp-mailer.php:42
+msgid ""
+"SPF (Sender Policy Framework), DKIM (DomainKeys Identified Mail), and DMARC "
+"(Domain-based Message Authentication, Reporting, and Conformance) are email "
+"authentication methods that help protect your email reputation and combat "
+"spam."
+msgstr ""
+"SPF (Sender Policy Framework), DKIM (DomainKeys Identified Mail) et DMARC "
+"(Domain-based Message Authentication, Reporting, and Conformance) sont des "
+"méthodes d'authentification d'email qui aident à protéger votre réputation "
+"d'email et à combattre le spam."
+
+#: includes/smtp-mailer.php:43
+msgid "Why Should I Test My SPF, DKIM, and Domain DMARC Setup and When?"
+msgstr ""
+"Pourquoi et quand je devrais tester mon nom de Domain, SPF, DKIM et DMARC?"
+
+#: includes/smtp-mailer.php:44
+msgid ""
+"Testing your SPF, DKIM, and DMARC settings is like making sure your doors "
+"are locked and your alarm is set. It's all about security and ensuring that "
+"your emails are trusted and reach their destination. This test is advisable "
+"if you send using you domain name to ensure it is correctly configured."
+msgstr ""
+"Tester vos paramètres SPF, DKIM et DMARC, c'est comme s'assurer que vos "
+"portes sont verrouillées et que votre alarme est activée. Il s'agit de "
+"sécurité et de s'assurer que vos emails sont fiables et atteignent leur "
+"destination. Ce test est conseillé si vous envoyez des messages en utilisant "
+"votre nom de domaine pour vous assurer qu'il est correctement configuré."
+
+#: includes/smtp-mailer.php:45
+msgid "Still need Help?"
+msgstr "Besoin d'aide ?"
+
+#: includes/smtp-mailer.php:46
+msgid ""
+"Don't be shy, contact us with your question, we'll do our best to help you "
+"get up and running."
+msgstr ""
+"N'hésitez pas, contactez-nous avec votre question, nous ferons de notre "
+"mieux pour vous aider à démarrer."
+
+#: includes/smtp-mailer.php:47
+msgid "Ask for help"
+msgstr "Demander de l'aide"
+
+#: includes/smtp-mailer.php:55
+msgid "Your smtp mail server hostname (or IP)"
+msgstr "Nom de domaine de votre serveur SMTP ( Ou IP )"
+
+#: includes/smtp-mailer.php:57
+msgid "Please insert a valid hostname or IP"
+msgstr "Veuillez saisir un nom de hôte valide ou une adresse IP"
+
+#: includes/smtp-mailer.php:63
+msgid "You smtp mail server PORT"
+msgstr "Numéro de port de votre serveur SMTP"
+
+#: includes/smtp-mailer.php:74
+msgid "What type of encryption your server is using"
+msgstr "Quel type de cryptage votre serveur utilise"
+
+#: includes/smtp-mailer.php:80
+msgid "You smtp account's username"
+msgstr "Le nom de votre utilisateur SMTP"
+
+#: includes/smtp-mailer.php:86
 msgid "You smtp account's password"
 msgstr "Le mot de passe de votre compte SMTP"
 
-#: includes/smtp-mailer.php:55
+#: includes/smtp-mailer.php:91
 msgid "From Email"
-msgstr "Emails envoyés avec l’adresse"
+msgstr "Emails envoyés avec l'adresse"
 
-#: includes/smtp-mailer.php:56
+#: includes/smtp-mailer.php:92
 msgid "Your emails will be sent from this email adress"
 msgstr "Les emails partiront de cette adresse mail"
 
-#: includes/smtp-mailer.php:61
-msgid "From Name"
-msgstr "Nom de l’envoyeur"
-
-#: includes/smtp-mailer.php:62
+#: includes/smtp-mailer.php:98
 msgid "Your emails will be sent with this name"
 msgstr "Les emails partiront avec ce nom"
 
-#: includes/smtp-mailer.php:99
+#: includes/smtp-mailer.php:137
 msgid "Mail Control, test email"
-msgstr "Test d’envoi d’email Mail Control"
+msgstr "Test d'envoi d'email Mail Control"
 
-#: includes/smtp-mailer.php:100
+#: includes/smtp-mailer.php:138
 #, php-format
 msgid "This is a test email sent mail control in by %s"
 msgstr "Ceci est un email de test envoyé par Mail Control sur le site %s"
 
-#: includes/smtp-mailer.php:114
+#: includes/smtp-mailer.php:155
 msgid "You have to setup From Email field to run this test"
-msgstr "Vous devez saisir un email d’envoyeur pour lancer ce test"
+msgstr "Vous devez saisir un email d'envoyeur pour lancer ce test"
 
-#: includes/smtp-mailer.php:118
+#: includes/smtp-mailer.php:159
 msgid "You have to setup the smtp host to run this test"
 msgstr "Vous devez paramétrer votre hôte SMTP pour lancer ce test"
 
-#: includes/smtp-mailer.php:139
+#: includes/smtp-mailer.php:179
 msgid "Bravo! Our checks are succesful, still, make sure to send a test email"
 msgstr ""
+"Bravo ! Nos vérifications sont réussies, mais assurez-vous d'envoyer un "
+"email de test"
 
-#: includes/smtp-mailer.php:141
+#: includes/smtp-mailer.php:181
 #, php-format
 msgid ""
 "Don't hesitate to request us for some assistance helping you setting your "
 "domains, feel free to <a href=\"%s\" >contact us</a>"
 msgstr ""
+"N'hésitez pas à nous demander de l'aide pour configurer vos domaines, "
+"n'hésitez pas à <a href=\"%s\" >nous contacter</a>"
 
-#: includes/smtp-mailer.php:146
+#: includes/smtp-mailer.php:186
 #, php-format
 msgid ""
 "For a more complete test, we suggest you go to %s. After clicking on \"Next "
@@ -836,35 +1759,28 @@ msgid ""
 "XXXXXXX@appmaildev.com. There, you can your use our \"send a test email\" "
 "feature to send your email and then receive a complete delivrability report."
 msgstr ""
+"Pour un test plus complet, nous vous suggérons d'aller à %s. Après avoir "
+"cliqué sur \"Étape suivante\", il vous sera demandé d'envoyer un email à une "
+"adresse temporaire test-XXXXXXX@appmaildev.com. Là, vous pouvez utiliser "
+"notre fonction \"envoyer un email de test\" pour envoyer votre email et "
+"recevoir ensuite un rapport complet de délivrabilité."
 
-#: includes/smtp-mailer.php:159
+#: includes/smtp-mailer.php:202
 msgid "Test your setup"
 msgstr "Tester votre configuration"
 
-#: includes/smtp-mailer.php:165
+#: includes/smtp-mailer.php:209
 msgid "Send a test email"
 msgstr "Envoyer un email de test"
 
-#: includes/smtp-mailer.php:171
+#: includes/smtp-mailer.php:215
 msgid "Test your SPF, DKIM, and domain DMARC setup (experimental):"
 msgstr "Testez votre nom de Domain, SPF, DKIM et DMARC (expérimental)"
 
-#: includes/smtp-mailer.php:177
+#: includes/smtp-mailer.php:221
 msgid "DKIM Selector"
 msgstr "Sélecteur DKIM"
 
-#: includes/smtp-mailer.php:178
+#: includes/smtp-mailer.php:222
 msgid "Test your domain"
 msgstr "Testez votre domaine"
-
-#~ msgid "Setup your style"
-#~ msgstr "Personnaliser votre style"
-
-#~ msgid "Setup your content"
-#~ msgstr "Personnaliser votre contenu"
-
-#~ msgid "Smtp Secure"
-#~ msgstr "SMTP sécurisé"
-
-#~ msgid "Add tracking to email content"
-#~ msgstr "Activer le suivi d’ouvertures et clics"

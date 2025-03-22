@@ -2,7 +2,7 @@
 
 namespace Mail_Control;
 
-define( 'MC_WOOCOMMERCE_EMAIL_TYPES', [
+define( 'MC_WOOCOMMERCE_EMAIL_TYPES', array(
     'new_order'                 => 'WC_Email_New_Order',
     'cancelled_order'           => 'WC_Email_Cancelled_Order',
     'customer_processing_order' => 'WC_Email_Customer_Processing_Order',
@@ -14,59 +14,55 @@ define( 'MC_WOOCOMMERCE_EMAIL_TYPES', [
     'customer_new_account'      => 'WC_Email_Customer_New_Account',
     'customer_note'             => 'WC_Email_Customer_Note',
     'customer_reset_password'   => 'WC_Email_Customer_Reset_Password',
-] );
+) );
 /**
  * Loads a woocommerce preview.
  *
- * @param      string  $email_template  The email template
+ * @param      string $email_template  The email template
  *
  * @return     WC_Emails|null  ( description_of_the_return_value )
  */
-function load_woocommerce_preview( $email_template )
-{
+function load_woocommerce_preview(  $email_template  ) {
     $wc_emails = \WC_Emails::instance();
     $emails = $wc_emails->get_emails();
     $email = $emails[MC_WOOCOMMERCE_EMAIL_TYPES[$email_template]];
-    $orders = wc_get_orders( [
+    $orders = wc_get_orders( array(
         'numberposts' => 1,
-    ] );
-    
+    ) );
     if ( $orders ) {
         $email->object = $orders[0];
         return $email;
     } else {
         return null;
     }
-
 }
 
 /**
  * Adds woocommerce settings to email customizer
  */
-function setup_woocommerce_customizer()
-{
+function setup_woocommerce_customizer() {
     add_filter( 'mc_customizer_sections', function ( $sections ) {
-        $sections['woo_style'] = [
+        $sections['woo_style'] = array(
             'section'  => __( 'WooCommerce Table Style', 'mail-control' ),
             'priority' => 14,
-        ];
+        );
         return $sections;
     } );
     add_filter( 'mc_customizer_settings', function ( $settings ) {
-        $settings = array_merge( $settings, [ [
+        $settings = array_merge( $settings, array(array(
             'id'          => 'table_font_size',
             'label'       => __( 'Choose your Table font size', 'mail-control' ),
             'section'     => 'woo_style',
             'type'        => 'range',
-            'input_attrs' => [
-            'step' => 1,
-            'min'  => 8,
-            'max'  => 70,
-        ],
+            'input_attrs' => array(
+                'step' => 1,
+                'min'  => 8,
+                'max'  => 70,
+            ),
             'selectors'   => 'td.td, th.td',
             'transport'   => 'postMessage',
             'default'     => get_defaults( 'table_font_size' ),
-        ], [
+        ), array(
             'id'        => 'table_border_color',
             'label'     => __( 'Choose your Table border color', 'mail-control' ),
             'section'   => 'woo_style',
@@ -74,20 +70,20 @@ function setup_woocommerce_customizer()
             'selectors' => 'td.td, th.td',
             'transport' => 'postMessage',
             'default'   => get_defaults( 'table_border_color' ),
-        ], [
+        ), array(
             'id'          => 'table_border_size',
             'label'       => __( 'Choose your Table border size', 'mail-control' ),
             'section'     => 'woo_style',
             'type'        => 'range',
             'selectors'   => 'td.td, th.td',
             'transport'   => 'postMessage',
-            'input_attrs' => [
-            'step' => 0.5,
-            'min'  => 0,
-            'max'  => 5,
-        ],
+            'input_attrs' => array(
+                'step' => 0.5,
+                'min'  => 0,
+                'max'  => 5,
+            ),
             'default'     => get_defaults( 'table_border_size' ),
-        ] ] );
+        )) );
         return $settings;
     } );
 }
@@ -95,8 +91,7 @@ function setup_woocommerce_customizer()
 /**
  * Ensures email customizer integrates correctly with woocommerce emails
  */
-function customize_woocommerce_emails()
-{
+function customize_woocommerce_emails() {
     remove_all_actions( 'woocommerce_email_header' );
     remove_all_actions( 'woocommerce_email_footer' );
     add_filter( 'woocommerce_email_styles', '__return_empty_string', 1000 );
@@ -107,14 +102,14 @@ function customize_woocommerce_emails()
     add_action(
         'woocommerce_email_header',
         function ( $email_heading, $email ) {
-        echo  "<h1>" . esc_html( $email_heading ) . "</h1>" ;
-    },
+            echo '<h1>' . esc_html( $email_heading ) . '</h1>';
+        },
         10,
         2
     );
     add_filter( 'woocommerce_email_settings', function ( $settings ) {
         $settings = array_filter( $settings, function ( $setting ) {
-            return !isset( $setting['id'] ) || !in_array( $setting['id'], [
+            return !isset( $setting['id'] ) || !in_array( $setting['id'], array(
                 'woocommerce_email_header_image',
                 'woocommerce_email_footer_text',
                 'woocommerce_email_base_color',
@@ -122,16 +117,16 @@ function customize_woocommerce_emails()
                 'woocommerce_email_body_background_color',
                 'woocommerce_email_text_color',
                 'email_template_options'
-            ] );
+            ) );
         } );
         $customizer = get_customizer_url();
-        $text = "<a href='" . $customizer . "'>" . __( 'Use Mail Control to customize your emails ', 'mail-control' ) . "</a>";
-        $settings[] = [
+        $text = "<a href='" . $customizer . "'>" . __( 'Use Mail Control to customize your emails ', 'mail-control' ) . '</a>';
+        $settings[] = array(
             'title' => __( 'Email template', 'woocommerce' ),
             'type'  => 'title',
-            'desc'  => sprintf( __( 'This section lets you customize the WooCommerce emails. <a href="%s" target="_blank">Click here to preview your email template</a> or <a href="%s" target="_blank">Click here to customize your email template</a> ', 'mail-control' ), wp_nonce_url( admin_url( '?preview_woocommerce_mail=true' ), 'preview-mail' ), $customizer ),
+            'desc'  => sprintf( __( 'This section lets you customize the WooCommerce emails. <a href="%1$s" target="_blank">Click here to preview your email template</a> or <a href="%2$s" target="_blank">Click here to customize your email template</a> ', 'mail-control' ), wp_nonce_url( admin_url( '?preview_woocommerce_mail=true' ), 'preview-mail' ), $customizer ),
             'id'    => 'email_template_options',
-        ];
+        );
         return $settings;
     } );
 }
@@ -139,8 +134,7 @@ function customize_woocommerce_emails()
 /**
  * Disables the woocommerce customization.
  */
-function disable_woocommerce_customization()
-{
+function disable_woocommerce_customization() {
     // All woocommerce emails use woocommerce_email_headers filter to allow customizing headers
     add_filter( 'woocommerce_email_headers', function ( $headers ) {
         // disable the beautification
@@ -155,7 +149,7 @@ function disable_woocommerce_customization()
 }
 
 add_filter( 'mc_customizer_email_types', function ( $email_types ) {
-    $email_types += [
+    $email_types += array(
         'new_order'                 => __( 'Woocommerce : New Order', 'mail-control' ),
         'cancelled_order'           => __( 'Woocommerce : Cancelled Order', 'mail-control' ),
         'customer_processing_order' => __( 'Woocommerce : Customer Processing Order', 'mail-control' ),
@@ -167,50 +161,44 @@ add_filter( 'mc_customizer_email_types', function ( $email_types ) {
         'customer_new_account'      => __( 'Woocommerce : Customer New Account', 'mail-control' ),
         'customer_note'             => __( 'Woocommerce : Customer Note', 'mail-control' ),
         'customer_reset_password'   => __( 'Woocommerce : Customer Reset Password', 'mail-control' ),
-    ];
+    );
     return $email_types;
 } );
 add_filter(
     'mc_customizer_preview',
     function ( $preview, $email_type ) {
-    
-    if ( isset( MC_WOOCOMMERCE_EMAIL_TYPES[$email_type] ) ) {
-        $email = load_woocommerce_preview( $email_type );
-        
-        if ( $email ) {
-            $content = $email->get_content();
-            $subject = $email->get_heading();
-        } else {
-            $content = __( "You'll have to create some orders to be able to customize woocommerce emails", 'mail-control' );
-            $subject = __( "Create orders first", 'mail-control' );
+        if ( isset( MC_WOOCOMMERCE_EMAIL_TYPES[$email_type] ) ) {
+            $email = load_woocommerce_preview( $email_type );
+            if ( $email ) {
+                $content = $email->get_content();
+                $subject = $email->get_heading();
+            } else {
+                $content = __( "You'll have to create some orders to be able to customize woocommerce emails", 'mail-control' );
+                $subject = __( 'Create orders first', 'mail-control' );
+            }
+            return array($content, $subject);
         }
-        
-        return [ $content, $subject ];
-    }
-    
-    return $preview;
-},
+        return $preview;
+    },
     10,
     2
 );
 add_filter( 'mc_customizer_defaults', function ( $defaults ) {
-    $defaults += [
+    $defaults += array(
         'table_font_size'    => 11,
         'table_border_color' => '#eee',
         'table_border_size'  => 1,
-    ];
+    );
     return $defaults;
 } );
 add_action( 'settings_ready_mc', function () {
     setup_woocommerce_customizer();
     if ( defined( 'EMAIL_CUSTOMIZER_ACTIVE' ) && EMAIL_CUSTOMIZER_ACTIVE == 'on' || MC_TEST_EMAIL_CUSTOMIZATION ) {
-        
         if ( defined( 'EMAIL_CUSTOMIZER_WOOCOMMERCE_ENABLED' ) && EMAIL_CUSTOMIZER_WOOCOMMERCE_ENABLED == 'on' ) {
             add_action( 'woocommerce_email', 'Mail_Control\\customize_woocommerce_emails' );
         } else {
             // disable beautify ( on woocommerce email initialization )
             add_action( 'woocommerce_email', 'Mail_Control\\disable_woocommerce_customization' );
         }
-    
     }
 }, 100 );

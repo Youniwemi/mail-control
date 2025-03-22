@@ -2,12 +2,13 @@
 Contributors: rahal.aboulfeth
 Tags: email customizer, smtp, email, email log, email deliverability, email tracking
 Requires at least: 5.0
-Tested up to: 6.5
+Tested up to: 6.7.2
 Requires PHP: 7.4
 License: GPL
-Stable tag: 0.3.7
+Stable tag: 0.3.9
 
-Design and customize email templates, control your SMTP email deliverability, track your emails clicks and openings, and allow defering the emails as a background process to speed up your pages.
+Design and customize email templates, control your SMTP email deliverability, track your emails clicks and openings, and send them as background task.
+
 
 == Description ==
 
@@ -50,9 +51,13 @@ What if you notice that a visitor reads you email multiple times? isn't it a goo
 
 Email Tracking will help you detect problems and opportunities so you can take action, it is an invaluable tool for the great marketer.
 
+= How does log retention work? =
+
+Mail Control plugin automatically manages your email logs based on your selected retention period. A scheduled task runs daily to remove only logs that exceed your chosen timeframe, ensuring your database remains optimized while preserving all valuable tracking data.
+
 = How Mail Control will help me solve my email deliverability problems? =
 
-With this plugin, you will be able to test your domain name's SPF, DKIM and DMARC records and have actionable suggestions to fix any detected issue.
+Mail Control helps you diagnose and fix email deliverability issues by testing your domain's SPF, DKIM, and DMARC records, providing actionable suggestions for any detected problems.
 
 As it is an experimental feature for now, we can assist you if you need any help.
 
@@ -85,6 +90,8 @@ Please be aware that there is a [500 emails limit per day](https://support.googl
 
 If you get stuck, you can ask for help in the [Mail Control Plugin Forum](https://wordpress.org/support/plugin/mail-control).
 
+
+
 == Installation ==
 1. Upload the plugin to your plugins folder: 'wp-content/plugins/'
 2. Activate the 'Mail Control' plugin from the Plugins admin panel.
@@ -95,8 +102,14 @@ If you get stuck, you can ask for help in the [Mail Control Plugin Forum](https:
 2. Configure Background Mailer Settings
 3. Configure Smtp Mailer
 4. Test your smtp confirugation, "Send a test email" and "Test your SPF, DKIM, and domain DMARC setup"
+5. Email customizer settings, test before activating
+6. Email customizer in action
 
 == Changelog ==
+= 0.3.9 =
+* Added log retention setup
+* Updated french translation
+= 0.3.8 : Upgraded dependencies =
 = 0.3.7 =
 * Customizer : for a safe customization, restricting the allowed blocks while customizing email template
 * Upgraded dependencies and tested up to
